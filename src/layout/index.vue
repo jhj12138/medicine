@@ -1,5 +1,5 @@
 <template>
-  <div class="layout" style="height:100%;background-color:#F3F5F8;" >
+  <div class="layout" style="height:100%;" >
     <router-view></router-view>
   </div>
 </template>
@@ -22,5 +22,7 @@ export default {
 }
 </script>
 <style lang="scss">
-
+.layout{
+  
+}
 </style>

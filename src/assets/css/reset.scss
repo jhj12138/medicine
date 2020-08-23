@@ -12,7 +12,7 @@ body,html {
 	margin: 0;
 	padding: 0;
 	// font-family: "Monospaced Number","PingFang SC",  "Chinese Quote", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
-	background: #ffffff;
+	// background: #ffffff;
 	font-size: 14px;
 }
 
@@ -76,6 +76,7 @@ a:focus {
 img {
 	vertical-align: top;
 	border: 0;
+	display:block;
 }
 
 address,
