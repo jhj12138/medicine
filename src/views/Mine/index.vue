@@ -21,17 +21,17 @@
                 <img src="../../assets/image/mine_six.png" alt="">
               </div>
             </div>
-            <div class="mine_message">查看个人主页</div>
+            <div class="mine_message" @click="goAcc">查看个人主页</div>
           </div>
 
         </div>
         <div class="mine_con_bottom">
-          <div class="mine_con_mailbox">
+          <div class="mine_con_mailbox" @click="goMessage">
             <span>999</span>
             <span>站内信</span>
           </div>
           <div class="mine_heng"></div>
-          <div class="mine_con_mailbox">
+          <div class="mine_con_mailbox" @click="goForm">
             <span>999</span>
             <span>联系表单</span>
           </div>
@@ -61,7 +61,7 @@
               </div>
               <div class="mine_admin_name">参展人员管理</div>
             </li>
-            <li class="mine_admin_li">
+            <li class="mine_admin_li" @click="goStand">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine3.png" alt="">
               </div>
@@ -69,13 +69,13 @@
             </li>
           </ul>
           <ul class="mine_admin_ul">
-            <li class="mine_admin_li">
+            <li class="mine_admin_li" @click="goCommodity">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine4.png" alt="">
               </div>
               <div class="mine_admin_name">商品管理</div>
             </li>
-            <li class="mine_admin_li">
+            <li class="mine_admin_li" @click="goCertif">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine5.png" alt="">
               </div>
@@ -92,7 +92,7 @@
         </div>
       </div>
       <!-- 发票管理及修改密码 -->
-      <div class="mine_invocie">
+      <div class="mine_invocie" @click="goInv">
         <div class="mine_invocie_left">
           <div class="mine_invocie_ing">
             <img src="../../assets/image/mine_invoice.png" alt="">
@@ -123,6 +123,27 @@ export default {
   methods:{
     goExhib(){
       this.$router.push('/evemanage') //跳转到参展人员管理
+    },
+    goCertif(){
+      this.$router.push('/certifcate') //跳转到证书管理
+    },
+    goCommodity(){
+      this.$router.push('/commodity') //跳转到商品管理
+    },
+    goStand(){
+      this.$router.push('/standmage') //跳转到展位管理
+    },
+    goMessage(){
+      this.$router.push('/message') //跳转到站内信
+    },
+    goForm(){
+      this.$router.push('/contform') //跳转到联系表单
+    },
+    goInv(){
+      this.$router.push('/invdetail') //跳转到发票管理
+    },
+    goAcc(){
+      this.$router.push('/accinform') //跳转到账户信息
     }
   }
 }

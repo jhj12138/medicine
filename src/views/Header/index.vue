@@ -1,6 +1,6 @@
 <template>
   <div id = "header" :class="headFlag?'header_in':''">
-    
+    <div @click="close">关闭</div>
   </div>
 </template>
 
@@ -10,6 +10,12 @@ export default {
   data() {
     return {
       
+    }
+  },
+  methods:{
+    close() {
+      this.$emit('changeFlag',false)
+      // this.headFlag = false
     }
   }
 }

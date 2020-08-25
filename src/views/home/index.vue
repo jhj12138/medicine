@@ -1,7 +1,7 @@
 <template>
   <div id="home">
     <!-- 遮罩层 -->
-    <Header :headFlag = 'flag'></Header>
+    <Header :headFlag = 'flag' @changeFlag = "changeFlag"></Header>
     <div class="home_top">
       <div class="home_tit">
         <img src="../../assets/image/home_bg.png" alt="">
@@ -315,6 +315,9 @@ export default {
     },
     getReview(index) {
       this.review_index = index
+    },
+    changeFlag(flag){
+      this.flag = false
     }
   },
   mounted:function(){
