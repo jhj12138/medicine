@@ -3,7 +3,7 @@ import axios from 'axios'
 
 //2.全局配置（后期请求接口，实际请求地址baseURL+url）
 
-axios.defaults.baseURL = '' // 测试接口
+axios.defaults.baseURL = 'http://yzh.demoweb.68hanchen.com/api' // 测试接口
 axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 
 

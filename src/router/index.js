@@ -33,6 +33,9 @@ const ExhSearch = () => import('@/views/exhSearch') //展商搜索列表
 const SurrTraffic = () => import('@/views/surrTraffic') //周边交通
 const CaterHotel = () => import('@/views/caterHotel') //周边餐饮酒店
 const Problem = () => import('@/views/problem') //常见问题
+const HighIevel = () => import('@/views/highIevel') //高层次人才服务
+const Login = () => import('@/views/login') //登录
+const RetPassword = () => import('@/views/retPassword') //找回密码
 // Standard 
 
 
@@ -163,6 +166,22 @@ const routes = [{
             path: 'problem',
             name: '常见问题',
             component: Problem
+        },{
+            path: 'highievel',
+            name: '高层次人才服务',
+            component: HighIevel
+        },{
+            path: 'login',
+            name: '登录',
+            component: Login
+        },{
+            path: 'retpassword',
+            name: '找回密码',
+            component: RetPassword
+        },{
+            path: 'retpassword',
+            name: '找回密码',
+            component: RetPassword
         }]
     },
     

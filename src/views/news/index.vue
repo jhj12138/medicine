@@ -37,7 +37,7 @@
             class="new_tab_list">
             <div class="new_tab_time">08-12</div>
             <div class="new_tab_tit">{{itemList.tit}}</div>
-            <div class="new_tab_con">由浙江省卫生健康委员会和浙江省科学技术厅主办的第32届浙江国际科研、医疗仪器设备...</div>
+            <div class="new_tab_con">由浙江省卫生健康委员会和浙江省科学委员会和浙江省科学委员会和浙江省科学委员会和浙江省科学委员会和浙江省科学技术厅主办的第32届浙江国际科研、医疗仪器设备...</div>
           </div>
         </div>
       </div>

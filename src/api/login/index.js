@@ -24,3 +24,11 @@ import axios from 'axios'
 //     params: apiParams
 //   })
 // }
+
+// export const companyInfoDetail = apiParams => { //get例子
+//     return axios({
+//       method: 'get',
+//       url: '/user/types',
+//       params: apiParams
+//     })
+//   }
