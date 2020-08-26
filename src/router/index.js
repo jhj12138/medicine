@@ -37,7 +37,14 @@ const HighIevel = () => import('@/views/highIevel') //高层次人才服务
 const Login = () => import('@/views/login') //登录
 const RetPassword = () => import('@/views/retPassword') //找回密码
 const Register = () => import('@/views/register') //注册
-const newsform = () => import('@/views/newsform') //注册
+const Newsform = () => import('@/views/newsForm') //注册
+const AcdeTails = () => import('@/views/acdeTails') //活动详情
+const OriTails = () => import('@/views/oriTails') //国内外详情
+const ExTails = () => import('@/views/exTails') //展会介绍
+const HotCourse = () => import('@/views/hotCourse') //热门课程
+const Inter = () => import('@/views/inter') //我感兴趣的
+const Inraim = () => import('@/views/inraim') //参观展会的目的
+const Exam = () => import('@/views/exam') //疫情防控调查
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
@@ -188,7 +195,35 @@ const routes = [{
         },{
             path: 'newsform',
             name: '新闻详情',
-            component: newsform
+            component: Newsform
+        },{
+            path: 'acdetails',
+            name: '活动详情',
+            component: AcdeTails
+        },{
+            path: 'oritails',
+            name: '国内外详情',
+            component: OriTails
+        },{
+            path: 'extails',
+            name: '展会介绍',
+            component: ExTails
+        },{
+            path: 'hotcourse',
+            name: '热门课程',
+            component: HotCourse
+        },{
+            path: 'inter',
+            name: '我感兴趣的',
+            component: Inter
+        },{
+            path: 'inraim',
+            name: '参观展会的目的',
+            component: Inraim
+        },{
+            path: 'exam',
+            name: '疫情防控调查',
+            component: Exam
         }]
     },
     
