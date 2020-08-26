@@ -36,7 +36,9 @@ const Problem = () => import('@/views/problem') //常见问题
 const HighIevel = () => import('@/views/highIevel') //高层次人才服务
 const Login = () => import('@/views/login') //登录
 const RetPassword = () => import('@/views/retPassword') //找回密码
-const newsform = () => import('@/views/newsform')
+const Register = () => import('@/views/register') //注册
+const newsform = () => import('@/views/newsform') //注册
+// const newsform = () => import('@/views/newsform') 
 // Standard 
 
 
@@ -180,12 +182,12 @@ const routes = [{
             name: '找回密码',
             component: RetPassword
         },{
-            path: 'retpassword',
-            name: '找回密码',
-            component: RetPassword
+            path: 'register',
+            name: '注册',
+            component: Register
         },{
             path: 'newsform',
-            name: '常见问题',
+            name: '新闻详情',
             component: newsform
         }]
     },

@@ -182,6 +182,7 @@ export default {
     return{
       value: '',
       columns: ['男','女'],
+      con:['1','2'],
       showPicker: false,
       value2: '',
       columns2: ['1','2'],
@@ -215,7 +216,7 @@ export default {
     },
     onConfirm(value,index) {
       this.value = value;
-      // console.log(index)
+      console.log(this.con[index])
       this.showPicker = false;
     },
     onConfirm2(value,index) {
