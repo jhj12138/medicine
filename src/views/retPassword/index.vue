@@ -1,7 +1,7 @@
 <template>
   <div id ="retPassword">
     <div class="retPass_top">
-      <div class="retPass_return">
+      <div class="retPass_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="retPass_middle">找回密码</div>
@@ -12,13 +12,13 @@
         <div class="retPass_con_input">
           <div class="retPass_con_name">手机号</div>
           <div class="retPass_con_inputs">
-            <input type="text" placeholder="请输入昵称">
+            <input type="text" placeholder="请输入手机号" v-model="Phone">
           </div>
         </div>
         <div class="retPass_con_input">
           <div class="retPass_con_name">验证码</div>
           <div class="retPass_con_inputs">
-            <input type="text" placeholder="请输入验证码">
+            <input type="text" placeholder="请输入验证码" v-model="Code">
             <div class="getcode_box" @click="getCodeMethod">
               <div :class="[getCodeFlag?'getcode_text': 'getcode_text_else']">{{getCodeText}}</div>
             </div>
@@ -27,16 +27,20 @@
         <div class="retPass_con_input">
           <div class="retPass_con_name">新密码</div>
           <div class="retPass_con_inputs">
-            <input type="text" placeholder="请输入新密码">
+            <form>
+              <input type="password" placeholder="请输入密码" v-model="NewPwd" autocomplete="off">
+            </form>
           </div>
         </div>
         <div class="retPass_con_input">
           <div class="retPass_con_name">确认密码</div>
           <div class="retPass_con_inputs">
-            <input type="text" placeholder="请输入确认密码">
+            <form>
+              <input type="password" placeholder="请输入密码" v-model="NewPwd1" autocomplete="off">
+            </form>
           </div>
         </div>
-        <div class="retPass_con_btn">
+        <div class="retPass_con_btn" @click="submit">
           <div class="retPass_con_btns">立即登录</div>
         </div>
       </div>
@@ -45,20 +49,44 @@
 </template>
 
 <script>
+import {refund,sendMessage} from '../../api/register'
+import { Toast } from 'vant';
 export default {
   data() {
     return{
       getCodeFlag:true,
       getCodeText: '获取验证码',
       times: 60,
+      Phone:'',
+      Code:'',
+      NewPwd1:'',
+      NewPwd:''
     }
   },
   methods:{
+    goReturn(){
+      this.$router.push('/login')
+    },
     // 获得验证码
     getCodeMethod() {
+      if(!this.Phone) {
+        Toast({
+          message: '请输入手机号',
+        });
+        return
+      };
       if (!this.getCodeFlag) return; //验证码倒计时是否完成
       this.getCodeText = `${this.times}s重新获取`
       this.getCodeFlag = false
+      const data = {
+        telephone: this.Phone
+      }
+      sendMessage(data).then((res) => {
+        Toast({
+          message: '验证码请在1分钟之内使用',
+        });
+        console.log(res.data)
+      })
       const timer = setInterval(() => {
         if (this.times <= 0) {
           clearInterval(timer)
@@ -71,6 +99,26 @@ export default {
         this.getCodeText = `${this.times}s重新获取`
       }, 1000);
     },
+    submit(){
+      if(!this.Phone){Toast('请输入电话号码');return}
+      if(!this.NewPwd){Toast('请输入新密码');return}
+      if(this.NewPwd != this.NewPwd1){
+        Toast('两次密码输入不一致');return
+      }
+      const data = {
+        Phone: this.Phone,
+        NewPwd: this.NewPwd,
+        Code: this.Code
+      }
+      refund(data).then((res) => {
+        if(res.data.Success){
+          Toast({
+            message: '修改成功',
+          });
+          this.$router.push('/home')
+        }
+      })
+    }
   }
 }
 </script>
@@ -140,7 +188,7 @@ export default {
           justify-content: space-between;
           margin-top: px(10);
           margin-bottom: px(30);
-          >input{
+          input{
             border: none;
             font-size: 16px;
           }

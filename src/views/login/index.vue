@@ -12,21 +12,23 @@
         <div class="login_con_input">
           <div class="login_con_name">昵称</div>
           <div class="login_con_inputs">
-            <input type="text" placeholder="请输入昵称">
+            <input type="text" placeholder="请输入昵称" v-model="UserName">
           </div>
         </div>
         <div class="login_con_input">
           <div class="login_con_name">密码</div>
           <div class="login_con_inputs">
-            <input type="text" placeholder="请输入密码">
+            <form>
+              <input type="password" placeholder="请输入密码" v-model="UserPwd" autocomplete="off">
+            </form>
           </div>
         </div>
-        <div class="login_con_btn">
+        <div class="login_con_btn" @click="subMit">
           <div class="login_con_btns">立即登录</div>
         </div>
         <div class="login_con_go">
           <div class="login_con_gos">
-            <div class="login_con_l">立即注册</div>
+            <div class="login_con_l" @click="goRegister">立即注册</div>
             <div class="login_con_s"></div>
             <div class="login_con_w" @click="goPass">忘记密码？</div>
           </div>
@@ -37,15 +39,43 @@
 </template>
 
 <script>
+import {login} from '../../api/register'
+import { Toast } from 'vant';
 export default {
   data() {
     return{
-
+      UserName:'',
+      UserPwd:''
     }
   },
   methods:{
     goPass(){
       this.$router.push('/retpassword')
+    },
+    goRegister(){
+      this.$router.push('/register')
+    },
+    subMit(){
+      if(!this.UserName){Toast('请输入用户名');return}
+      if(!this.UserPwd){Toast('请输入密码');return}
+      const data = {
+        UserName :this.UserName,
+        UserPwd :this.UserPwd
+      }
+      login(data).then((res) => {
+        if(res.data.Success){
+          Toast({
+            message: '登录成功',
+          });
+          localStorage.setItem('yzhToken', res.data.Data.Token)
+          localStorage.setItem('tokenId', res.data.Data.Id)
+          this.$router.push('/home')
+        }else{
+          Toast({
+            message: '登录失败',
+          });
+        }
+      })
     }
   }
 }
@@ -116,7 +146,7 @@ export default {
           align-items: center;
           margin-top: px(10);
           margin-bottom: px(30);
-          >input{
+          input{
             border: none;
             font-size: 16px;
           }

@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   data() {
     return {
@@ -72,6 +73,14 @@ export default {
       this.licensePlate = this.licensePlateOptions[value].text
       this.licensePlateValue = value
     }
+  },
+  mounted(){
+    axios({
+      method: 'get',
+      url: `intenal/list/abroad?TypeId=${1}&PubTime=${30}&CurPage=${1}&PageSize=${10}`,
+    }).then((res)=>{
+      console.log(res)
+    })
   }
 }
 </script>

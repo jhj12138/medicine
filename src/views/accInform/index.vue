@@ -182,7 +182,6 @@ export default {
     return{
       value: '',
       columns: ['男','女'],
-      con:['1','2'],
       showPicker: false,
       value2: '',
       columns2: ['1','2'],
