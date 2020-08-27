@@ -51,3 +51,12 @@ export const refund = apiParams => { //
     params: apiParams
   })
 }
+
+
+export const list = apiParams => { //get例子
+  return axios({
+    method: 'get',
+    url: 'user/lessionsactivity/list',
+    params: apiParams
+  })
+}

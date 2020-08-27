@@ -50,9 +50,15 @@ export default {
   },
   methods:{
     goPass(){
-      this.$router.push('/retpassword')
+      // if(localStorage.getItem('yzhToken')){
+        this.$router.push('/retpassword')
+        // this.$router.push({path:'/retpassword' || "/"},() => {}, () => {})
+      // }
+      // this.$router.push('/retpassword').catch(err => err)
+      // this.$router.replace({path:'/retpassword'})
     },
     goRegister(){
+      console.log('register')
       this.$router.push('/register')
     },
     subMit(){
@@ -67,9 +73,9 @@ export default {
           Toast({
             message: '登录成功',
           });
+          this.$router.push('/home')
           localStorage.setItem('yzhToken', res.data.Data.Token)
           localStorage.setItem('tokenId', res.data.Data.Id)
-          this.$router.push('/home')
         }else{
           Toast({
             message: '登录失败',

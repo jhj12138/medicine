@@ -90,7 +90,7 @@
 </template>
 
 <script>
-import {register,regType,sendMessage} from '../../api/register'
+import {register,regType,sendMessage,list} from '../../api/register'
 import { Toast } from 'vant';
 export default {
   data() {
@@ -155,6 +155,7 @@ export default {
       this.showPicker = false;
     },
     goSubmit() {
+      console.log(this.radio)
       if(!this.UserName){Toast('请输入用户名');return}
       if(!this.UserPwd){Toast('请输入密码');return}
       if(!this.Phone){Toast('请输入联系电话');return}
@@ -166,6 +167,7 @@ export default {
       if(this.UserPwd.length < 6){Toast('密码需要大于六位数');return}
       if (!(/^1[3456789]\d{9}$/.test(this.Phone))){Toast('联系人电话有误');return} 
       if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.Email))){Toast('邮箱有误');return} 
+      if(!this.radio){Toast('请同意使用条款');return}
       const data = {
         UserName: this.UserName,
         UserPwd: this.UserPwd,
@@ -186,7 +188,7 @@ export default {
     regType().then((res) => {
       if(res.status === 200){
         var newDate = res.data.Data
-        newDate.forEach((ele)=>{
+        newDate.forEach(ele=>{
           this.columns.push(ele.Name)
           this.con.push(ele.Id)
         })

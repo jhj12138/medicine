@@ -14,16 +14,17 @@ Vue.use(Vant)
 
 Vue.prototype.$md5 = md5
 
-// router.beforeEach((to, from, next) => {
-//   const isLogin = localStorage.getItem('qsToken') // 是否token
-//   if (to.path !== '/login' && !isLogin) {
-//     next({
-//       path: '/login'
-//     })
-//   } else {
-//     next()
-//   }
-// })
+
+router.beforeEach((to, from, next) => {
+  const isLogin = localStorage.getItem('yzhToken') // 是否token
+  if (to.path !== '/login' && !isLogin && from.path !== '/login') {
+    next({
+      path: '/login'
+    })
+  } else {
+    next()
+  }
+})
 
 Vue.config.productionTip = false
 
