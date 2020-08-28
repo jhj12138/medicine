@@ -85,7 +85,7 @@ export default {
         Toast({
           message: '验证码请在1分钟之内使用',
         });
-        console.log(res.data)
+        console.log(res)
       })
       const timer = setInterval(() => {
         if (this.times <= 0) {
@@ -111,11 +111,12 @@ export default {
         Code: this.Code
       }
       refund(data).then((res) => {
-        if(res.data.Success){
+        console.log(res)
+        if(res.Success){
           Toast({
             message: '修改成功',
           });
-          this.$router.push('/home')
+          this.$router.push('/login')
         }
       })
     }

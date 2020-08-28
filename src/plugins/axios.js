@@ -21,7 +21,9 @@ axios.defaults.headers['Content-Type'] = 'application/json;charset=UTF-8'
 // 请求拦截
 axios.interceptors.request.use(
     config => {
-
+        // if (localStorage.getItem('yzhToken')) {
+        //     config.headers['asd']=localStorage.getItem('yzhToken')
+        // }
         return config
     },
     error => {
@@ -37,20 +39,20 @@ axios.interceptors.response.use(
     },
     error => {
         // 对响应错误做点什么
-        switch (error.response.status) {
-            case 401:
-                // Message.error('身份信息过期,请重新登录')
-                console.log('身份信息过期,请重新登录')
-                break
-            case 400:
-                console.log('接口不存在')
-                break
-            case 404:
-                console.log('接口不存在')
-                break
-            default:
-                console.log('接口不存在')
-        }
+        // switch (error.response.status) {
+        //     case 401:
+        //         // Message.error('身份信息过期,请重新登录')
+        //         console.log('身份信息过期,请重新登录')
+        //         break
+        //     case 400:
+        //         console.log('接口不存在')
+        //         break
+        //     case 404:
+        //         console.log('接口不存在')
+        //         break
+        //     default:
+        //         console.log('接口不存在')
+        // }
         return Promise.reject(error)
     }
 )

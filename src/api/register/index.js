@@ -1,5 +1,9 @@
-import axios from 'axios'
+// import axios from 'axios'
 
+// var Token = null
+// if (localStorage.getItem('yzhToken')) {
+//     Token = localStorage.getItem('yzhToken')
+// }
 
 // export const register = apiParams => { //
 //   return axios({
@@ -8,36 +12,41 @@ import axios from 'axios'
 //       data: apiParams
 //   })
 // }
+import request from '../../plugins/request'
+
+const urlParams = 'http://yzh.68hanchen.com/api/'
 
 export const login = apiParams => { //
-  return axios({
+  return request({
     method: 'post',
-    url: 'user/login',
-    params: apiParams
+    url: urlParams + 'user/login',
+    params: apiParams,
+    headers:{'Content-Type': 'application/x-www-form-urlencoded'}
   })
 }
 
 export const register = apiParams => { //
-  return axios({
+  return request({
     method: 'post',
-    url: 'user/register',
+    url: urlParams + 'user/register',
     params: apiParams
   })
 }
 
 export const regType = apiParams => { //
-  return axios({
+  return request({
     method: 'get',
-    url: 'user/types',
+    url: urlParams + 'user/types',
     params: apiParams
   })
 }
 
 export const sendMessage = apiParams => { //
-  return axios({
+  return request({
     method: 'post',
-    url: 'common/sendMessage',
-    params: apiParams
+    url: urlParams + 'common/sendMessage',
+    params: apiParams,
+    headers:{'Content-Type': 'application/x-www-form-urlencoded'}
   })
 }
 
@@ -45,18 +54,50 @@ export const sendMessage = apiParams => { //
 // 找回密码
 
 export const refund = apiParams => { //
-  return axios({
-    method: 'patch',
-    url: 'user/refund',
-    params: apiParams
+  return request({
+    method: 'POST',
+    url: urlParams + 'user/refund',
+    params: apiParams,
+    headers:{'Content-Type': 'application/x-www-form-urlencoded'}
   })
 }
 
 
 export const list = apiParams => { //get例子
-  return axios({
+  return request({
     method: 'get',
-    url: 'user/lessionsactivity/list',
+    url: urlParams + 'user/lessionsactivity/list',
     params: apiParams
   })
 }
+
+export const regTypes = apiParams => { //
+  // apiParams.Token = Token
+  return request({
+    method: 'get',
+    url: urlParams + 'lession/detail',
+    params: apiParams
+  })
+}
+
+
+// export default {
+//   // 用户注册
+//   login (data) {
+//     const params = data
+//     return request({
+//       url: urlParams + 'user/login',
+//       type: 'POST',
+//       params: params
+//     })
+//   },
+  
+// }
+
+// export const login = apiParams => { //
+//     return request({
+//       method: 'post',
+//       url: urlParams + 'user/login',
+//       params: apiParams
+//     })
+//   }

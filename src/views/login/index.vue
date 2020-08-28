@@ -44,8 +44,8 @@ import { Toast } from 'vant';
 export default {
   data() {
     return{
-      UserName:'',
-      UserPwd:''
+      UserName: '',
+      UserPwd: ''
     }
   },
   methods:{
@@ -69,13 +69,14 @@ export default {
         UserPwd :this.UserPwd
       }
       login(data).then((res) => {
-        if(res.data.Success){
+        console.log(res)
+        if(res.Success){
           Toast({
             message: '登录成功',
           });
           this.$router.push('/home')
-          localStorage.setItem('yzhToken', res.data.Data.Token)
-          localStorage.setItem('tokenId', res.data.Data.Id)
+          localStorage.setItem('yzhToken', res.Data.Token)
+          localStorage.setItem('tokenId', res.Data.Id)
         }else{
           Toast({
             message: '登录失败',

@@ -231,6 +231,7 @@
 <script>
 import Header from '../Header'
 import Footer from '../Footer'
+import {regTypes} from '../../api/register'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 export default {
   components:{Header,Swiper,SwiperSlide,Footer},
@@ -318,9 +319,22 @@ export default {
     },
     changeFlag(flag){
       this.flag = false
+    },
+    edits(){
+      const data ={
+        Token:localStorage.getItem('yzhToken'),
+        ProId:'1'
+      }
+      regTypes().then((res) => {
+      if(res.status === 200){
+          console.log(res)
+        }
+      })
     }
   },
-  mounted:function(){
+  mounted(){
+    console.log(localStorage.getItem('yzhToken'))
+    this.edits()
     new Swiper('.swiper-container', {
       loop: true, // 循环模式选项
       // 如果需要分页器
@@ -841,9 +855,9 @@ export default {
             flex-flow: wrap;
             // justify-content: space-between;
             .home_coop_list{
-              width: px(222);
+              width: 30%;
               height: px(116);
-              margin:0 px(22) px(10) 0;
+              margin:0 5% px(10) 0;
               img{
                 width: 100%;
                 height: 100%;
