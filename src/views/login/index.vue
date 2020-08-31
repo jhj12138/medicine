@@ -1,9 +1,9 @@
 <template>
   <div id = "login">
     <div class="login_top">
-      <div class="login_return">
+      <!-- <div class="login_return">
         <img src="../../assets/image/mine_return.png" alt="">
-      </div>
+      </div> -->
       <div class="login_middle">登录</div>
     </div>
     <div class="login_con">
@@ -70,11 +70,12 @@ export default {
       }
       login(data).then((res) => {
         console.log(res)
-        if(res.Success){
+        if(res.Success && res.Msg !== '用户名或密码错误'){
           Toast({
             message: '登录成功',
           });
           this.$router.push('/home')
+          console.log('res.Data',res.Data)
           localStorage.setItem('yzhToken', res.Data.Token)
           localStorage.setItem('tokenId', res.Data.Id)
         }else{

@@ -135,7 +135,7 @@ export default {
         Toast({
           message: '验证码请在1分钟之内使用',
         });
-        console.log(res.data)
+        console.log(res)
       })
       const timer = setInterval(() => {
         if (this.times <= 0) {
@@ -180,14 +180,24 @@ export default {
       }
       console.log(data)
       register(data).then((res) => {
-        console.log(res.data)
+        if(res.Success){
+            Toast({
+              message: '注册成功',
+            });
+            // this.$router.push('/login')
+            this.$router.push({ path: '/inraim', query: { Id: res.Data.Id } })
+        } else {
+          Toast({
+            message: res.Msg
+          });
+        }
       })
     },
   },
   mounted(){
     regType().then((res) => {
-      if(res.status === 200){
-        var newDate = res.data.Data
+      if(res.Success){
+        var newDate = res.Data
         newDate.forEach(ele=>{
           this.columns.push(ele.Name)
           this.con.push(ele.Id)

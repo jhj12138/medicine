@@ -7,8 +7,8 @@
       <div class="certif_middle">证书管理</div>
       <div class="certif_right">管理</div>
     </div>
-    <div class="certif_con">
-      <ul>
+    <div class="certif_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
+      <ul ref="scrollRef">
         <li
         v-for="(item,index) in list "
         :key = "index"
@@ -39,6 +39,7 @@
           </div>
         </li>
       </ul>
+      <div ref = "scrollRef"></div>
     </div>
   </div>
 </template>
@@ -47,6 +48,7 @@
 export default {
   data() {
     return {
+      busy: false,
       list:[{},{},{},{},{},{}]
     }
   },
@@ -56,6 +58,14 @@ export default {
     },
     goDetail() {
       this.$router.push('/cerdetail') 
+    },
+    loadMore: function() {
+      this.busy = true
+      this.list.push([{},{},{}])
+      console.log('22233444')
+      setTimeout(() => {
+        this.busy = false
+      }, 1000)
     }
   }
 }

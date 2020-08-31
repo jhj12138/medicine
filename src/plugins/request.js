@@ -32,21 +32,18 @@ const suffix = '' // 后缀
 // nginx 大屏代理
 const screenProxy = ''
 const ajax = function (obj) {
-  console.log('obj===',obj)
   // loadOpen()
   const _suffix = obj.suffix !== undefined ? obj.suffix : suffix
   const url = screenProxy + obj.url + _suffix
   const type = obj.method ? obj.method.toUpperCase() : 'POST'
   const headers = {
-    headers: obj.headers || { 'Content-Type': 'application/json;charset=UTF-8' }
+    headers: obj.headers || { 'Content-Type': 'application/x-www-form-urlencoded' }
   }
 
   const params = obj.params || {}
-  params.Token = sessionStorage.Token
-  console.log('1111',service.get,type)
+  params.Token = localStorage.getItem('yzhToken')
   switch (type) {
     case 'GET':
-      console.log(params)
       return service.get(url, { params: params })
     case 'POST':
       return service.post(url, qs.stringify(params), headers)

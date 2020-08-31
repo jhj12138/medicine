@@ -45,6 +45,7 @@ const HotCourse = () => import('@/views/hotCourse') //热门课程
 const Inter = () => import('@/views/inter') //我感兴趣的
 const Inraim = () => import('@/views/inraim') //参观展会的目的
 const Exam = () => import('@/views/exam') //疫情防控调查
+const EnterFor = () => import('@/views/enterFor') //报名参加
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
@@ -230,6 +231,10 @@ const routes = [{
             path: 'exam',
             name: '疫情防控调查',
             component: Exam
+        },{
+            path: 'enterfor',
+            name: '报名参加',
+            component: EnterFor
         }]
     },
     

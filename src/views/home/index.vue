@@ -152,7 +152,7 @@
           <div class="swiper-wrapper">
             <div class="swiper-slide swiper_item" v-for="(item,index) in swiper_list" :key="index">
               <div class="home_video_top">
-                <img src="../../assets/image/home_video.png" alt="">
+                <img :src="item.ImgUrl" alt="">
               </div>
               <div class="home_video_bottom">
                 <span>{{item.name}}</span>
@@ -231,7 +231,7 @@
 <script>
 import Header from '../Header'
 import Footer from '../Footer'
-import {regTypes} from '../../api/register'
+import {regTypes,regTypess} from '../../api/register'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 export default {
   components:{Header,Swiper,SwiperSlide,Footer},
@@ -299,7 +299,8 @@ export default {
           times:'2020-08-16'
         }]
       }],
-      swiper_list:[{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'}],
+      // swiper_list:[{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'}],
+      swiper_list:null,
       review_list:[{time:'15'},{time:'16'},{time:'17'}]
     }
   },
@@ -330,18 +331,40 @@ export default {
           console.log(res)
         }
       })
+    },
+    regTypes(){
+      regTypess().then((res) => {
+        console.log(res)
+      if(res.status === 200){
+          console.log(res)
+          this.swiper_list = res.Data
+          this.$nextTick(function () {
+            this.Swipers()
+          })
+        }
+      })
+    },
+    Swipers() {
+      new Swiper('.swiper-container', {
+      loop: true, // 循环模式选项
+      // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      })
     }
   },
   mounted(){
     console.log(localStorage.getItem('yzhToken'))
     this.edits()
-    new Swiper('.swiper-container', {
-      loop: true, // 循环模式选项
-      // 如果需要分页器
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    }),
+    this.regTypes()
+    // new Swiper('.swiper-container', {
+    //   loop: true, // 循环模式选项
+    //   // 如果需要分页器
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //   },
+    // }),
     new Swiper('.swiper-container2', {
       loop: true, // 循环模式选项
       // 如果需要分页器
@@ -873,6 +896,11 @@ export default {
         }
       }
     }
+  }
+}
+@media(max-width: 360px){
+  #home .home_tab ul li {
+  margin-right: 0.14rem;
   }
 }
 </style>

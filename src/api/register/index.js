@@ -80,6 +80,15 @@ export const regTypes = apiParams => { //
   })
 }
 
+export const regTypess = apiParams => { //
+  // apiParams.Token = Token
+  return request({
+    method: 'get',
+    url: urlParams + 'hone/cooperation',
+    params: apiParams
+  })
+}
+
 
 // export default {
 //   // 用户注册
