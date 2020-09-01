@@ -46,3 +46,38 @@ export const joinEditList = apiParams => { //
     params: apiParams,
   })
 }
+
+// 我参与的课程
+
+export const userLession = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/user/lessions',
+    params: apiParams,
+  })
+}
+// 我学习的课程删除
+export const userLessionDel = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/user/lession/del',
+    params: apiParams,
+  })
+}
+// 我关注的商品列表
+export const userCollection = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/user/collection/list',
+    params: apiParams,
+  })
+}
+
+// 我关注的商品删除
+export const userCollectionDel = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/user/collection/del',
+    params: apiParams,
+  })
+}

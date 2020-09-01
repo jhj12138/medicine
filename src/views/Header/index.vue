@@ -1,8 +1,12 @@
 <template>
   <div id = "header" :class="headFlag?'header_in':''">
-    <div @click="close">关闭</div>
+    <div @click="close($event)" class="header_close">
+      <div class="header_closes">
+        <img src="../../assets/image/close.png" alt="">
+      </div>
+    </div>
     <ul>
-      <li><span>首页</span></li>
+      <li @click="goHome"><span>首页</span></li>
       <li>
         <van-collapse v-model="activeNames">
           <van-collapse-item title="新闻中心" name="1">
@@ -49,7 +53,24 @@
           </van-collapse-item>
         </van-collapse>
       </li>
+      <!-- 三个按钮 -->
+    <div class="header_btn">
+      <div class="header_btn1" @click="goLogin">
+        <div class="header_btn_txt">登录</div>
+        <div class="header_btn_right">
+          <img src="../../assets/image/head_reight.png" alt="">
+        </div>
+      </div>
+      <div class="header_btn2" @click="goRegist">
+        <div class="header_btn_txt">个人注册</div>
+      </div>
+      <div class="header_btn2" @click="goRegist">
+        <div class="header_btn_txt">展商注册</div>
+      </div>
+    </div>
+    <!-- 三个按钮 -->
     </ul>
+    
   </div>
 </template>
 
@@ -63,9 +84,26 @@ export default {
     }
   },
   methods:{
-    close() {
+    close(event) {
+      event.stopPropagation()
       this.$emit('changeFlag',false)
       // this.headFlag = false
+    },
+    goLogin() {
+      this.$router.push('/login')
+    },
+    goRegist() {
+      this.$router.push('/register')
+    },
+    goHome () {
+      console.log(this.$route.path)
+      if (this.$route.path == '/home') {
+        this.close()
+      } else {
+        this.$router.push('/home')
+      }
+      // this.$router.go(0);
+      // this.$router.push('/home')
     }
   }
 }
@@ -80,14 +118,35 @@ export default {
 #header{
   width: 100%;
   height: 100%;
-  position: absolute;
+  // position: absolute;
+  position: fixed;
   background: #fff;
   right: -100%;
   top: 0;
   z-index: 999;
+  overflow: hidden;
+  box-sizing: border-box;
+  top: 0;
+  .header_close{
+    display: flex;
+    justify-content: flex-end;
+    height: 40px;
+    padding: px(30) px(30) 0 0 ;
+    box-sizing: border-box;
+    .header_closes{
+      width: px(55);
+      height: px(55);
+      img{
+        width: 100%;
+      }
+    }
+  }
   ul{
-    position: fixed;
     width: 100%;
+    overflow: auto;
+    box-sizing: border-box;
+    height: calc(100% - 40px);
+    // overflow-y:scroll ;
     li{
       padding:px(30) 0;
       width: 100%;
@@ -119,6 +178,13 @@ export default {
               align-items: center;
             }
           }
+          .van-collapse-item__title--expanded{
+            .van-cell__title{
+              >span{
+                color:#2b75d8;
+              }
+            }
+          }
           .van-cell::after{
             border-bottom: none;
           }
@@ -139,6 +205,47 @@ export default {
             border:none;
           }
         }
+      }
+    }
+  }
+  .header_btn{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 px(30);
+    margin-top: px(80);
+    .header_btn1{
+      display: flex;
+      align-items: center;
+      width: px(168);
+      height: px(70);
+      background: #2b75d8;
+      border-radius: px(40);
+      padding: px(20);
+      justify-content: space-between;
+      box-sizing: border-box;
+      .header_btn_txt{
+        font-size: 16px;
+        color: #fff;
+        padding-left:px(10);
+      }
+      .header_btn_right{
+        width: px(20);
+        img{
+          width: 100%;
+        }
+      }
+    }
+    .header_btn2{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border:1px solid #222222;
+      width: px(168);
+      height: px(70);
+      border-radius: px(40);
+      .header_btn_txt{
+        font-size: 16px;
       }
     }
   }

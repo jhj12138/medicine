@@ -3,15 +3,19 @@
     <!-- <img src="../../assets/image/footer.png" alt=""> -->
     <div class="footer_con">
       <div class="footer_tit">联系我们</div>
-      <div class="footer_phone">0571-87709118</div>
+      <div class="footer_phone">{{Tel}}</div>
       <div class="footer_l">
-        <span>网站维护：浙江国际科研、医疗仪器设备技术交流展览会</span>
-        <span>联系方式：webmaster@zjwst.gov.cn</span>
+        <span>网站维护：{{Maintain}}</span>
+        <span>联系方式：{{ContactWay}}</span>
       </div>
       <div class="footer_l2">
-        <span>友情链接：浙江省卫生健康委员会</span>
-        <span class="footer_border"></span>
-        <span>浙江省医疗卫生国际合作发展中心</span>
+        <span>友情链接：</span>
+        <span v-for="(item,index) in footList" :key = "index" class="footer_span"
+        @click="goHref(item.LinkUrl)">
+          <span>{{item.ImgUrl}}</span>
+          <span class="footer_border"></span>
+        </span>
+        <!-- <span>浙江省医疗卫生国际合作发展中心</span>
         <span class="footer_border"></span>
         <span>浙江省科技厅</span>
         <span class="footer_border"></span>
@@ -21,7 +25,7 @@
         <span class="footer_border"></span>
         <span>浙江政府采购网 </span>
         <span class="footer_border"></span>
-        <span>浙江省健康服务促进会</span>                              
+        <span>浙江省健康服务促进会</span>                               -->
       </div>
       <div class="footer_bottom">
         <div class="footer_bottom_left">备案序号 浙ICP备10046040-1号</div>
@@ -32,11 +36,46 @@
 </template>
 
 <script>
+import {honeContact,homeLinks} from '../../api/home'
 export default {
   data() {
     return {
-
+      ContactWay:null,
+      Maintain:null,
+      Tel:null,
+      footList:null,
     }
+  },
+  methods:{
+    honeContact(){
+      honeContact().then((res) => {
+        if (res.Success){
+          console.log(res)
+          this.ContactWay = res.Data.ContactWay
+          this.Maintain = res.Data.Maintain
+          this.Tel = res.Data.Tel
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    homeLinks(){
+      homeLinks().then((res) => {
+        if (res.Success){
+          console.log(res)
+          this.footList = res.Data
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    goHref(hrefs){
+      window.location.href = hrefs
+    }
+  },
+  mounted() {
+    this.honeContact()
+    this.homeLinks()
   }
 }
 </script>
@@ -83,6 +122,11 @@ export default {
       line-height: 2.4;
       color: rgba(255,255,255,.5);
       margin:px(40) 0;
+      .footer_span:last-child{
+        .footer_border{
+          width: 0px;
+        }
+      }
       .footer_border{
         display: inline-block;
         height: 10px;

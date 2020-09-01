@@ -1,10 +1,10 @@
 <template>
   <div id="home">
     <!-- 遮罩层 -->
-    <Header :headFlag = 'flag' @changeFlag = "changeFlag"></Header>
+    <Header :headFlag = 'flag' @changeFlag = "changeFlag()"></Header>
     <div class="home_top">
-      <div class="home_tit">
-        <img src="../../assets/image/home_bg.png" alt="">
+      <div class="home_tit" @click="goHref($event)">
+        <img :src="headBanner" alt="">
         <div class="home_tits">
           <div class="home_tit_left">
             <div class="home_titlec"><img src="../../assets/image/home_titlec.png" alt=""></div>
@@ -14,21 +14,23 @@
             <img src="../../assets/image/home_tit_btn.png" alt="">
           </div>
         </div>
-        <div class="home_tit_text">让世界看到“浙江制造”</div>
+        <div class="home_tit_text">{{bannerTit}}</div>
       </div>
       <!-- 输入框 -->
       <div class="home_textbox">
         <div class="home_textboxs">
-          <div class="home_textbox_left">
+          <div class="home_textbox_left" @click="goUp">
             <div class="home_textbox_lefts">
               <span>展品</span>
               <div class="home_textbox_img"><img src="../../assets/image/home_san.png" alt=""></div>
             </div>
+            <div class="home_textup" @click="goUps" v-if ="flagUp">会展产品</div>
           </div>
           <div class="home_textbox_right">
             <div class="home_textbox_shou"><img src="../../assets/image/home_shou.png" alt=""></div>
             <div class="home_textbox_input">
-              <input type="text" placeholder="请输入关键词">
+              <div style="color:#848c98">请输入关键词</div>
+              <!-- <input type="text" placeholder="请输入关键词"> -->
             </div>
           </div>
         </div>
@@ -48,7 +50,7 @@
         <img src="../../assets/image/home_hall1.png" alt="">
       </div>
       <div class="home_hall_right">
-        <div class="home_hall_top">
+        <div class="home_hall_top" @click="goExam">
           <span>立即参展</span>
           <img src="../../assets/image/home_hall2.png" alt="">
         </div>
@@ -66,28 +68,23 @@
         v-for="(item,index) in tab_li"
         :key  = "item.name"
         :class="num == index?'home_tab_active':''"
-        @click="getNum(index)">{{item.name}}</li>
+        @click="getNum(index,item.classid)">{{item.name}}</li>
       </ul>
       <div class="home_tabcon">
-        <div 
-        v-for="(itemCon,index) in tabContents"
-        :key = "index"
-        v-show="index == num"
-        >
           <div 
-          v-for="(itemList,index2) in itemCon.tabName"
+          v-for="(itemList,index2) in tabContents"
           :key = "index2"
           class="home_tab_list">
-            <div class="home_tab_tit">{{itemList.tit}}</div>
+            <div class="home_tab_tit">{{itemList.Title}}</div>
             <div class="home_tab_time">
               <div class="home_tab_img">
                 <img src="../../assets/image/home_time.png" alt="">
               </div> 
-              <span>{{itemList.times}}</span>
+              <span>{{itemList.ShowDate}}</span>
             </div>
           </div>
           <!-- 查看更多 -->
-          <div class="home_more">
+          <div class="home_more" @click="goMore(itemList.ID)">
             <div class="home_more_img1">
               <img src="../../assets/image/home_more_img1.png" alt="">
             </div>
@@ -95,7 +92,6 @@
               <img src="../../assets/image/home_more_ing.png" alt="">
             </div>
           </div>
-        </div>
       </div>
     </div>
     <!-- 交流展会 -->
@@ -106,17 +102,15 @@
         <div class="home_inform_top">
           <div class="home_inform_region">
             <div class="home_region_top">
-              <span>200</span>
-              <span>个</span>
-              <span>+</span>
+              <span>{{this.Number1}}</span>
+              <span>{{this.Unit1}}</span>
             </div>
             <div class="home_region_bottom">国家、地区和组织</div>
           </div>
           <div class="home_inform_region">
             <div class="home_region_top">
-              <span>100</span>
-              <span>个</span>
-              <span>+</span>
+              <span>{{this.Number2}}</span>
+              <span>{{this.Unit2}}</span>
             </div>
             <div class="home_region_bottom">累计参展商</div>
           </div>
@@ -127,17 +121,15 @@
         <div class="home_inform_top">
           <div class="home_inform_region">
             <div class="home_region_top">
-              <span>8000</span>
-              <span>万</span>
-              <span>+</span>
+              <span>{{this.Number3}}</span>
+              <span>{{this.Unit3}}</span>
             </div>
             <div class="home_region_bottom">累计交易额</div>
           </div>
           <div class="home_inform_region">
             <div class="home_region_top">
-              <span>2000</span>
-              <span>人</span>
-              <span>+</span>
+              <span>{{this.Number4}}</span>
+              <span>{{this.Unit4}}</span>
             </div>
             <div class="home_region_bottom">累计进场人数</div>
           </div>
@@ -155,8 +147,8 @@
                 <img :src="item.ImgUrl" alt="">
               </div>
               <div class="home_video_bottom">
-                <span>{{item.name}}</span>
-                <span>大咖讲座等你来</span>
+                <span>{{item.Title}}</span>
+                <span>{{item.Summary}}</span>
               </div>
             </div>
           </div>
@@ -174,15 +166,15 @@
             v-for="(item,index) in review_list" 
             :key = "index"
             @click="getReview(index)">
-              <img src="../../assets/image/home_review_list.png" alt="">
+              <img :src="item.ImgUrl" alt="">
               <div class="home_review_flag"
               :class="review_index == index?'home_review_flags':''">
                 <div class="home_review_time">
                   <div class="home_review_data">
-                    <span>{{item.time}}</span>
+                    <span>{{item.Title}}</span>
                     <span>th</span>
                   </div>
-                  <div class="home_review_e">hangzhou</div>
+                  <div class="home_review_e">{{item.Address}}</div>
                 </div>
                 <div class="home_review_bottom">
                   <img src="../../assets/image/home_reviews.png" alt="">
@@ -198,24 +190,9 @@
       <div class="home_coop_swiper">
         <div class="swiper-container2">
           <div class="swiper-wrapper">
-            <div class="swiper-slide swiper_item" v-for="(item,index) in swiper_list" :key="index">
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop1.png" alt="">
-              </div>
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop2.png" alt="">
-              </div>
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop3.png" alt="">
-              </div>
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop3.png" alt="">
-              </div>
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop5.png" alt="">
-              </div>
-              <div class="home_coop_list">
-                <img src="../../assets/image/home_coop6.png" alt="">
+            <div class="swiper-slide swiper_item" v-for="(item,index) in swiper_two" :key="index">
+              <div class="home_coop_list" v-for="(items,index2) in item" :key = "index2">
+                <img :src="items.ImgUrl" alt="">
               </div>
             </div>
           </div>
@@ -231,95 +208,96 @@
 <script>
 import Header from '../Header'
 import Footer from '../Footer'
-import {regTypes,regTypess} from '../../api/register'
+import {bannerImg,bannerList,homeData,homeVideo,homeHistory,homeCooperation,newsList,ServiceDownload,ServiceObtainCid} from '../../api/home'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+import { Toast } from 'vant';
 export default {
   components:{Header,Swiper,SwiperSlide,Footer},
   data() {
     return {
       flag: false,
-      data_list:[{name:'针管'},{name:'呼吸机'},{name:'保健器材'},{name:'医用保健'}], 
+      flagUp: false,
+      data_list:null, 
       text_index:0,
-      tab_li:[{name:'展会动态'},{name:'国际合作'},{name:'政府采购'},{name:'学术论坛'},{name:'资料下载'}],
+      tab_li:[{name:'展会动态',classid:'9'},{name:'国际合作',classid:'10'},{name:'政府采购',classid:'11'},{name:'学术论坛',classid:'12'},{name:'资料下载',classid:'13'}],
       num:0,
       review_index:0,
-      tabContents:[{
-        tabName:[{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷”',
-          times:'2020-08-16'
-        }]
-      },{
-        tabName:[{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷2”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷2”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷2”',
-          times:'2020-08-16'
-        }]
-      },{
-        tabName:[{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        }]
-      },{
-        tabName:[{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷4”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        }]
-      },{
-        tabName:[{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷5”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        },{
-          tit:'国产医疗器械“成功突围” 浙江交出自己的“答卷3”',
-          times:'2020-08-16'
-        }]
-      }],
+      headBanner:null,
+      headHref:null,
+      bannerTit:null,
+      Title1:null,
+      Title2:null,
+      Title3:null,
+      Title4:null,
+      Number1:null,
+      Number2:null,
+      Number3:null,
+      Number4:null,
+      Unit1:null,
+      Unit2:null,
+      Unit3:null,
+      Unit4:null,
+      tabContents:null,
       // swiper_list:[{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'},{name:'学术讲座'}],
       swiper_list:null,
-      review_list:[{time:'15'},{time:'16'},{time:'17'}]
+      // review_list:[{time:'15'},{time:'16'},{time:'17'}]
+      review_list:null,
+      swiper_two:[],
+      clsId:9
     }
   },
   methods: {
     // 跳转回首页
     toFlag() {
+      event.stopPropagation()
       this.flag = true
     },
     getActive(index){
       this.text_index = index
     },
-    getNum(index) {
-      this.num = index;
+    getNum(index,classId) {
+      if(index){
+        this.num = index;
+      } else if (index == 0){
+        this.num = 0
+      }
+      if (classId) {
+        this.clsId = classId
+      }
+      const data = {
+        classid: this.clsId
+      }
+      newsList(data).then((res) => {
+        if (res.Success){
+          this.tabContents = res.Data.Data.slice(0,3)
+          console.log(this.tabContents)
+        } else {
+          Toast(res.Msg)
+        }
+      })
+      if (this.clsId == 13){
+        ServiceDownload(data).then((res) => {
+          if (res.Success){
+            this.tabContents = res.Data.slice(0,3)
+            // console.log('11111',this.tabContents)
+          } else {
+            Toast(res.Msg)
+          }
+        })
+      }
+    },
+    goMore(ids){
+      this.$router.push({ path: '/news', query: { Id: ids} })
     },
     getReview(index) {
       this.review_index = index
     },
-    changeFlag(flag){
+    changeFlag(flag,event){
       this.flag = false
+    },
+    goHref() {
+      event.stopPropagation()
+      window.location.href = this.headHref
     },
     edits(){
       const data ={
@@ -332,17 +310,110 @@ export default {
         }
       })
     },
-    regTypes(){
-      regTypess().then((res) => {
-        console.log(res)
-      if(res.status === 200){
-          console.log(res)
+    ServiceObtainCid() {
+      ServiceObtainCid().then((res) => {
+        if (res.Success){
+          console.log('1sdjhfsd',res)
+          this.data_list = res.Data
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    homeVideo(){
+      homeVideo().then((res) => {
+        if (res.Success){
+          res.Data.forEach(ele=> {
+            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+          })
           this.swiper_list = res.Data
           this.$nextTick(function () {
             this.Swipers()
           })
+        } else {
+          Toast(res.Msg)
         }
       })
+    },
+    homeCooperation(){
+      homeCooperation().then((res) => {
+        if (res.Success){
+          res.Data.forEach(ele=> {
+            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+          })
+          this.swiper_two = [];
+          for(var i=0,len=res.Data.length;i<len;i+=6){
+            this.swiper_two.push(res.Data.slice(i,i+6));
+          }
+          this.$nextTick(function () {
+            this.Swiper2()
+          })
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    homeHistory() {
+      homeHistory().then((res) => {
+        if (res.Success){
+          this.review_list = res.Data
+          res.Data.forEach(ele=> {
+            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+          })
+          // console.log(res)
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    getBanner() {
+      bannerImg().then((res) => {
+        if (res.Success){
+          this.headBanner = 'http://yzh.68hanchen.com'+res.Data[0].ImgUrl
+          this.headHref = res.Data[0].Link
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    bannerList() {
+      bannerList().then((res) => {
+        if (res.Success){
+          this.bannerTit = res.Data.Summary
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    // newsList() {
+      
+    // },
+    homeData() {
+      homeData().then((res) => {
+        if (res.Success){
+          this.Title1 = res.Data[0].Title
+          this.Number1 = res.Data[0].Number
+          this.Unit1 = res.Data[0].Unit
+          this.Title2 = res.Data[1].Title
+          this.Number2 = res.Data[1].Number
+          this.Unit2 = res.Data[1].Unit
+          this.Title3 = res.Data[2].Title
+          this.Number3 = res.Data[2].Number
+          this.Unit3 = res.Data[2].Unit
+          this.Title4 = res.Data[3].Title
+          this.Number4 = res.Data[3].Number
+          this.Unit4 = res.Data[3].Unit
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+    goUp() {
+      this.flagUp = !this.flagUp
+    },
+    goUps() {
+      event.stopPropagation()
+      this.flagUp = false
     },
     Swipers() {
       new Swiper('.swiper-container', {
@@ -352,12 +423,33 @@ export default {
           el: '.swiper-pagination',
         },
       })
+    },
+    Swiper2() {
+      new Swiper('.swiper-container2', {
+      loop: true, // 循环模式选项
+      // 如果需要分页器
+        pagination: {
+          el: '.swiper-pagination',
+        },
+      })
+    },
+    goExam() {
+      this.$router.push('/enterfor')
     }
+    // 
   },
   mounted(){
-    console.log(localStorage.getItem('yzhToken'))
-    this.edits()
-    this.regTypes()
+    // console.log(localStorage.getItem('yzhToken'))
+    this.getBanner()
+    this.bannerList()
+    this.homeData()
+    this.homeVideo()
+    this.homeHistory()
+    this.homeCooperation()
+    this.getNum()
+    this.ServiceObtainCid()
+    // this.edits()
+    // this.regTypes()
     // new Swiper('.swiper-container', {
     //   loop: true, // 循环模式选项
     //   // 如果需要分页器
@@ -365,13 +457,13 @@ export default {
     //     el: '.swiper-pagination',
     //   },
     // }),
-    new Swiper('.swiper-container2', {
-      loop: true, // 循环模式选项
-      // 如果需要分页器
-      pagination: {
-        el: '.swiper-pagination',
-      },
-    })
+    // new Swiper('.swiper-container2', {
+    //   loop: true, // 循环模式选项
+    //   // 如果需要分页器
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //   },
+    // })
   },
 }
 </script>
@@ -466,6 +558,7 @@ export default {
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
           .home_textbox_lefts{
             width: 100%;
             border-right: 1px solid rgba(191,191,191,1);
@@ -485,7 +578,18 @@ export default {
               }
             }
           }
-          
+          .home_textup{
+            position: absolute;
+            top:px(50);
+            left: px(3);
+            width: px(130);
+            height: px(100);
+            background: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0px 4px 21px 0px rgba(14, 43, 127, 0.15);
+          }
           //
         }
         .home_textbox_right{
@@ -631,6 +735,11 @@ export default {
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        .home_tab_tit{
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+        }
         .home_tab_time{
           display: flex;
           align-items: center;
@@ -833,8 +942,11 @@ export default {
                 }
               }
               .home_review_e{
-              margin-top:px(26);
-              line-height: 1;
+                margin-top:px(26);
+                line-height: 1;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
               }
             }
             .home_review_bottom{
@@ -864,15 +976,18 @@ export default {
       margin:px(60) 0 px(27);
     }
     .home_coop_swiper{
-      padding: 0 px(20);
+      margin: 0 px(20);
       height: 100%;
       flex: 1;
+      overflow: hidden;
       .swiper-container2{
         height: 100%;
         .swiper-wrapper{
           height: 100%;
+          width: 100%;
           .swiper_item{
             height: 100%;
+            width: 100%;
             display: flex;
             flex-direction: row;
             flex-flow: wrap;
@@ -901,6 +1016,9 @@ export default {
 @media(max-width: 360px){
   #home .home_tab ul li {
   margin-right: 0.14rem;
+  }
+  .home_tit_text{
+    font-size: 14px !important;
   }
 }
 </style>

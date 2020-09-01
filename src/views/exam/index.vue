@@ -151,7 +151,7 @@ export default {
   },
   methods:{
     goReturn() {
-      this.$router.push('/mine')
+      this.$router.push('/home')
     },
     onConfirm(value,index) {
       this.value = value;

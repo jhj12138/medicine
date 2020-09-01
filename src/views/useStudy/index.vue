@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="certif_middle">我学习的课程</div>
-      <div class="certif_right">管理</div>
+      <div class="certif_right" @click="updata">删除</div>
     </div>
     <div class="invdetail_con">
       <ul>
@@ -15,27 +15,34 @@
         >
           <div class="invdetail_li_top">
             <div class="invdetail_li_left">
-              <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="invdetail_li_name">最新教学</div>
+              <van-checkbox v-model="item.checked" @click="getList(item.Id,item.checked,index)" icon-size="15px"></van-checkbox>
+              <div class="invdetail_li_name">{{item.LessionName}}</div>
             </div>
           </div>
           <div class="invdetail_li_bottom">
-            <div class="invdetail_li_span"><div class="invdetail_li_tit">课程时间：2小时</div></div>
+            <div class="invdetail_li_span"><div class="invdetail_li_tit">课程时间：{{item.Time}}分钟</div></div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="stand_bottoms">
+    <!-- <div class="stand_bottoms">
       <div class="stand_bottom" @click="goInvoice">发票信息</div>
-    </div>
+    </div> -->
   </div>
 </template>
 
 <script>
+import {userLession,userLessionDel} from '../../api/user'
+import { Toast } from 'vant';
 export default {
   data() {
     return{
-      list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
+      list:null,
+      // list:[{'checked':false,'Id':1},{'checked':false,'Id':2},{'checked':false,'Id':3},{'checked':false,'Id':4},{'checked':false,'Id':5},{'checked':false,'Id':6}],
+      CurPage: 1,
+      PageSize: 10,
+      Ids:null,
+      arr:[]
     }
   },
   methods:{
@@ -45,13 +52,53 @@ export default {
     goInvoice() {
       this.$router.push('/invoice')
     },
-    getList(item,checked,index){
-      // if(checked){
-
-      // }
-      // console.log(index)
-      // console.log(item)
+    getList(ids,checked,index){
+      if (checked) {
+        this.arr.push(ids)
+      } else {
+        const key = this.arr.indexOf(ids)
+        this.arr.splice(key,1)
+      }
     },
+    userLession () {
+      const data = {
+        CurPage: this.CurPage,
+        PageSize: this.PageSize
+      }
+      userLession(data).then((res) => {
+        console.log('111',res)
+        if(res.Success) {
+          res.Data.Data.forEach(ele=> {
+            ele.checked = false
+          })
+          this.list = res.Data.Data
+        } else {
+          Toast({
+            message: res.Msg,
+          });
+        }
+      })
+    },
+    updata() {
+      const data = {
+        Ids: this.arr.join(',')
+      }
+      // console.log(this.arr.join(','))
+      userLessionDel(data).then((res) => {
+        console.log('res',res)
+        if(res.Success) {
+          this.CurPage = 1,
+          this.userLession()
+        } else {
+          Toast({
+            message: res.Msg,
+          });
+        }
+      })
+    }
+  },
+  mounted() {
+    this.userLession()
   }
 }
 </script>
@@ -99,7 +146,7 @@ export default {
     }
   }
   .invdetail_con{
-    padding:px(130) 0;
+    padding-top:px(130);
     margin:0 px(20);
     ul{
       li{

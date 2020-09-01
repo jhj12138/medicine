@@ -52,7 +52,7 @@ export default {
   data() {
     return{
       flag: false,
-      tab_li:[{name:'展会动态'},{name:'展会动态'},{name:'展会动态'}],
+      tab_li:[{name:'展会动态1'},{name:'展会动态2'},{name:'展会动态3'}],
       num:0,
       tabContents:[{
         tabName:[{
