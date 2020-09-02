@@ -164,7 +164,7 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @function px($px){
   $rem: 75;
   @return ($px/ $rem) + rem;
@@ -259,7 +259,7 @@ export default {
 .van-field__control{
 font-size: px(26);
 font-weight: 400;
-color: red;
+color: #222222;
 line-height: px(75);
 }
 </style>
