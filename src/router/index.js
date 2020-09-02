@@ -4,54 +4,66 @@ import VueRouter from 'vue-router'
 const Layout = () => import ('@/layout')
 const notFount = () => import ('@/views/error404') // 404页面
 const Home = () => import ('@/views/Home') // 首页
-const Mine = () => import('@/views/Mine') //展商中心
-const Evemanage = () => import('@/views/eveManage') //参展人员管理
-const Evedail = () => import('@/views/eveDail') //参展人员管理详情
-const Eveadd = () => import('@/views/eveAdd') //参展人员管理添加人员
-const Certifcate = () => import('@/views/certifcate') //证书管理
-const Cerdetail = () => import('@/views/certDetail') //上传证书
-const Message = () => import('@/views/message') //站内信
-const Commodity = () => import('@/views/commodity') //商品管理
-const Standmage = () => import('@/views/standMage') //展位管理
-const ComRel = () => import('@/views/comRel') //商品发布
-const Contform = () => import('@/views/contForm') //联系表单
-const Invoice = () => import('@/views/invoice') //发票信息
-const InvDetail = () => import('@/views/invDetail') //发票管理
-const AccInform = () => import('@/views/accInform') //账户信息
-const UseStudy = () => import('@/views/useStudy') //我学习的课程
-const UseCourse = () => import('@/views/useCourse') //我的课程评论
-const UseOffline = () => import('@/views/useOffline') //报名的线下活动
-const UseMessage = () => import('@/views/useMessage') //用户站内信
-const UseCare = () => import('@/views/useCare') //我关注的商品
-const UseAttend = () => import('@/views/useAttend') //我参加的展会
-const UseInform = () => import('@/views/useInform') //用户个人信息
+const Mine = () => import('@/views/exhibitor/Mine') //展商中心
+const Evemanage = () => import('@/views/exhibitor/eveManage') //参展人员管理
+const Evedail = () => import('@/views/exhibitor/eveDail') //参展人员管理详情
+const Eveadd = () => import('@/views/exhibitor/eveAdd') //参展人员管理添加人员
+const Certifcate = () => import('@/views/exhibitor/certifcate') //证书管理
+const Cerdetail = () => import('@/views/exhibitor/certDetail') //上传证书
+const Message = () => import('@/views/exhibitor/message') //站内信
+const Commodity = () => import('@/views/exhibitor/commodity') //商品管理
+const Standmage = () => import('@/views/exhibitor/standMage') //展位管理
+const ComRel = () => import('@/views/exhibitor/comRel') //商品发布
+const Contform = () => import('@/views/exhibitor/contForm') //联系表单
+const Invoice = () => import('@/views/exhibitor/invoice') //发票信息
+const InvDetail = () => import('@/views/exhibitor/invDetail') //发票管理
+const AccInform = () => import('@/views/exhibitor/accInform') //账户信息
+const UseStudy = () => import('@/views/user/useStudy') //我学习的课程
+const UseCourse = () => import('@/views/user/useCourse') //我的课程评论
+const UseOffline = () => import('@/views/user/useOffline') //报名的线下活动
+const UseMessage = () => import('@/views/user/useMessage') //用户站内信
+const UseCare = () => import('@/views/user/useCare') //我关注的商品
+const UseAttend = () => import('@/views/user/useAttend') //我参加的展会
+const UseInform = () => import('@/views/user/useInform') //用户个人信息
 const ChangePass = () => import('@/views/changePass') //用户修改密码
-const ForeCoop = () => import('@/views/foreCoop') //国外合作
+const ForeCoop = () => import('@/views/international/foreCoop') //国外合作
 const PurTrans = () => import('@/views/purTrans') //采购交易
 const News = () => import('@/views/news') //新闻动态
 const ExhSearch = () => import('@/views/exhSearch') //展商搜索列表
-const SurrTraffic = () => import('@/views/surrTraffic') //周边交通
-const CaterHotel = () => import('@/views/caterHotel') //周边餐饮酒店
-const Problem = () => import('@/views/problem') //常见问题
-const HighIevel = () => import('@/views/highIevel') //高层次人才服务
+const SurrTraffic = () => import('@/views/peripheral/surrTraffic') //周边交通
+const CaterHotel = () => import('@/views/peripheral/caterHotel') //周边餐饮酒店
+const Problem = () => import('@/views/peripheral/problem') //常见问题
+const HighIevel = () => import('@/views/international/highIevel') //高层次人才服务
 const Login = () => import('@/views/login') //登录
 const RetPassword = () => import('@/views/retPassword') //找回密码
 const Register = () => import('@/views/register') //注册
-const Newsform = () => import('@/views/newsForm') //注册
-const AcdeTails = () => import('@/views/acdeTails') //活动详情
-const OriTails = () => import('@/views/oriTails') //国内外详情
-const ExTails = () => import('@/views/exTails') //展会介绍
-const HotCourse = () => import('@/views/hotCourse') //热门课程
-const Inter = () => import('@/views/inter') //我感兴趣的
-const Inraim = () => import('@/views/inraim') //参观展会的目的
-const Exam = () => import('@/views/exam') //疫情防控调查
-const EnterFor = () => import('@/views/enterFor') //报名参加
+const Newsform = () => import('@/views/newsForm') //新闻详情
+const AcdeTails = () => import('@/views/active/acdeTails') //活动详情
+const OriTails = () => import('@/views/international/oriTails') //国内详情
+const ExTails = () => import('@/views/peripheral/exTails') //展会介绍
+const HotCourse = () => import('@/views/theme/hotCourse') //热门课程
+const Inter = () => import('@/views/user/inter') //我感兴趣的
+const Inraim = () => import('@/views/user/inraim') //参观展会的目的
+const Exam = () => import('@/views/user/exam') //疫情防控调查
+const EnterFor = () => import('@/views/user/enterFor') //报名参加
+const DataDownLoad = () => import('@/views/peripheral/dataDownLoad') //资料下载
+const domeCoop = () => import('@/views/international/domeCoop') //国内合作
+const oriTaOut = () => import('@/views/international/oriTaOut') //国外详情
+const exChange = () => import('@/views/active/exChange') //交流活动
+const offlineActive = () => import('@/views/active/offlineActive') //交流活动
+const offlineDetail = () => import('@/views/active/offlineDetail') //线下的活动详情
+const themeList = () => import('@/views/theme/themeList') //主题培训
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
 
 Vue.use(VueRouter)
 
+// 解决点击当前页面报错的问题
+const originalPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
 // const originalPush = VueRouter.prototype.push
 // VueRouter.prototype.push = function push (location, onResolve, onReject) {
 //   if (onResolve || onReject) return originalPush.call(this, location, onResolve, onReject)
@@ -205,7 +217,7 @@ const routes = [{
             component: Newsform
         },{
             path: 'acdetails',
-            name: '活动详情',
+            name: '交流活动详情',
             component: AcdeTails
         },{
             path: 'oritails',
@@ -235,6 +247,34 @@ const routes = [{
             path: 'enterfor',
             name: '报名参加',
             component: EnterFor
+        },{
+            path: 'download',
+            name: '资料下载',
+            component: DataDownLoad
+        },{
+            path: 'domecoop',
+            name: '国内合作',
+            component: domeCoop
+        },{
+            path: 'oritaout',
+            name: '国外详情',
+            component: oriTaOut
+        },{
+            path: 'exchange',
+            name: '交流活动',
+            component: exChange
+        },{
+            path: 'offlineactive',
+            name: '线下活动',
+            component: offlineActive
+        },{
+            path: 'offlinedetail',
+            name: '线下活动详情',
+            component: offlineDetail
+        },{
+            path: 'themelist',
+            name: '主题培训',
+            component: themeList
         }]
     },
     

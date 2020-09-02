@@ -11,32 +11,32 @@
         <van-collapse v-model="activeNames">
           <van-collapse-item title="新闻中心" name="1">
             <div class="header_li">
-              <p>展会动态</p>
-              <p>国际合作</p>
-              <p>学术论坛</p>
+              <p @click="news1">展会动态</p>
+              <p @click="news2">国际合作</p>
+              <p @click="news3">学术论坛</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="展会服务" name="2">
             <div class="header_li">
-              <p>展会介绍</p>
-              <p>周边交通</p>
-              <p>周边餐饮酒店</p>
-              <p>资料下载</p>
-              <p>常见问题</p>
+              <p @click="extails">展会介绍</p>
+              <p @click="gosurrtraffic">周边交通</p>
+              <p @click="caterhotel">周边餐饮酒店</p>
+              <p @click="download">资料下载</p>
+              <p @click="problem">常见问题</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="会议论坛" name="3">
             <div class="header_li">
-              <p>线下活动</p>
+              <p @click="offlineactive">线下活动</p>
               <p>云直播</p>
               <p>云对接</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="科技合作" name="4">
             <div class="header_li">
-              <p>国内合作</p>
-              <p>国外合作</p>
-              <p>高层次人才服务</p>
+              <p @click="goDomecoop">国内合作</p>
+              <p @click="goForecoop">国外合作</p>
+              <p @click="goHighleve">高层次人才服务</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="采购交易" name="5">
@@ -47,8 +47,8 @@
           </van-collapse-item>
           <van-collapse-item title="培训交流" name="6">
             <div class="header_li">
-              <p>主题培训</p>
-              <p>交流活动</p>
+              <p @click="gothemelist">主题培训</p>
+              <p @click="goexchange">交流活动</p>
             </div>
           </van-collapse-item>
         </van-collapse>
@@ -85,15 +85,36 @@ export default {
   },
   methods:{
     close(event) {
-      event.stopPropagation()
+      // event.stopPropagation()
       this.$emit('changeFlag',false)
       // this.headFlag = false
+    },
+    offlineactive() {
+      this.$router.push('/offlineactive')
+    },
+    gothemelist() {
+      this.$router.push('/themelist')
     },
     goLogin() {
       this.$router.push('/login')
     },
     goRegist() {
       this.$router.push('/register')
+    },
+    download() {
+      this.$router.push('/download')
+    },
+    goForecoop() {
+      this.$router.push('/forecoop')
+    },
+    goDomecoop() {
+      this.$router.push('/domecoop')
+    },
+    goHighleve() {
+      this.$router.push('/highievel')
+    },
+    goexchange() {
+      this.$router.push('/exchange')
     },
     goHome () {
       console.log(this.$route.path)
@@ -104,6 +125,44 @@ export default {
       }
       // this.$router.go(0);
       // this.$router.push('/home')
+    },
+    gosurrtraffic() {
+      this.$router.push('/surrtraffic')
+    },
+    caterhotel() {
+      this.$router.push('/caterhotel')
+    },
+    problem() {
+      this.$router.push('/problem')
+    },
+    news1() {
+      // if (this.$route.path == '/news') {
+      //   this.$router.push({ path: '/news', query: { Id: 9} })
+      // } else {
+      //   this.$router.push('/home')
+      // }
+      this.$router.push({ path: '/news', query: { Id: 9} })
+      if(this.$route.path == '/news') {
+        location.reload()
+      }
+      this.close()
+    },
+    news2() {
+      this.$router.push({ path: '/news', query: { Id: 10} })
+      if(this.$route.path == '/news') {
+        location.reload()
+      }
+      this.close()
+    },
+    news3() {
+      this.$router.push({ path: '/news', query: { Id: 12} })
+      if(this.$route.path == '/news') {
+        location.reload()
+      }
+      this.close()
+    },
+    extails() {
+      this.$router.push({ path: '/extails'})
     }
   }
 }

@@ -84,7 +84,7 @@
             </div>
           </div>
           <!-- 查看更多 -->
-          <div class="home_more" @click="goMore(itemList.ID)">
+          <div class="home_more" @click="goMore()">
             <div class="home_more_img1">
               <img src="../../assets/image/home_more_img1.png" alt="">
             </div>
@@ -270,7 +270,7 @@ export default {
       newsList(data).then((res) => {
         if (res.Success){
           this.tabContents = res.Data.Data.slice(0,3)
-          console.log(this.tabContents)
+          // console.log(this.tabContents)
         } else {
           Toast(res.Msg)
         }
@@ -286,8 +286,12 @@ export default {
         })
       }
     },
-    goMore(ids){
-      this.$router.push({ path: '/news', query: { Id: ids} })
+    goMore(){
+      if (this.clsId == 9 || this.clsId == 10 || this.clsId == 12){
+        this.$router.push({ path: '/news', query: { Id: this.clsId} })
+      } else if (this.clsId == 13){
+        this.$router.push({ path: '/problem'})
+      }
     },
     getReview(index) {
       this.review_index = index
@@ -1013,9 +1017,9 @@ export default {
     }
   }
 }
-@media(max-width: 360px){
+@media(max-width: 375px){
   #home .home_tab ul li {
-  margin-right: 0.14rem;
+  margin-right: px(23);
   }
   .home_tit_text{
     font-size: 14px !important;
