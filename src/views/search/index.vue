@@ -21,7 +21,6 @@
                     :columns="columns3"
                     @cancel="showPicker3 = false"
                     @confirm="onConfirm3"
-                    :click="lop()"
                 />
                 </van-popup>
           </div>
@@ -70,6 +69,7 @@ export default {
         list: null,
         value3: '',
         columns3: ['是','否'],
+        gg3: [],
         showPicker3: false,
         value2: '',
         columns2: [],
@@ -87,6 +87,7 @@ export default {
       this.value3 = value;
       // console.log(index)
       this.showPicker3 = false;
+      this.qc()
     },
     onConfirm2(value,index) {
       this.value2 = value;
@@ -128,17 +129,21 @@ export default {
                 this.columns3 = res.Data.map(res => {
                     return res.name
                 })
+                this.gg3 = res.Data.map(res => {
+                    return res.lid
+                })
             } else {
                 this.$message.error(res.Msg)
             }
-            console.log(res)
+            // console.log(this.gg3)
         })
     },
     qc () {
         const s = {
-            Industryrb: this.value3,
+            Industryrb: this.gg3[this.columns3.indexOf(this.value3)],
             province: this.value2
         }
+        console.log(s)
         getqc(s).then(res => {
             if (res.Success) {
                 this.all = res.Data.Data
@@ -221,7 +226,9 @@ export default {
         overflow: hidden;
         margin-top: px(220);
         .loo{
-            img{
+            .lo{
+                overflow: hidden;
+                img{
                 float: left;
                 width: px(311);
                 height: px(175);
@@ -229,6 +236,7 @@ export default {
             }
             div{
                 float: left;
+                width: px(320);
                 h5{  
                 font-size: px(26);
                 font-family: PingFangSC;
@@ -244,7 +252,14 @@ export default {
                     line-height: px(75);
                 }
             }
+            }
         }
     }
+}
+.van-field__control{
+font-size: px(26);
+font-weight: 400;
+color: red;
+line-height: px(75);
 }
 </style>
