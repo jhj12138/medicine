@@ -1,7 +1,7 @@
 <template>
   <div id = "newsform">
     <div class="login_top">
-      <div class="login_return">
+      <div class="login_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="login_middle"></div>
@@ -10,34 +10,59 @@
         <div class="new_top">
             <div class="new_a">这里是标题这里是标题这里是标题这里是标题 这里是是标题这里是标题标题标题</div>
             <div class="new_b">2020.3.25 15:15:34</div>
-            <div class="new_c">
+            <div class="new_con" v-html="Content"></div>
+            <!-- <div class="new_c">
                 <img src="../../assets/image/fore_img.png" alt="">
             </div>
             <div class="new_d">
                 <div>飞利浦在历代经典产品的基础上，不断超越心脏、神经、肿瘤、血管介入等专业领域的创新。在全新的UNIQ高端融合平台上，我们的创新将突破传统硬件升级的局限，更长远的定位于融合优越图像和极低剂量的前沿趋势。 临床使用者将真正感受到极低剂量的差异，和多学科图像融合带来的震撼。尤其在发展迅速的肿瘤介入领域，UNIQ高端平台将支持临床做出更加快速精准的诊疗。</div>
                 <div>飞利浦在历代经典产品的基础上，不断超越心脏、神经、肿瘤、血管介入等专业领域的创新。在全新的UNIQ高端融合平台上，我们的创新将突破传统硬件升级的局限，更长远的定位于融合优越图像和极低剂量的前沿趋势。 临床使用者将真正感受到极低剂量的差异，</div>
-            </div>
+            </div> -->
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast} from 'vant';
+import {NewsContent} from '../../api/home'
 export default {
   data() {
     return{
-
+      Content:null,
+      ShowDate:null,
+      Title:null,
     }
   },
   methods:{
-    goPass(){
-      this.$router.push('/retpassword')
-    }
+    goReturn() {
+      this.$router.push({ path: '/news', query: { Id: this.$route.query.clsId} })
+    },
+    NewsContent() {
+      const data = {
+        ID : this.$route.query.Id
+        // cid : 20
+      }
+      NewsContent(data).then((res) => {
+        if (res.Success){
+          this.Content = res.Data.Content
+          this.ShowDate = res.Data.ShowDate
+          this.Title = res.Data.Title
+          console.log(res)
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
+  },
+  mounted(){
+    this.NewsContent()
+    // console.log(this.$route.query.Id,this.$route.query.clsId)
   }
 }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @function px($px){
   $rem: 75;
   @return ($px/ $rem) + rem;
@@ -108,6 +133,11 @@ export default {
                 margin-bottom: px(40);
             }
         }
+    }
+  }
+  .new_con{
+    img{
+      width: 100% !important;
     }
   }
 }

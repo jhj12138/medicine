@@ -26,7 +26,7 @@
 
 <script>
 import {newsList} from '../../api/home'
-import { Dialog } from 'vant';
+import { Dialog,Toast } from 'vant';
 export default {
   data() {
     return{

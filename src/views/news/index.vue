@@ -33,7 +33,8 @@
             <div 
               v-for="(itemList,index2) in tabContents"
               :key = "index2"
-              class="new_tab_list">
+              class="new_tab_list"
+              @click="goDetail(itemList.ID)">
               <div class="new_tab_time">{{itemList.ShowDate}}</div>
               <div class="new_tab_tit">{{itemList.Title}}</div>
               <div class="new_tab_con">{{itemList.Content}}</div>
@@ -66,6 +67,9 @@ export default {
   methods:{
     toFlag() {
       this.flag = true
+    },
+    goDetail(ids) {
+      this.$router.push({ path: '/newsform', query: { Id: ids,clsId:this.clsId} })
     },
     changeFlag(){
       this.flag = false
@@ -254,7 +258,8 @@ export default {
       // flex:1;
       // flex-wrap:wrap;
       // height: 100px;
-      height: 85%;
+      flex: 1;
+      overflow: hidden;
       .new_tabcons{
         height: 100%;
         overflow-y:scroll ;

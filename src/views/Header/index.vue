@@ -41,7 +41,7 @@
           </van-collapse-item>
           <van-collapse-item title="采购交易" name="5">
             <div class="header_li">
-              <p>采购信息</p>
+              <p @click="gopurtrans">采购信息</p>
               <p>采购专家库</p>
             </div>
           </van-collapse-item>
@@ -115,6 +115,9 @@ export default {
     },
     goexchange() {
       this.$router.push('/exchange')
+    },
+    gopurtrans() {
+      this.$router.push('/purtrans')
     },
     goHome () {
       console.log(this.$route.path)

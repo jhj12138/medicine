@@ -1,25 +1,70 @@
 <template>
   <div id = "purtrans">
     <div class="purtrans_top">
-      <div class="purtrans_return">
+      <div class="purtrans_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="purtrans_middle">采购交易</div>
     </div>
-    <div class="purtrans_con">
-      <div class="purtrans_li">
-        <div class="purtrans_li_left">采购交易标题</div>
-        <div class="purtrans_li_right">2020.10.12 12:00.06</div>
+    <div class="purtrans_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
+      <div class="purtrans_li"
+      v-for="(itemList,index) in tabContents"
+      :key = "index">
+        <div class="purtrans_li_left">{{itemList.Title}}</div>
+        <div class="purtrans_li_right">{{itemList.ShowDate}}</div>
       </div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
+import {newsList} from '../../api/home'
 export default {
   data() {
     return{
-
+      flag: false,
+      busy: false,
+      CurPage:0,
+      PageSize:5,
+      tabContents:[],
     }
+  },
+  methods:{
+    goReturn() {
+      this.$router.push('/home')
+    },
+    loadMore() {
+      // this.tabContents =[]
+      this.busy = true
+      this.CurPage ++
+      const data = {
+        CurPage: this.CurPage,
+        PageSize: this.PageSize,
+        classid:11
+      }
+      console.log(data)
+      newsList(data).then((res) => {
+        this.busy = false
+        console.log('jhjhjhjhj',this.busy)
+        if (res.Success){
+          // setTimeout(() => {
+          if (res.Data.Data.length >0) {
+            res.Data.Data.forEach(ele => {
+              this.tabContents.push(ele)
+            })
+          } else {
+            this.busy = true
+          }
+          console.log('this.tabContents',this.tabContents)
+          // this.busy = false
+          
+            // this.busy = false
+          // }, 1000)
+        } else {
+          Toast(res.Msg)
+        }
+      })
+    },
   }
 }
 </script>
@@ -73,6 +118,12 @@ export default {
       .purtrans_li_left{
         font-size: 16px;
         color: #565656;
+        overflow: hidden;
+        width: 70%;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
       }
       .purtrans_li_right{
         color: #9A9A9A;

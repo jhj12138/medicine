@@ -1,10 +1,10 @@
 <template>
-  <div id="foreCoop">
+  <div id="search">
     <div class="fore_top">
       <div class="fore_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="fore_middle">国外合作</div>
+      <div class="fore_middle">展位搜索列表</div>
     </div>
     <div class="fore_up">
       <div class="fore_up1">
@@ -44,20 +44,21 @@
         </van-popup>
       </div>
     </div>
-    <div class="fore_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
+    <div class="fore_con">
       <div class="fore_con_li"
       v-for="(item,index) in tabContents"
       :key="index"
-      @click="goDetail(item.Id)">
+      @click="goDetail(item.cid)">
         <div class="fore_li_left">
-          <img :src="item.ImgUrl" alt="">
+          <img :src="item.imgurl" alt="">
         </div>
         <div class="fore_li_right">
           <div class="fore_li_top">
             <div class="fore_li_name">{{item.Title}}</div>
-            <div class="fore_li_txt">{{item.Summary}}</div>
+            <div class="fore_li_changp">主营产品：{{item.Industryrb}}</div>
+            <div class="fore_li_address">公司地址：{{item.address}}</div>
           </div>
-          <div class="fore_li_time">发布时间：{{item.PubTime}}</div>
+          <div class="fore_li_time">展位：{{item.number}}</div>
         </div>
       </div>
     </div>
@@ -67,100 +68,86 @@
 <script>
 // import axios from 'axios'
 import { Toast } from 'vant';
-import {typesAbroad,listAbroad} from '../../api/home'
+import {getqc,getar} from '../../api/home'
 export default {
   data() {
     return {
-      value1: '类别选择',
-      columns1: ['全部'],
+      value1: '行业类型',
+      columns1: [],
       colu1:[],
       showPicker1: false,
-      value2: '发布时间',
-      columns2: ['全部','一周内','一个月内'],
-      colu2:['',7,30],
-      TypeId:null,
-      PubTime:null,
+      value2: '公司地区',
+      columns2: ['陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '上海市', '重庆市', '河北省', '山西省', '辽宁省', '吉林省', '黑龙江省', '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '海南省', '四川省', '贵州省', '云南省', '台湾省', '内蒙古自治区', '广西壮族自治区', '西藏自治区', '香港特别行政区', '澳门特别行政区'],
+      colu2:['陕西省', '甘肃省', '青海省', '宁夏回族自治区', '新疆维吾尔自治区', '北京市', '天津市', '上海市', '重庆市', '河北省', '山西省', '辽宁省', '吉林省', '黑龙江省', '江苏省', '浙江省', '安徽省', '福建省', '江西省', '山东省', '河南省', '湖北省', '湖南省', '广东省', '海南省', '四川省', '贵州省', '云南省', '台湾省', '内蒙古自治区', '广西壮族自治区', '西藏自治区', '香港特别行政区', '澳门特别行政区'],
+      Industryrb:null,
+      province:null,
       showPicker2: false,
       tabContents:[],
-      busy: false,
       CurPage:0,
       PageSize:5,
+      key:null,
       list:[{},{},{},{},{},{},{},{},{},],
     }
   },
   methods: {
     onConfirm1(value,index) {
       this.value1 = value;
-      if (value == '全部') {
-        this.TypeId = null
-      } else {
-        this.TypeId = this.colu1[index]
-      }
+      this.Industryrb = this.colu1[index]
       // console.log(index)
       this.showPicker1 = false;
       this.tabContents = []
-      this.CurPage = 0
-      this.loadMore()
+      this.getList()
     },
     goDetail(ids) {
-      this.$router.push({ path: '/oritaout', query: { Id: ids} })
+      this.$router.push({ path: '/exhibitionxq', query: { Id: ids} })
     },
+    // this.$router.push({ path: '/news', query: { Id: 9} })
     onConfirm2(value,index) {
       this.value2 = value;
-      this.PubTime = this.colu2[index]
+      this.province = this.colu2[index]
       this.showPicker2 = false;
       this.tabContents = []
-      this.CurPage = 0
-      this.loadMore()
+      this.getList()
     },
     goReturn() {
-      this.$router.push('/home')
+      this.$router.push('/onlinex')
     },
     typesAbroad() {
-      typesAbroad().then((res) => {
+      getar().then((res) => {
         if (res.Success){
+            console.log(res)
           res.Data.forEach(ele => {
-            this.colu1.push(ele.Id)
-            this.columns1.push(ele.Name)
+            this.colu1.push(ele.lid)
+            this.columns1.push(ele.name)
           })
         } else {
           Toast(res.Msg)
         }
       })
     },
-    loadMore() {
-      // this.tabContents =[]
-      this.busy = true
-      this.CurPage ++
-      const data = {
-        CurPage: this.CurPage,
-        PageSize: this.PageSize,
-        TypeId:this.TypeId,
-        PubTime:this.PubTime,
-      }
-      console.log(data)
-      listAbroad(data).then((res) => {
-        this.busy = false
-        if (res.Success){
-          // setTimeout(() => {
-          if (res.Data.Data.length >0) {
-            res.Data.Data.forEach(ele => {
-              ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
-              ele.PubTime = ele.PubTime.slice(0,10)
-              this.tabContents.push(ele)
-            })
-          } else {
-            this.busy = true
-          }
-          console.log('this.tabContents',this.tabContents)
-        } else {
-          Toast(res.Msg)
+    getList() {
+        const data ={
+            key : this.key,
+            Industryrb: this.Industryrb,
+            province: this.province
         }
-      })
-    },
+        console.log('daaaaa==',data)
+        getqc(data).then((res) => {
+            if (res.Success){
+                res.Data.Data.forEach(ele=>{
+                    ele.imgurl = 'http://yzh.68hanchen.com'+ele.imgurl
+                    this.tabContents.push(ele)
+                })
+                console.log(res)
+            } else {
+                Toast(res.Msg)
+            }
+        })
+    }
   },
   mounted(){
     this.typesAbroad()
+    this.getList()
   }
 }
 </script>
@@ -170,7 +157,7 @@ export default {
   $rem: 75;
   @return ($px/ $rem) + rem;
 }
-#foreCoop{
+#search{
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -260,10 +247,24 @@ export default {
           font-weight: bold;
           line-height: 1;
           overflow: hidden;
-			    text-overflow: ellipsis;
-			    display: -webkit-box;
-			    -webkit-line-clamp: 1;
-			    -webkit-box-orient: vertical;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .fore_li_changp{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+        }
+        .fore_li_address{
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
         }
         .fore_li_txt{
           margin-top:px(14);

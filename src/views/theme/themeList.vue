@@ -93,7 +93,7 @@ export default {
   data() {
     return {
       value1: '课程分类',
-      columns1: [],
+      columns1: ['全部'],
       colu1:[],
       showPicker1: false,
       value2: '课程时间',
@@ -117,7 +117,11 @@ export default {
   methods: {
     onConfirm1(value,index) {
       this.value1 = value;
-      this.TypeId = this.colu1[index]
+      if (value == '全部') {
+        this.TypeId = null
+      } else {
+        this.TypeId = this.colu1[index]
+      }
       // console.log(index)
       this.showPicker1 = false;
       this.tabContents = []

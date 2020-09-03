@@ -4,7 +4,7 @@
     <Header :headFlag = 'flag' @changeFlag = "changeFlag()"></Header>
     <div class="home_top">
       <div class="home_tit" @click="goHref($event)">
-        <img :src="headBanner" alt="">
+        <img :src="Mobileimg" alt="">
         <div class="home_tits">
           <div class="home_tit_left">
             <div class="home_titlec"><img src="../../assets/image/home_titlec.png" alt=""></div>
@@ -45,16 +45,18 @@
       </li> 
     </ul>
     <div class="home_hall">
-      <div class="home_hall_left">
+      <div class="home_hall_left" @click="golinex">
         <span>网上展厅</span>
         <img src="../../assets/image/home_hall1.png" alt="">
       </div>
       <div class="home_hall_right">
-        <div class="home_hall_top" @click="goExam">
+        <!-- 解开注释跳报名 -->
+        <!-- <div class="home_hall_top" @click="goExam"> -->
+        <div class="home_hall_top" @click="gosubmit1">
           <span>立即参展</span>
           <img src="../../assets/image/home_hall2.png" alt="">
         </div>
-        <div class="home_hall_bottm">
+        <div class="home_hall_bottm" @click="gosubmit2">
           <span>立即采购</span>
           <img src="../../assets/image/home_hall3.png" alt="">
         </div>
@@ -210,7 +212,7 @@ import Header from '../Header'
 import Footer from '../Footer'
 import {bannerImg,bannerList,homeData,homeVideo,homeHistory,homeCooperation,newsList,ServiceDownload,ServiceObtainCid} from '../../api/home'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-import { Toast } from 'vant';
+import { Toast,Dialog} from 'vant';
 export default {
   components:{Header,Swiper,SwiperSlide,Footer},
   data() {
@@ -222,7 +224,7 @@ export default {
       tab_li:[{name:'展会动态',classid:'9'},{name:'国际合作',classid:'10'},{name:'政府采购',classid:'11'},{name:'学术论坛',classid:'12'},{name:'资料下载',classid:'13'}],
       num:0,
       review_index:0,
-      headBanner:null,
+      Mobileimg:null,
       headHref:null,
       bannerTit:null,
       Title1:null,
@@ -290,7 +292,9 @@ export default {
       if (this.clsId == 9 || this.clsId == 10 || this.clsId == 12){
         this.$router.push({ path: '/news', query: { Id: this.clsId} })
       } else if (this.clsId == 13){
-        this.$router.push({ path: '/problem'})
+        this.$router.push({ path: '/download'})
+      } else if (this.clsId == 11){
+        this.$router.push({ path: '/purtrans'})
       }
     },
     getReview(index) {
@@ -303,17 +307,17 @@ export default {
       event.stopPropagation()
       window.location.href = this.headHref
     },
-    edits(){
-      const data ={
-        Token:localStorage.getItem('yzhToken'),
-        ProId:'1'
-      }
-      regTypes().then((res) => {
-      if(res.status === 200){
-          console.log(res)
-        }
-      })
-    },
+    // edits(){
+    //   const data ={
+    //     Token:localStorage.getItem('yzhToken'),
+    //     ProId:'1'
+    //   }
+    //   regTypes().then((res) => {
+    //   if(res.status === 200){
+    //       console.log(res)
+    //     }
+    //   })
+    // },
     ServiceObtainCid() {
       ServiceObtainCid().then((res) => {
         if (res.Success){
@@ -373,8 +377,9 @@ export default {
     getBanner() {
       bannerImg().then((res) => {
         if (res.Success){
-          this.headBanner = 'http://yzh.68hanchen.com'+res.Data[0].ImgUrl
+          this.Mobileimg = 'http://yzh.68hanchen.com'+res.Data[0].Mobileimg
           this.headHref = res.Data[0].Link
+          console.log('11111hzjzjz',res)
         } else {
           Toast(res.Msg)
         }
@@ -439,7 +444,24 @@ export default {
     },
     goExam() {
       this.$router.push('/enterfor')
-    }
+    },
+    golinex() {
+      this.$router.push('/onlinex')
+    },
+    gosubmit1() {
+      Dialog.alert({
+        message: '此功能暂未开发',
+      }).then(() => {
+        // on close
+      });
+    },
+    gosubmit2() {
+      Dialog.alert({
+        message: '此功能暂未开发',
+      }).then(() => {
+        // on close
+      });
+    },
     // 
   },
   mounted(){

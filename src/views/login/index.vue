@@ -1,9 +1,9 @@
 <template>
   <div id = "login">
     <div class="login_top">
-      <!-- <div class="login_return">
+      <div class="login_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
-      </div> -->
+      </div>
       <div class="login_middle">登录</div>
     </div>
     <div class="login_con">
@@ -56,6 +56,9 @@ export default {
       // }
       // this.$router.push('/retpassword').catch(err => err)
       // this.$router.replace({path:'/retpassword'})
+    },
+    goReturn(){
+      this.$router.push('/home')
     },
     goRegister(){
       console.log('register')

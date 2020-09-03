@@ -53,6 +53,10 @@ const exChange = () => import('@/views/active/exChange') //交流活动
 const offlineActive = () => import('@/views/active/offlineActive') //交流活动
 const offlineDetail = () => import('@/views/active/offlineDetail') //线下的活动详情
 const themeList = () => import('@/views/theme/themeList') //主题培训
+const Onlinex = () => import('@/views/onlinex') //网上展厅
+const Search = () => import('@/views/search') //搜索
+const exhibitionxq = () => import('@/views/search/exhibitionxq') //展商
+const comdetail = () => import('@/views/search/comDetail') //商品详情
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
@@ -275,6 +279,22 @@ const routes = [{
             path: 'themelist',
             name: '主题培训',
             component: themeList
+        },{
+            path: 'search',
+            name: '搜索',
+            component: Search
+        },{
+            path: 'onlinex',
+            name: '网上展厅',
+            component: Onlinex
+        },{
+            path: 'exhibitionxq',
+            name: '展商',
+            component: exhibitionxq
+        },{
+            path: 'comdetail',
+            name: '商品详情',
+            component: comdetail
         }]
     },
     

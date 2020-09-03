@@ -283,3 +283,80 @@ export const lessionHotlist = apiParams => {
     params: apiParams,
   })
 }
+// 网上展厅图
+export const getsx = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Service/Onlineexhibition',
+    params: apiParams,
+  })
+}
+// 获取展商列表
+export const getobt = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainCompanyList',
+    params: apiParams,
+  })
+}
+// 获取行业列表
+export const getoar = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainIndustry',
+    params: apiParams,
+  })
+}
+// 查询商家列表
+export const getqc = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/FrontCompanyList',
+    params: apiParams,
+  })
+}
+// 公司行业
+export const getar = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainIndustry',
+    params: apiParams,
+  })
+}
+
+// 获取展位联系我们
+export const ObtainContactUs = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainContactUs',
+    params: apiParams,
+  })
+}
+
+// 获取展商信息
+export const Obtaincommodity = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/Obtaincommodity',
+    params: apiParams,
+  })
+}
+
+// 商品详情
+export const exhibitorcommoditys = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/commodity',
+    params: apiParams,
+  })
+}
+
+// 获取新闻详情
+export const NewsContent = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'News/Content',
+    params: apiParams,
+  })
+}
+

@@ -11,13 +11,13 @@
         <div class="caterHotel_tit">餐饮推荐</div>
         <div class="caterHotel_li" v-for="(item,index) in surrTra_list" :key ='index' >
           <div class="caterHotel_li_left">
-            <img src="../../assets/image/fore_img.png" alt="">
+            <img :src="item.ImgUrl" alt="">
           </div>
           <div class="caterHotel_li_right">
             <div class="caterHotel_li_name">{{item.Title}}</div>
-            <div class="caterHotel_li_address">{{item.Summary[0]}}</div>
-            <div class="caterHotel_li_phone">{{item.Summary[1]}}</div>
-            <div class="caterHotel_li_jieshao">介绍：门店介绍菜品美味、门店介绍门店介绍菜品美味、门店介绍门店介绍菜品美味、门店介绍</div>
+            <div class="caterHotel_li_address">{{item.Summary}}</div>
+            <div class="caterHotel_li_phone">{{item.Content}}</div>
+            <div class="caterHotel_li_jieshao">介绍：{{item.Content1}}</div>
           </div>
         </div>
       </div>
@@ -25,13 +25,13 @@
         <div class="caterHotel_tit">酒店推荐</div>
         <div class="caterHotel_li" v-for="(item,index) in surrTra_list2" :key ='index' >
           <div class="caterHotel_li_left">
-            <img src="../../assets/image/fore_img.png" alt="">
+            <img :src="item.ImgUrl" alt="">
           </div>
           <div class="caterHotel_li_right">
             <div class="caterHotel_li_name">{{item.Title}}</div>
-            <div class="caterHotel_li_address">{{item.Summary[0]}}</div>
-            <div class="caterHotel_li_phone">{{item.Summary[1]}}</div>
-            <div class="caterHotel_li_jieshao">介绍：门店介绍菜品美味、门店介绍门店介绍菜品美味、门店介绍门店介绍菜品美味、门店介绍</div>
+            <div class="caterHotel_li_address">{{item.Summary}}</div>
+            <div class="caterHotel_li_phone">{{item.Content}}</div>
+            <div class="caterHotel_li_jieshao">介绍：{{item.Content1}}</div>
           </div>
         </div>
       </div>
@@ -46,13 +46,18 @@ export default {
     return{
       surrTra_list:null,
       surrTra_list2:null,
-      hotelList:[{
-        tit:'餐饮推荐',
-        con:[{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"}]
-      },{
-        tit:'酒店推荐',
-        con:[{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"}]
-      }]
+      // Content:null,
+      // Content1:null,
+      // ImgUrl:null,
+      // Summary:null,
+      // Title:null
+      // hotelList:[{
+      //   tit:'餐饮推荐',
+      //   con:[{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"}]
+      // },{
+      //   tit:'酒店推荐',
+      //   con:[{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"},{name:"重庆美味川菜"}]
+      // }]
     }
   },
   methods:{
@@ -65,9 +70,9 @@ export default {
       }
       ServiceTraffic(data).then((res) => {
         if (res.Success){
-          // res.Data.forEach(ele=> {
-          //   ele.Summary = ele.Summary.split("<br>")
-          // })
+          res.Data.forEach(ele => {
+            ele.ImgUrl = 'http://yzh.68hanchen.com'+ ele.ImgUrl
+          })
           this.surrTra_list = res.Data
           console.log('11111',this.surrTra_list)
         } else {
@@ -81,8 +86,8 @@ export default {
       }
       ServiceTraffic(data).then((res) => {
         if (res.Success){
-          res.Data.forEach(ele=> {
-            ele.Summary = ele.Summary.split("<br>")
+          res.Data.forEach(ele => {
+            ele.ImgUrl = 'http://yzh.68hanchen.com'+ ele.ImgUrl
           })
           this.surrTra_list2 = res.Data
           // console.log('11111',this.surrTra_list)
@@ -178,13 +183,18 @@ export default {
             text-overflow: ellipsis;
             display: -webkit-box;
             overflow: hidden;
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 1;
             -webkit-box-orient: vertical;
           }
           .caterHotel_li_phone{
             margin-top: px(14);
             color: #565656;
             line-height: 1;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            overflow: hidden;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
           }
           .caterHotel_li_jieshao{
             margin-top: px(14);
