@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 
 const Layout = () => import ('@/layout')
 const notFount = () => import ('@/views/error404') // 404页面
-const Home = () => import ('@/views/Home') // 首页
+const Home = () => import ('@/views/home') // 首页
 const Mine = () => import('@/views/exhibitor/Mine') //展商中心
 const Evemanage = () => import('@/views/exhibitor/eveManage') //参展人员管理
 const Evedail = () => import('@/views/exhibitor/eveDail') //参展人员管理详情
@@ -37,7 +37,7 @@ const HighIevel = () => import('@/views/international/highIevel') //高层次人
 const Login = () => import('@/views/login') //登录
 const RetPassword = () => import('@/views/retPassword') //找回密码
 const Register = () => import('@/views/register') //注册
-const Newsform = () => import('@/views/newsForm') //新闻详情
+const Newsform = () => import('@/views/newsform') //新闻详情
 const AcdeTails = () => import('@/views/active/acdeTails') //活动详情
 const OriTails = () => import('@/views/international/oriTails') //国内详情
 const ExTails = () => import('@/views/peripheral/exTails') //展会介绍
