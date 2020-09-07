@@ -104,7 +104,7 @@ export default {
         getsx().then((res) => {
             if (res.Success){
             res.Data.forEach(ele=> {
-                ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+                ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
             })
             this.swiper_list = res.Data
             this.$nextTick(function () {

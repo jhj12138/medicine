@@ -68,7 +68,7 @@ export default {
           // setTimeout(() => {
           if (res.Data.Data.length >0) {
             res.Data.Data.forEach(ele => {
-              ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+              ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
               ele.ActivityTime = ele.ActivityTime.replace(/-/g,".")
               ele.ActivityTimeEnd = ele.ActivityTimeEnd.replace(/-/g,".")
               this.tabContents.push(ele)

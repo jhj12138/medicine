@@ -14,7 +14,7 @@
 // }
 import request from '../../plugins/request'
 
-const urlParams = 'http://yzh.68hanchen.com/api/'
+const urlParams = 'https://www.zjylz.com/api/'
 
 export const login = apiParams => { //
   return request({

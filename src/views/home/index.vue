@@ -332,7 +332,7 @@ export default {
       homeVideo().then((res) => {
         if (res.Success){
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
           })
           this.swiper_list = res.Data
           this.$nextTick(function () {
@@ -347,7 +347,7 @@ export default {
       homeCooperation().then((res) => {
         if (res.Success){
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
           })
           this.swiper_two = [];
           for(var i=0,len=res.Data.length;i<len;i+=6){
@@ -366,7 +366,7 @@ export default {
         if (res.Success){
           this.review_list = res.Data
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
           })
           // console.log(res)
         } else {
@@ -377,7 +377,7 @@ export default {
     getBanner() {
       bannerImg().then((res) => {
         if (res.Success){
-          this.Mobileimg = 'http://yzh.68hanchen.com'+res.Data[0].Mobileimg
+          this.Mobileimg = 'https://www.zjylz.com'+res.Data[0].Mobileimg
           this.headHref = res.Data[0].Link
           console.log('11111hzjzjz',res)
         } else {

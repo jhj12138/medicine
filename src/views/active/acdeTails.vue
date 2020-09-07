@@ -61,7 +61,7 @@ export default {
         if (res.Success){
           this.Title = res.Data.Title
           this.Address = res.Data.Address
-          this.Content = res.Data.Content.replace(/\/Upload/g, 'http://yzh.68hanchen.com/Upload')
+          this.Content = res.Data.Content.replace(/\/Upload/g, 'https://www.zjylz.com/Upload')
           this.Ids = res.Data.Id
           this.ActivityTime = res.Data.ActivityTime.replace(/-/g,".")
           this.ActivityTimeEnd = res.Data.ActivityTimeEnd.replace(/-/g,".")

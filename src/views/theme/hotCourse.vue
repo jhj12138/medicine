@@ -140,7 +140,7 @@ export default {
                 this.PubTime = res.Data.PubTime.slice(0,10)
                 this.Time = res.Data.Time
                 this.Title = res.Data.Title
-                this.VideoUrl = 'http://yzh.68hanchen.com'+res.Data.VideoUrl
+                this.VideoUrl = 'https://www.zjylz.com'+res.Data.VideoUrl
                 this.ViewNum = res.Data.ViewNum
             console.log(res)
             } else {
@@ -176,7 +176,7 @@ export default {
             if (res.Success){
                 console.log('hdsafa',res.Data)
                 res.Data.forEach(ele => {
-                    ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+                    ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
                     ele.PubTime = ele.PubTime.slice(0,10)
                 })
                 this.conList = res.Data

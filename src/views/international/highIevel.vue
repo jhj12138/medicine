@@ -53,7 +53,7 @@ export default {
           // setTimeout(() => {
           if (res.Data.Data.length >0) {
             res.Data.Data.forEach(ele => {
-              ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+              ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
               this.tabContents.push(ele)
             })
             console.log(res.Data)

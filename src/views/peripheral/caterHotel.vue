@@ -71,7 +71,7 @@ export default {
       ServiceTraffic(data).then((res) => {
         if (res.Success){
           res.Data.forEach(ele => {
-            ele.ImgUrl = 'http://yzh.68hanchen.com'+ ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com'+ ele.ImgUrl
           })
           this.surrTra_list = res.Data
           console.log('11111',this.surrTra_list)
@@ -87,7 +87,7 @@ export default {
       ServiceTraffic(data).then((res) => {
         if (res.Success){
           res.Data.forEach(ele => {
-            ele.ImgUrl = 'http://yzh.68hanchen.com'+ ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com'+ ele.ImgUrl
           })
           this.surrTra_list2 = res.Data
           // console.log('11111',this.surrTra_list)

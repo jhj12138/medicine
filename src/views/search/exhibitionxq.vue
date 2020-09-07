@@ -82,7 +82,7 @@ export default {
       ObtainContactUs(data).then((res) => {
         if (res.Success){
           res.Data.LOGO = res.Data.LOGO.split("&&")[0]
-          this.LOGO = 'http://yzh.68hanchen.com'+ res.Data.LOGO 
+          this.LOGO = 'https://www.zjylz.com'+ res.Data.LOGO 
           this.contacts = res.Data.contacts
           this.introduce = res.Data.introduce
           this.phone = res.Data.phone
@@ -107,10 +107,10 @@ export default {
           this.list = res.Data.Data
           res.Data.Data.forEach(ele => {
             ele.imgurl = ele.imgurl.split("&&")[0]
-            ele.imgurl = 'http://yzh.68hanchen.com'+ ele.imgurl 
+            ele.imgurl = 'https://www.zjylz.com'+ ele.imgurl 
           })
           // res.Data.LOGO = res.Data.LOGO.split("&&")[0]
-          // this.LOGO = 'http://yzh.68hanchen.com'+ res.Data.LOGO 
+          // this.LOGO = 'https://www.zjylz.com'+ res.Data.LOGO 
           // this.contacts = res.Data.contacts
           // this.introduce = res.Data.introduce
           // this.phone = res.Data.phone

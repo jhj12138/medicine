@@ -1,6 +1,6 @@
 import request from '../../plugins/request'
 
-const urlParams = 'http://yzh.68hanchen.com/api/'
+const urlParams = 'https://www.zjylz.com/api/'
 
 // 获取国家
 export const OnlineCode = apiParams => { //

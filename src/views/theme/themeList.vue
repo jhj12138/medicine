@@ -186,7 +186,7 @@ export default {
           // setTimeout(() => {
           if (res.Data.Data.length >0) {
             res.Data.Data.forEach(ele => {
-              ele.ImgUrl = 'http://yzh.68hanchen.com'+ele.ImgUrl
+              ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
               ele.PubTime = ele.PubTime.slice(0,10)
               this.tabContents.push(ele)
             })

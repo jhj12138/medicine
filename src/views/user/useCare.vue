@@ -106,7 +106,7 @@ export default {
         if(res.Success) {
           res.Data.Data.forEach(ele=> {
             ele.checked = false
-            ele.ImgUrl = 'http://yzh.68hanchen.com' + ele.ImgUrl
+            ele.ImgUrl = 'https://www.zjylz.com' + ele.ImgUrl
           })
           this.list = res.Data.Data
         } else {
