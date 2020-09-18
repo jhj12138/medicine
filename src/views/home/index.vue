@@ -321,7 +321,7 @@ export default {
     ServiceObtainCid() {
       ServiceObtainCid().then((res) => {
         if (res.Success){
-          this.data_list = res.Data.Content.split('、').slice(0, 6)
+          this.data_list = res.Data.Content.split('、').slice(0, 4)
         } else {
           Toast(res.Msg)
         }
