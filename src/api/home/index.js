@@ -100,7 +100,7 @@ export const ServiceDownload = apiParams => { //
 export const ServiceObtainCid = apiParams => { //
   return request({
     method: 'get',
-    url: urlParams + 'Exhibitorinfo/ObtainIndustry',
+    url: urlParams + 'Exhibitorinfo/keyword',
     params: apiParams,
   })
 }

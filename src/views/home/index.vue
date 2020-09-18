@@ -39,9 +39,9 @@
     <ul class="home_textbox_tit" >
      <li 
       v-for="(item,index) in data_list" 
-      :key = "item.name"
+      :key = "item"
       :class="text_index == index?'home_active':''"
-      @click="getActive(index)">{{item.name}}
+      @click="getActive(index)">{{item}}
       </li> 
     </ul>
     <div class="home_hall">
@@ -321,8 +321,7 @@ export default {
     ServiceObtainCid() {
       ServiceObtainCid().then((res) => {
         if (res.Success){
-          console.log('1sdjhfsd',res)
-          this.data_list = res.Data
+          this.data_list = res.Data.Content.split('、').slice(0, 6)
         } else {
           Toast(res.Msg)
         }
@@ -649,7 +648,7 @@ export default {
       font-size:12px;
       font-weight:400;
       color:rgba(132,140,152,1);
-      margin-left: px(35);
+      margin-left: 3%;
     }
     li.home_active{
       color: #2B76D9;
