@@ -2,7 +2,7 @@
   <div id="exhSearch">
     <div class="fore_top">
       <div class="fore_return">
-        <img src="../../assets/image/mine_return.png" alt="">
+        <img src="../../assets/image/mine_return.png" alt=""  @click="returnhome">
       </div>
       <div class="fore_middle">搜索</div>
     </div>
@@ -27,17 +27,19 @@
     <div class="fore_con">
       <div class="fore_con_li"
       v-for="(item,index) in list"
-      :key="index">
+      :key="index"
+       @click="goDetail(item.cid)"
+      >
         <div class="fore_li_left">
-          <img src="../../assets/image/fore_img.png" alt="">
+          <img :src="gUrl + imgUrl[index]" alt="">
         </div>
         <div class="fore_li_right">
           <div class="fore_li_top">
-            <div class="fore_li_name">公司名称</div>
-            <div class="fore_li_txt">主营产品：呼吸机、血压计、心脏起吸机、血压计</div>
-            <div class="fore_li_address">公司地址：杭州市西湖区</div>
+            <div class="fore_li_name">{{item.Title}}</div>
+            <div class="fore_li_txt">主营产品：{{item.Industryrb}}</div>
+            <div class="fore_li_address">公司地址：{{item.address}}</div>
           </div>
-          <div class="fore_li_zhan">展位：A23 \ B22</div>
+          <div class="fore_li_zhan">展位：{{item.number}}</div>
         </div>
       </div>
     </div>
@@ -45,6 +47,7 @@
 </template>
 
 <script>
+import {getqc} from '../../api/home'
 export default {
   data() {
     return {
@@ -61,10 +64,32 @@ export default {
         { text: '30天以前', value: 0 },
         { text: '7天内', value: 1 },
       ],
-      list:[{},{},{},{},{},{},{},{},{},],
+      list:[],
+      imgUrl:[],
+      gUrl:"https://www.zjylz.com/"
     }
   },
+  mounted(){
+  this.getexhibitors()
+  },
   methods: {
+    goDetail(ids) {
+      this.$router.push({ path: '/exhibitionxq', query: { Id: ids} })
+      console.log(1111)
+    },
+    returnhome(){
+       this.$router.push({ path: '/home'})
+    },
+    //获取展商信息
+    getexhibitors(){
+      getqc().then(res=>{
+        this.list = res.Data.Data
+        res.Data.Data.forEach(element => {
+          // this.imgUrl = res.Data.Data[0].imgurl
+          this.imgUrl.push(element.imgurl.split('&&')[0])
+        });
+      })
+    },
     toggleAccountName(value) {
       this.accountName = this.accountNameOptions[value].text
       this.accountNameValue = value
@@ -143,7 +168,10 @@ export default {
         justify-content: space-between;
         height: px(178);
         .fore_li_name{
-          font-size: 16px;
+          // white-space: nowrap;
+          // text-overflow: ellipsis;
+          // overflow: hidden;
+          font-size: 14px;
           color: rgba(34,34,34,1);
           font-weight: bold;
           line-height: 1;
@@ -164,6 +192,11 @@ export default {
           font-size: 12px;
           line-height: 1;
           color: #565656;
+          overflow:hidden; 
+          text-overflow:ellipsis;
+          display:-webkit-box; 
+          -webkit-box-orient:vertical;
+          -webkit-line-clamp:1; 
         }
         .fore_li_zhan{
           font-size: 12px;

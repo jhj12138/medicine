@@ -8,8 +8,8 @@
     </div>
     <div class="login_con">
         <div class="new_top">
-            <div class="new_a">这里是标题这里是标题这里是标题这里是标题 这里是是标题这里是标题标题标题</div>
-            <div class="new_b">2020.3.25 15:15:34</div>
+            <div class="new_a">{{Title}}</div>
+            <div class="new_b">{{Time}}</div>
             <div class="new_con" v-html="Content"></div>
             <!-- <div class="new_c">
                 <img src="../../assets/image/fore_img.png" alt="">
@@ -32,6 +32,7 @@ export default {
       Content:null,
       ShowDate:null,
       Title:null,
+      Time:null,
     }
   },
   methods:{
@@ -43,11 +44,13 @@ export default {
         ID : this.$route.query.Id
         // cid : 20
       }
+      
       NewsContent(data).then((res) => {
         if (res.Success){
           this.Content = res.Data.Content
           this.ShowDate = res.Data.ShowDate
           this.Title = res.Data.Title
+          this.Time = res.Data.ShowDate
           console.log(res)
         } else {
           Toast(res.Msg)
@@ -107,12 +110,13 @@ export default {
         margin-top: px(100);
         .new_a{
             font-size:px(32);
-            font-weight:500;
+            font-weight:600;
             color:rgba(34,34,34,1);
             line-height:px(50);
             padding: px(25) 0;
         }
         .new_b{
+          text-align: center;
             font-size:px(24);
             font-weight:bold;
             color:rgba(136,136,136,1);

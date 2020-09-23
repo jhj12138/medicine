@@ -18,8 +18,8 @@
       </div>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom_qd">确定</div>
-      <div class="stand_bottom_qx">取消</div>
+      <div class="stand_bottom_qd" @click="Determine">确定</div>
+      <div class="stand_bottom_qx" @click="cancel">取消</div>
     </div>
   </div>
 </template>
@@ -37,6 +37,12 @@ export default {
     }
   },
   methods:{
+    Determine(){
+      
+    },
+    cancel(){
+      this.$router.push('/mine')
+    },
     goReturn() {
       this.$router.push('/mine')
     },

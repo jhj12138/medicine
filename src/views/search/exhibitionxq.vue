@@ -37,7 +37,7 @@
         <div class="exhibit_con_li" v-for="(item,index) in list"
         :key = "index">
           <div class="exhibit_li_img">
-            <img :src="item.imgurl" alt="">
+            <img :src="imgUrl" alt="">
           </div>
           <div class="exhibit_li_bottom">
             <div class="exhibit_li_name">{{item.name}}</div>
@@ -63,7 +63,8 @@ export default {
       introduce:null,
       phone:null,
       mailbox:null,
-      list:null
+      list:null,
+      imgUrl:"",
     }
   },
   methods:{
@@ -106,8 +107,8 @@ export default {
         if (res.Success){
           this.list = res.Data.Data
           res.Data.Data.forEach(ele => {
-            ele.imgurl = ele.imgurl.split("&&")[0]
-            ele.imgurl = 'https://www.zjylz.com'+ ele.imgurl 
+           this.imgUrl = 'https://www.zjylz.com'+ ele.ImgList.split("&&")[0]
+           console.log(ele)
           })
           // res.Data.LOGO = res.Data.LOGO.split("&&")[0]
           // this.LOGO = 'https://www.zjylz.com'+ res.Data.LOGO 
@@ -119,7 +120,7 @@ export default {
           //   this.colu1.push(ele.Id)
           //   this.columns1.push(ele.Name)
           // })
-          console.log(res)
+          
         } else {
           Toast(res.Msg)
         }

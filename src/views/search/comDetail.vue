@@ -92,7 +92,7 @@ export default {
           this.Price = res.Data.Price
           this.Summary = res.Data.Summary
           this.name = res.Data.name
-          this.imgurl = 'https://www.zjylz.com'+ res.Data.imgurl
+          this.imgurl = 'https://www.zjylz.com'+ res.Data.ImgList.split('&&')[0]
           console.log(res)
         } else {
           Toast(res.Msg)

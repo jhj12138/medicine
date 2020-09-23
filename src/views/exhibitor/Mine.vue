@@ -2,7 +2,7 @@
   <div id = "mine">
     <div class="mine_top">
       <!-- 返回 -->
-      <div class="mine_return">
+      <div class="mine_return" @click="returnHome">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="mine_top_bg">
@@ -101,7 +101,7 @@
         </div>
         <div class="mine_invocie_right"><img src="../../assets/image/mine_go.png" alt=""></div>
       </div>
-      <div class="mine_invocie">
+      <div class="mine_invocie" @click="goChangepw">
         <div class="mine_invocie_left">
           <div class="mine_invocie_ing">
             <img src="../../assets/image/mine_password.png" alt="">
@@ -121,6 +121,12 @@ export default {
     }
   },
   methods:{
+    returnHome(){
+       this.$router.push('/home') //返回首页
+    },
+    goChangepw(){
+      this.$router.push('/changePass') //跳转修改密码
+    },
     goExhib(){
       this.$router.push('/evemanage') //跳转到参展人员管理
     },

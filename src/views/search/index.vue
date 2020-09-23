@@ -135,7 +135,7 @@ export default {
         getqc(data).then((res) => {
             if (res.Success){
                 res.Data.Data.forEach(ele=>{
-                    ele.imgurl = 'https://www.zjylz.com'+ele.imgurl
+                    ele.imgurl = 'https://www.zjylz.com'+ele.imgurl.split('&&')[0]
                     this.tabContents.push(ele)
                 })
                 console.log(res)

@@ -55,8 +55,15 @@
       </li>
       <!-- 三个按钮 -->
     <div class="header_btn">
-      <div class="header_btn1" @click="goLogin">
-        <div class="header_btn_txt">登录</div>
+      <div class="header_btn1">
+        <div class="header_btn_txt" v-show="flag"  @click="goLogin">登录</div>
+        <div class="header_btn_txt" v-show="flags" @click="According">
+            <span> {{userName}}</span>
+       </div>
+       <div class="header_btn_cont" v-show="bisshow">
+         <div class="header_btn_cont1" @click="uesrcont">用户中心</div>
+         <div class="header_btn_cont2" @click="exitLongin">退出</div>
+       </div>
         <div class="header_btn_right">
           <img src="../../assets/image/head_reight.png" alt="">
         </div>
@@ -81,9 +88,53 @@ export default {
     return {
       activeNames: [],
       activeNames2: [],
+      flaguser:{
+        login:"登录",
+        userName:"用户中心"
+      },
+      flaguserName:null,
+      flag:true,
+      userName:null,
+      bisshow:false,
+      flags:true,
     }
   },
+  mounted(){
+    this.changeuser()
+  },
   methods:{
+    //用户中心跳转
+    uesrcont(){
+     this.$router.push('/mine')
+    },
+    //退出登录
+    exitLongin(){
+      sessionStorage.removeItem("Information")
+      this.flag = true
+      this.bisshow=false
+      this.flags = false
+    },
+    //点击显示隐藏用户信息
+    According(){
+      if(this.bisshow){
+     this.bisshow=false
+      }else{
+       this.bisshow=true
+      }
+    },
+    changeuser(){
+      let name = sessionStorage.getItem("Information")
+      console.log(name)
+      this.userName = name
+      if(name==null){
+        this.flag = true
+        this.flags = false
+
+      }else{
+      this.flag = false
+      this.flags = true
+      }
+    },
     close(event) {
       // event.stopPropagation()
       this.$emit('changeFlag',false)
@@ -279,17 +330,36 @@ export default {
     .header_btn1{
       display: flex;
       align-items: center;
-      width: px(168);
+      width: px(164);
       height: px(70);
       background: #2b75d8;
       border-radius: px(40);
       padding: px(20);
       justify-content: space-between;
       box-sizing: border-box;
+      position: relative;
+     
       .header_btn_txt{
-        font-size: 16px;
+        font-size: px(32);
         color: #fff;
-        padding-left:px(10);
+        overflow: hidden;    
+        text-overflow:ellipsis;    
+        white-space: nowrap;
+        // padding-left:px(10);
+      }
+      .header_btn_cont{
+        position: absolute;
+        top: px(80);
+        left: px(20);
+      }
+     
+      .header_btn_cont1:hover{
+        color: #2b75d8;
+        background: #abd7f049;
+      }
+      .header_btn_cont2:hover{
+        color: #2b75d8;
+        background: #abd7f049;
       }
       .header_btn_right{
         width: px(20);

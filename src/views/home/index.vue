@@ -29,7 +29,7 @@
           <div class="home_textbox_right">
             <div class="home_textbox_shou"><img src="../../assets/image/home_shou.png" alt=""></div>
             <div class="home_textbox_input">
-              <div style="color:#848c98">请输入关键词</div>
+              <div style="color:#848c98" @click="goSearch">请输入关键词</div>
               <!-- <input type="text" placeholder="请输入关键词"> -->
             </div>
           </div>
@@ -51,8 +51,8 @@
       </div>
       <div class="home_hall_right">
         <!-- 解开注释跳报名 -->
-        <!-- <div class="home_hall_top" @click="goExam"> -->
-        <div class="home_hall_top" @click="gosubmit1">
+        <div class="home_hall_top" @click="goExam">
+        <!-- <div class="home_hall_top" @click="gosubmit1"> -->
           <span>立即参展</span>
           <img src="../../assets/image/home_hall2.png" alt="">
         </div>
@@ -76,7 +76,9 @@
           <div 
           v-for="(itemList,index2) in tabContents"
           :key = "index2"
-          class="home_tab_list">
+          class="home_tab_list"
+          @click="gonewsxq(itemList.ID)"
+          >
             <div class="home_tab_tit">{{itemList.Title}}</div>
             <div class="home_tab_time">
               <div class="home_tab_img">
@@ -254,6 +256,14 @@ export default {
       event.stopPropagation()
       this.flag = true
     },
+    //条状新闻详情
+    gonewsxq(ID){
+      this.$router.push({ path: '/newsform', query: { Id: ID} })
+    },
+    //跳转搜索页面
+    goSearch(){
+      this.$router.push({ path: '/ExhSearch'})
+    },
     getActive(index){
       this.text_index = index
     },
@@ -272,7 +282,7 @@ export default {
       newsList(data).then((res) => {
         if (res.Success){
           this.tabContents = res.Data.Data.slice(0,3)
-          // console.log(this.tabContents)
+          console.log(this.tabContents)
         } else {
           Toast(res.Msg)
         }
@@ -367,7 +377,7 @@ export default {
           res.Data.forEach(ele=> {
             ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
           })
-          // console.log(res)
+          console.log(res)
         } else {
           Toast(res.Msg)
         }

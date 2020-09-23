@@ -81,6 +81,7 @@ export default {
           console.log('res.Data',res.Data)
           localStorage.setItem('yzhToken', res.Data.Token)
           localStorage.setItem('tokenId', res.Data.Id)
+          sessionStorage.setItem('Information',res.Data.UserName)
         }else{
           Toast({
             message: '登录失败',

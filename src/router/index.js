@@ -4,7 +4,7 @@ import VueRouter from 'vue-router'
 const Layout = () => import ('@/layout')
 const notFount = () => import ('@/views/error404') // 404页面
 const Home = () => import ('@/views/home') // 首页
-const Mine = () => import('@/views/exhibitor/Mine') //展商中心
+const Mine = () => import('@/views/exhibitor/Mine') //展商中心    
 const Evemanage = () => import('@/views/exhibitor/eveManage') //参展人员管理
 const Evedail = () => import('@/views/exhibitor/eveDail') //参展人员管理详情
 const Eveadd = () => import('@/views/exhibitor/eveAdd') //参展人员管理添加人员
@@ -57,6 +57,9 @@ const Onlinex = () => import('@/views/onlinex') //网上展厅
 const Search = () => import('@/views/search') //搜索
 const exhibitionxq = () => import('@/views/search/exhibitionxq') //展商
 const comdetail = () => import('@/views/search/comDetail') //商品详情
+const ChooseBooth = () => import('@/views/registration/ChooseBooth') //展商报名
+// const aaaa = () => import('@/views/registration/aaaa') //商品详情
+const ceshi = () => import('@/views/user/ceshi') //测试
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
@@ -295,6 +298,10 @@ const routes = [{
             path: 'comdetail',
             name: '商品详情',
             component: comdetail
+        },{
+            path: 'ChooseBooth',
+            name: '展商报名',
+            component: ChooseBooth
         }]
     },
     
