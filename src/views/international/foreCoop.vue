@@ -140,6 +140,7 @@ export default {
       }
       console.log(data)
       listAbroad(data).then((res) => {
+        console.log(res)
         this.busy = false
         if (res.Success){
           // setTimeout(() => {

@@ -31,13 +31,13 @@
             <div class="hot-c" v-show="indd==0">
                 <div class="hot-ca">
                     <p v-for="(item,index) in list" :key="index">
-                        <span>{{item[0]}}</span>
-                        <span>{{item[1]}}</span>
+                        <span>{{item.UserName}}</span>:
+                        <span>{{item.Content}}</span>
                     </p>
                 </div>
                 <div class="hot-cb">
-                    <input type="text" placeholder="留下您的想法...">
-                    <div>发送</div>
+                    <input type="text" placeholder="留下您的想法..." v-model="uo">
+                    <div @click="lessionComment">发送</div>
                 </div>
             </div>
             <div class="hot-d" v-show="indd==1" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
@@ -53,7 +53,7 @@
 
 <script>
 import { Toast } from 'vant';
-import {lessionDetail,lessionCommentList,lessionHotlist} from '../../api/home'
+import {lessionDetail,lessionCommentList,lessionHotlist,lessionComment,getcomm} from '../../api/home'
 export default {
   data() {
     return{
@@ -69,26 +69,11 @@ export default {
         busy: false,
         CurPage:0,
         PageSize:5,
+        dat: {
+        Id: 1
+        },
+        uo:null,
         list:[
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容'],
-            ['瑞士ICO精密医疗器械：','评论内容评论内容评论内容'],
-            ['瑞士ICO：','评论内容评论内容评论内容']
         ]
     }
   },
@@ -148,6 +133,21 @@ export default {
             }
         })
     },
+   // 课程评论
+    lessionComment(){
+      const daty = {
+        LessionId: this.$route.query.Id,
+        Content: this.uo
+      }
+        getcomm(daty).then(res=>{
+        if(res.Success){
+        this.uo = ''
+        }else{
+        Toast(res.Msg)
+        console.log(11111)
+        }
+      })
+    },
     loadMore() {
       this.busy = true
       this.CurPage ++
@@ -157,7 +157,16 @@ export default {
         LessionId:this.$route.query.Id
       }
       console.log(data)
+        const daty = {
+        LessionId: this.$route.query.TypeId
+        // Content: this.uo
+      }
+        lessionComment(daty).then(res=>{
+        this.list = res.Data.Data
+        console.log(this.list)
+      })
       lessionCommentList(data).then((res) => {
+        console.log(res)
         this.busy = false
         if (res.Success){
           if (res.Data.Data.length >0) {

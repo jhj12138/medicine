@@ -14,7 +14,7 @@
                 <div class="acd_left_time">活动时间：{{ActivityTime}}-{{ActivityTimeEnd}}</div>
                 <div class="acd_left_address">活动地点：{{Address}}</div>
               </div>
-              <div class="acd_right" @click="goBao">立即报名</div>
+              <div class="acd_right" @click="goBao">{{getstate}}</div>
             </div>
             <div class="acdeTails" v-html="Content">
             </div>
@@ -34,7 +34,16 @@ export default {
       Content:null,
       ActivityTime:null,
       ActivityTimeEnd:null,
-      Ids:null
+      Ids:null,
+      nowTime:null,
+      endTime:null,
+      xtime:null,
+      getTime:{
+        state:"立即报名",
+        begin:"已结束",
+        nostate:"未开始"
+      },
+      getstate:null,
     }
   },
   methods:{
@@ -47,7 +56,13 @@ export default {
       }
       activityJoin(data).then((res) => {
         if (res.Success){
-          console.log(res)
+           if(this.getstate == "立即报名"){
+            Toast(res.Msg)
+          }else if (this.getstate == "已结束"){
+            Toast("活动已结束")
+          }else if(this.getstate == "未开始"){
+            Toast("活动还未开会")
+          }
         } else {
           Toast(res.Msg)
         }
@@ -55,7 +70,7 @@ export default {
     },
     intenalDetail() {
       const data = {
-        Id :this.$route.query.Id
+        Id :this.$route.query.Id,
       }
       offlineDetail(data).then((res) => {
         if (res.Success){
@@ -65,7 +80,17 @@ export default {
           this.Ids = res.Data.Id
           this.ActivityTime = res.Data.ActivityTime.replace(/-/g,".")
           this.ActivityTimeEnd = res.Data.ActivityTimeEnd.replace(/-/g,".")
-          console.log(res)
+          this.endTime = new Date(this.ActivityTimeEnd).getTime()
+          this.xtime = new Date( this.ActivityTime).getTime()
+          this.nowTime = new Date().getTime()
+          console.log(this.nowTime)
+          if(this.nowTime <  this.xtime){
+            this.getstate = this.getTime.nostate
+          }else if(this.nowTime >=  this.xtime && this.nowTime <=  this.endTime){
+            this.getstate = this.getTime.state
+          }else if(this.nowTime >  this.endTime){
+           this.getstate = this.getTime.begin
+          }
         } else {
           Toast(res.Msg)
         }
@@ -122,8 +147,9 @@ export default {
         margin: 0 auto;
         margin-top: px(100);
         .new_a{
+            text-align: center;
             font-size:px(32);
-            font-weight:500;
+            font-weight:600;
             color:rgba(34,34,34,1);
             line-height:px(50);
             padding: px(25) 0;

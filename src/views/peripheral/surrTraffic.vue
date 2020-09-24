@@ -45,7 +45,7 @@ export default {
             ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
           })
           this.surrTra_list = res.Data
-          // console.log('11111',this.tabContents)
+          console.log('11111',res)
         } else {
           Toast(res.Msg)
         }

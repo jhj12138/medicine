@@ -16,9 +16,9 @@
           <div class="commodity_li_top">
             <div class="commodity_li_left">
               <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="commodity_li_name">343424</div>
+              <div class="commodity_li_name">{{index + 1}}</div>
               <div class="commodity_li_jin">
-                <span>已上架</span>
+                <!-- <span>已上架</span> -->
               </div>
             </div>
             <div class="commodity_li_right">
@@ -31,14 +31,14 @@
           <div class="commodity_li_bottom">
             <div class="commodity_lis_left">
               <div class="commodity_li_txt1">
-                <span><div class="commodity_li_n">商品名称<span></span></div>：呼吸机</span>
-                <span><div class="commodity_li_n">价格<span></span></div>：面议</span>
-                <span><div class="commodity_li_n">推荐<span></span></div>：面议</span>
+                <span><div class="commodity_li_n">商品名称:<span></span></div>{{item.name}}</span>
+                <span><div class="commodity_li_n">价格:<span></span></div>{{item.Price}}</span>
+                <span><div class="commodity_li_n">描述:<span></span></div><div class="commodity_li_n_ys">{{item.Summary}}</div></span>
               </div>
-              <div class="commodity_li_time"><div class="commodity_li_n">发布时间<span></span></div>：2020.08.19  12:00</div>
+              <div class="commodity_li_time"><div class="commodity_li_n">发布时间<span></span></div>：{{item.addtime}}</div>
             </div>
             <div class="commodity_lis_right">
-              <img src="../../assets/image/dity_img.png" alt="">
+              <img :src="'https://www.zjylz.com' +  imgurl[index]" alt="">
             </div>
           </div>
         </li>
@@ -51,13 +51,32 @@
 </template>
 
 <script>
+import {Obtaincommodity} from "../../api/home"
 export default {
   data() {
     return{
-      list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
+      cid:null,
+      list:[],
+      imgurl:[]
     }
   },
+  mounted(){
+    this.Obtaincommodity()
+  },
   methods:{
+    Obtaincommodity(){
+      this.cid = JSON.parse(sessionStorage.cidInfo)
+      var data = {
+        cid: this.cid.cid
+      }
+      Obtaincommodity(data).then(res=>{
+       this.list=res.Data.Data
+       res.Data.Data.forEach(ele => {
+        this.imgurl.push(ele.ImgList.split('&&')[0])
+       });
+       console.log(this.imgurl)
+      })
+    },
     getList(item,checked,index){
       // if(checked){
 
@@ -79,6 +98,12 @@ export default {
 @function px($px){
   $rem: 75;
   @return ($px/ $rem) + rem;
+}
+.commodity_li_n_ys{
+  width: px(300);
+   white-space: nowrap; /* 规定文本是否折行 */
+  overflow: hidden; /* 规定超出内容宽度的元素隐藏 */
+  text-overflow: ellipsis;
 }
 #commodity{
   width: 100%;
@@ -194,6 +219,9 @@ export default {
                 display: flex;
                 margin-bottom: px(-10);
                 .commodity_li_n{
+              //  white-space: nowrap; /* 规定文本是否折行 */
+              //  overflow: hidden; /* 规定超出内容宽度的元素隐藏 */
+              //  text-overflow: ellipsis;
                   width: px(120);
                   text-align: justify;
                   >span{

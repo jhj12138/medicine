@@ -19,6 +19,22 @@ export const userJoin = apiParams => { //
     params: apiParams,
   })
 }
+ // 展商报名第一步 已登录信息回填
+export const ObtainCid = apiParams => { //
+  return request({
+    url: urlParams + 'Exhibitorinfo/ObtainCid',
+    method: 'get',
+    params: apiParams
+  })
+}
+//获取bsid
+export const exhibitionGetBsid = apiParams => { //
+  return request({
+    url: urlParams + 'Exhibitorinfo/ObtainBsid',
+    method: 'get',
+    params: apiParams
+  })
+}
 
 // 报名参加展会（未登录）
 
@@ -78,6 +94,31 @@ export const userCollectionDel = apiParams => { //
   return request({
     method: 'post',
     url: urlParams + '/user/collection/del',
+    params: apiParams,
+  })
+}
+// 获取站内信
+export const usermessagelist = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/user/message/list',
+    params: apiParams,
+  })
+}
+
+//获取公司信息
+export const getcompany = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/company/Obtain',
+    params: apiParams,
+  })
+}
+//获取参展人员信息
+export const getParticipants = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/Participants',
     params: apiParams,
   })
 }

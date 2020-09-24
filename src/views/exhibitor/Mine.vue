@@ -16,7 +16,7 @@
           </div>
           <div class="mine_name">
             <div class="mine_names">
-              <span>用户民名称</span>
+              <span>{{userList.Title}}</span>
               <div class="mine_names_img">
                 <img src="../../assets/image/mine_six.png" alt="">
               </div>
@@ -27,7 +27,7 @@
         </div>
         <div class="mine_con_bottom">
           <div class="mine_con_mailbox" @click="goMessage">
-            <span>999</span>
+            <span>{{usermessagelgth}}</span>
             <span>站内信</span>
           </div>
           <div class="mine_heng"></div>
@@ -114,13 +114,36 @@
   </div>
 </template>
 <script>
+import {usermessagelist} from '../../api/user'
+import {Obtaincommodity} from '../../api/home'
 export default {
   data() {
     return {
+      userList:null,
+      username:null,
+      usermessagelgth:null,
 
     }
   },
+  mounted(){
+    this.getInformation()
+  },
   methods:{
+    getInformation(){
+      this.userList = JSON.parse(sessionStorage.cidInfo) 
+      console.log(this.userList)
+      //获取站内信列表
+      usermessagelist().then(res=>{
+        this.usermessagelgth = res.Data.Data.length
+      })
+      // //获取商品列表
+      // let data = {
+      //   cid:this.userList.cid
+      // }
+      // Obtaincommodity(data).then(res=>{
+      //   res.Data.Data.length
+      // })
+    },
     returnHome(){
        this.$router.push('/home') //返回首页
     },

@@ -1,7 +1,7 @@
 import request from '../../plugins/request'
 
 const urlParams = 'https://www.zjylz.com/api/'
-export const changepassword = apiParams => { //
+export const changepasswords = apiParams => { //
     return request({
       method: 'post',
       url: urlParams + 'user/pwd/edit',

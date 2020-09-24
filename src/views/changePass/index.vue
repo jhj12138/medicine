@@ -8,13 +8,13 @@
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入原密码" v-model="company">
+        <input type="password" placeholder="请输入原密码" v-model="company">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入新密码" v-model="contacts">
+        <input type="password" placeholder="请输入新密码" v-model="contacts">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请确认密码" v-model="phones">
+        <input type="password" placeholder="请确认密码" v-model="phones">
       </div>
     </div>
     <div class="stand_bottoms">
@@ -26,6 +26,7 @@
 
 <script>
 import { Toast } from 'vant';
+import {changepassword} from '../../api/home';
 export default {
   data() {
     return{
@@ -38,6 +39,27 @@ export default {
   },
   methods:{
     Determine(){
+      var NewPwd = {
+
+        NewPwd:123456,
+        JNewPwd:123456789
+      }
+      if(this.contacts!==this.phones){
+        Toast('两次密码输入不一致')
+      }else{
+        let data = {
+          NewPwd:this.contacts,
+          JNewPwd:this.company
+        }
+      changepassword(data).then(res=>{
+        if(res.Success){
+        Toast(res.Msg)   
+          this.$router.push('/mine')
+        }else{
+        Toast(res.Msg)   
+        }
+      })
+      }
       
     },
     cancel(){

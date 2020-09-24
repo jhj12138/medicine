@@ -8,7 +8,7 @@
       <div class="certif_right">管理</div>
     </div>
     <div class="certif_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
-      <ul ref="scrollRef">
+      <ul ref="scrollRef" v-if="listlen">
         <li
         v-for="(item,index) in list "
         :key = "index"
@@ -16,7 +16,7 @@
           <div class="certif_li_top">
             <div class="certif_li_left">
               <div class="certif_li_yuan"></div>
-              <div class="certif_li_name">证书名称</div>
+              <div class="certif_li_name">{{item.name}}</div>
             </div>
             <div class="certif_li_right" @click="goDetail">
               <span>编辑</span>
@@ -28,10 +28,10 @@
           <div class="certif_li_bottom">
             <div class="certif_lis_left">
               <div class="certif_li_txt1">
-                <span>ID：322</span>
-                <span>排序：2</span>
+                <span>{{item.ID}}</span>
+                <span>{{index+1}}</span>
               </div>
-              <div class="certif_li_time">发布时间：2020.08.19  12:00</div>
+              <div class="certif_li_time">发布时间：{{item.addTime}}</div>
             </div>
             <div class="certif_lis_right">
               <img src="../../assets/image/certif_img.png" alt="">
@@ -39,20 +39,46 @@
           </div>
         </li>
       </ul>
+        <div v-else class="certif_lis_cont">暂无内容....</div>
       <div ref = "scrollRef"></div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+import {getObtainCertificate} from "../../api/home"
 export default {
   data() {
     return {
       busy: false,
-      list:[{},{},{},{},{},{}]
+      list:null,
+      listlen:true,
     }
   },
+  mounted(){
+    this.getObtainCertificate()
+  },
   methods:{
+    getObtainCertificate(){
+      var cid = JSON.parse(sessionStorage.cidInfo)
+      let data = {
+        cid :cid.cid
+      }
+   getObtainCertificate(data).then(res=>{
+      if(res.Success){
+        this.list = res.Data.Data
+        console.log(this.list.length)
+        if(this.list.length == 0){
+          this.listlen = false
+        }else{
+          this.listlen = true
+        }
+      }else{
+        Toast(res.Msg)
+      }
+     })
+    },
     goReturn() {
       this.$router.push('/mine') 
     },
@@ -61,8 +87,8 @@ export default {
     },
     loadMore: function() {
       this.busy = true
-      this.list.push([{},{},{}])
-      console.log('22233444')
+      // this.list.push([{])
+      // console.log('22233444')
       setTimeout(() => {
         this.busy = false
       }, 1000)
@@ -75,6 +101,10 @@ export default {
 @function px($px){
   $rem: 75;
   @return ($px/ $rem) + rem;
+}
+.certif_lis_cont{
+  text-align: center;
+  line-height: px(300);
 }
 #certif{
   width: 100%;

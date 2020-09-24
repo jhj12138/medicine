@@ -28,8 +28,8 @@
           <van-collapse-item title="会议论坛" name="3">
             <div class="header_li">
               <p @click="offlineactive">线下活动</p>
-              <p>云直播</p>
-              <p>云对接</p>
+              <p @click="Cloudlive">云直播</p>
+              <p @click="Clouddocking">云对接</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="科技合作" name="4">
@@ -42,7 +42,7 @@
           <van-collapse-item title="采购交易" name="5">
             <div class="header_li">
               <p @click="gopurtrans">采购信息</p>
-              <p>采购专家库</p>
+              <p @click="goProcurement">采购专家库</p>
             </div>
           </van-collapse-item>
           <van-collapse-item title="培训交流" name="6">
@@ -103,13 +103,27 @@ export default {
     this.changeuser()
   },
   methods:{
+    //云直播
+    Cloudlive(){
+      window.open('https://wx.vzan.com/live/tvchat-725344008?shareuid=73663308&vprid=0&sharetstamp=1600161844289#/')
+    },
+    //云对接
+    Clouddocking(){
+      window.open('https://wx.vzan.com/live/tvchat-725344008?shareuid=73663308&vprid=0&sharetstamp=1600161844289#/')
+    },
     //用户中心跳转
     uesrcont(){
      this.$router.push('/mine')
     },
+    //采购交易库
+    goProcurement(){
+      window.open('###')
+
+    },
     //退出登录
     exitLongin(){
-      sessionStorage.removeItem("Information")
+      sessionStorage.clear()
+      localStorage.clear()
       this.flag = true
       this.bisshow=false
       this.flags = false
@@ -345,7 +359,7 @@ export default {
         overflow: hidden;    
         text-overflow:ellipsis;    
         white-space: nowrap;
-        // padding-left:px(10);
+        padding-left:px(10);
       }
       .header_btn_cont{
         position: absolute;

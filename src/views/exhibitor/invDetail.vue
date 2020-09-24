@@ -16,21 +16,21 @@
           <div class="invdetail_li_top">
             <div class="invdetail_li_left">
               <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="invdetail_li_name">**展览会</div>
+              <div class="invdetail_li_name">{{item.name}}</div>
               <div class="invdetail_li_jin">
-                <span>已申请</span>
+                <!-- <span>已申请</span> -->
               </div>
             </div>
             <div class="invdetail_li_right">
-              <span>下载发票</span>
+              <span @click="Download">下载发票</span>
               <div class="invdetail_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
               </div>
             </div>
           </div>
           <div class="invdetail_li_bottom">
-            <div class="invdetail_li_span"><div class="invdetail_li_tit">申请时间：2020.08.19</div></div>
-            <div class="invdetail_li_span"><div class="invdetail_li_tit">展会时间：2020.08.12-2020.09.12</div></div>
+            <div class="invdetail_li_span"><div class="invdetail_li_tit">申请时间：{{item.startsj}}</div></div>
+            <div class="invdetail_li_span"><div class="invdetail_li_tit">展会时间：{{item.addtime}}-{{item.endsj}}</div></div>
           </div>
         </li>
       </ul>
@@ -42,13 +42,29 @@
 </template>
 
 <script>
+import { Toast } from 'vant'
+import{getObtainInvoiceList} from "../../api/home"
 export default {
   data() {
     return{
-      list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
+      params:{},
+      list:[],
     }
   },
+  mounted(){
+   this.getObtainInvoiceList()
+  },
   methods:{
+    Download(){
+      Toast("请前往官网下载")
+    },
+    getObtainInvoiceList(){
+      this.params.cid = JSON.parse(sessionStorage.cidInfo).cid
+      getObtainInvoiceList(this.params).then(res=>{
+        this.list = res.Data.Data
+        console.log(res)
+      })
+    },
     goReturn() {
       this.$router.push('/mine')
     },
@@ -136,6 +152,10 @@ export default {
               margin-right: px(16);
             }
             .invdetail_li_name{
+              width: px(400);
+              overflow: hidden;
+              text-overflow:ellipsis;
+              white-space: nowrap;
               font-size: 16px;
               color: #212121;
               margin:0 px(30) 0 px(17);

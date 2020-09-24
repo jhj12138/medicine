@@ -62,6 +62,7 @@
 
 <script>
 import { Toast } from 'vant';
+import {addObtainInvoiceList} from "../../api/home"
 export default {
   data() {
     return{
@@ -99,7 +100,28 @@ export default {
       if(!this.rename){Toast('请输入收件人姓名');return}
       if (!(/^1[3456789]\d{9}$/.test(this.iphone))){Toast('开票电话有误');return} 
       if (!(/^1[3456789]\d{9}$/.test(this.iphone))){Toast('收件手机有误');return} 
-    }
+     
+      let data={
+        cid:JSON.parse(sessionStorage.cidInfo).cid,
+        company:this.corporate,
+        address:this.address,
+        Telephone:this.iphone,
+        number:this.axpayer,
+        collectcompany:this.receiv,
+        collectTelephone:this.reiphone,
+        collectaddress:this.readdress,
+        collectname:this.rename
+      }
+     addObtainInvoiceList(data).then(res=>{
+       if(res.Success){
+ console.log(res)
+       }else{
+         Toast(res.Msg)
+       }
+       
+      })
+  
+  }
   }
 }
 </script>

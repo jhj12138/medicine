@@ -41,6 +41,7 @@
 <script>
 import {login} from '../../api/register'
 import { Toast } from 'vant';
+import {ObtainCid,exhibitionGetBsid} from '../../api/user'
 export default {
   data() {
     return{
@@ -61,8 +62,35 @@ export default {
       this.$router.push('/home')
     },
     goRegister(){
-      console.log('register')
       this.$router.push('/register')
+    },
+    getBsid () {
+      exhibitionGetBsid({}).then(res => {
+           console.log(res)
+        if (res.Success) {
+          sessionStorage.bsid = res.Data.Bsid
+          // this.getOid()
+        } else {
+          // this.$message.error(res.Msg)
+          Toast(res.Msg)
+        }
+      })
+    },
+    getCidInfo () {
+       var data = {uid: sessionStorage.Uid}
+      ObtainCid(data).then(res => {
+       console.log(res)
+        if (res.Success) {
+          sessionStorage.cidInfo = JSON.stringify(res.Data)
+          this.$router.push({
+            path: '/home'
+          })
+        } else {
+          // this.$message.error(res.Msg)
+          Toast(res.Msg)
+
+        }
+      })
     },
     subMit(){
       if(!this.UserName){Toast('请输入用户名');return}
@@ -77,11 +105,23 @@ export default {
           Toast({
             message: '登录成功',
           });
-          this.$router.push('/home')
+          
           console.log('res.Data',res.Data)
           localStorage.setItem('yzhToken', res.Data.Token)
           localStorage.setItem('tokenId', res.Data.Id)
           sessionStorage.setItem('Information',res.Data.UserName)
+          sessionStorage.Token = res.Data.Token
+          sessionStorage.Uid = res.Data.Id
+          sessionStorage.Uname = res.Data.UserName
+          sessionStorage.IdentityType = res.Data.IdentityType
+          sessionStorage.Company = res.Data.Company
+          sessionStorage.ContactPerson = res.Data.ContactPerson
+          sessionStorage.Phone = res.Data.Phone
+          sessionStorage.PosiTion = res.Data.PosiTion
+          sessionStorage.Email = res.Data.Email
+          this.getCidInfo()
+          this.getBsid()
+          // this.$router.push('/home')
         }else{
           Toast({
             message: '登录失败',

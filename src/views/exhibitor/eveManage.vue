@@ -27,7 +27,7 @@
           <div class="evemage_li_top">
             <div class="evemage_li_left">
               <div class="evemage_li_yuan"></div>
-              <div class="evemage_li_name">**展览会</div>
+              <div class="evemage_li_name">{{item.Title}}</div>
               <div class="evemage_li_jin">
                 <span>进行中</span>
               </div>
@@ -50,14 +50,31 @@
   </div>
 </template>
 <script>
+import { Toast } from 'vant';
+import { getParticipants } from '../../api/user/index';
 export default {
   data() {
     return {
-      list:[{},{},{},{},{},{}],
-      v_flag:true
+      list:[],
+      v_flag:true,
+      params:{}
     }
   },
+  mounted(){
+    this.getParticipants()
+  },
   methods:{
+    getParticipants(){
+      this.params.cid = JSON.parse(sessionStorage.cidInfo).cid
+      getParticipants(this.params).then(res=>{
+        if(res.Success){
+        this.list = res.Data.Data
+
+        }else{
+          Toast(res.Msg)
+        }
+      })
+    },
     goDetail(){
       this.$router.push('/evedail') //跳转到参展人员管理详情
     },

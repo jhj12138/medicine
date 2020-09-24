@@ -8,15 +8,15 @@
       <div class="message_right">管理</div>
     </div>
     <div class="message_con">
-      <ul>
+      <ul v-if="usermessagelflag">
         <li 
-        v-for="(item,index) in list "
+        v-for="(item,index) in usermessagel "
         :key = "index"
         >
           <div class="message_li_top">
             <div class="message_li_left">
               <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="message_li_name">**展览会</div>
+              <div class="message_li_name">{{item.Title}}</div>
               <div class="message_li_jin">
                 <span>已读</span>
               </div>
@@ -29,25 +29,46 @@
             </div>
           </div>
           <div class="message_li_bottom">
-            <div class="message_li_span"><div class="message_li_tit"><span>主</span><span>题</span></div>：<span>系统</span></div>
-            <div class="message_li_span"><div class="message_li_tit"><span>内</span><span>容</span><span>摘</span><span>要</span></div>：<span>我对这个商品很感兴趣我对这个商品很感兴趣我对这个商品很感兴趣我对这个商品很感兴趣</span></div>
-            <div class="message_li_span"><div class="message_li_tit"><span>展</span><span>会</span><span>时</span><span>间</span></div>：<span>2020年8月20日-2020年9月20日</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>主</span><span>题</span></div>：<span>{{item.Summary}}</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>内</span><span>容</span><span>摘</span><span>要</span></div>：<span>{{item.Content}}</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>展</span><span>会</span><span>时</span><span>间</span></div>：<span>{{item.CreateTime}}</span></div>
           </div>
         </li>
       </ul>
+      <div v-else  class="message_con_cont">暂无内容.....</div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+import {usermessagelist} from '../../api/user'
+
 export default {
   data() {
     return{
       list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
-
+      usermessagel:null,
+      usermessagelflag:true,
     }
   },
+  mounted(){
+    this.getLists()
+  },
   methods:{
+    getLists(){
+    usermessagelist({}).then(res=>{
+      if(res.Success){
+          this.usermessagel = res.Data.Data
+          if(this.usermessagel.length == 0){
+            this.usermessagelflag = false
+          }
+      }else{
+        Toast(res.Msg)
+      }
+   
+      })
+    },
     getList(item,checked,index){
       // if(checked){
 
@@ -188,6 +209,9 @@ export default {
         }
       }
     }
+  }
+  .message_con_cont{
+    text-align: center;
   }
   @media(max-width: 340px){
     .message_li_tit{

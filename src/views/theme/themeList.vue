@@ -66,7 +66,7 @@
       <div class="fore_con_li"
       v-for="(item,index) in tabContents"
       :key="index"
-      @click="goDetail(item.Id)">
+      @click="goDetail(item.Id,index)">
         <div class="fore_li_left">
           <div class="fore_li_bg"></div>
           <img :src="item.ImgUrl" alt="">
@@ -128,8 +128,8 @@ export default {
       this.CurPage = 0
       this.loadMore()
     },
-    goDetail(ids) {
-      this.$router.push({ path: '/hotcourse', query: { Id: ids} })
+    goDetail(ids,index) {
+      this.$router.push({ path: '/hotcourse', query: { Id: ids,TypeId:index + 1} })
     },
     // this.$router.push({ path: '/news', query: { Id: 9} })
     onConfirm2(value,index) {
@@ -181,6 +181,7 @@ export default {
       }
       // console.log(data)
       lessionList(data).then((res) => {
+        console.log(res)
         this.busy = false
         if (res.Success){
           // setTimeout(() => {

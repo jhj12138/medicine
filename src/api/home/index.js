@@ -10,7 +10,14 @@ export const bannerImg = apiParams => { //
     params: apiParams,
   })
 }
-
+//修改密码
+export const changepassword = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'user/pwd/edit',
+    params: apiParams,
+  })
+}
 // Banner数据
 export const bannerList = apiParams => { //
   return request({
@@ -43,6 +50,14 @@ export const homeHistory = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'hone/history',
+    params: apiParams,
+  })
+}
+// 往届回顾详情跳转
+export const homeHistorycontent = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'hone/Historycontent',
     params: apiParams,
   })
 }
@@ -274,7 +289,22 @@ export const lessionCommentList = apiParams => {
     params: apiParams,
   })
 }
-
+//课程评论
+export const lessionComment = apiParams => { 
+  return request({
+    method: 'get',
+    url: urlParams + 'lession/commentList',
+    params: apiParams,
+  })
+}
+//评论课程
+export const getcomm = apiParams => { 
+  return request({
+    method: 'POST',
+    url: urlParams + '/user/lession/comment',
+    params: apiParams,
+  })
+}
 // 热门课程
 export const lessionHotlist = apiParams => { 
   return request({
@@ -350,7 +380,22 @@ export const exhibitorcommoditys = apiParams => { //
     params: apiParams,
   })
 }
-
+// 添加商品
+export const AddgoodsContent = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/ObtainProductType',
+    params: apiParams,
+  })
+}
+// 获取证书列表
+export const getObtainCertificate = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainCertificate',
+    params: apiParams,
+  })
+}
 // 获取新闻详情
 export const NewsContent = apiParams => { //
   return request({
@@ -359,4 +404,29 @@ export const NewsContent = apiParams => { //
     params: apiParams,
   })
 }
+//获取展商列表
+export const getexlist = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/list',
+    params: apiParams,
+  })
+}
+//获取发票信息
+export const getObtainInvoiceList = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/ObtainInvoiceList',
+    params: apiParams,
+  })
+}
+//添加发票信息
+export const addObtainInvoiceList = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/ADDInvoice',
+    params: apiParams,
+  })
+}
+
 

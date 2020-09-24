@@ -53,26 +53,26 @@
           <img src="../../assets/image/up_picker.png" alt="">
         </div>
       </div>
-      <div class="comrel_con_inp1">
-       <van-field
+      <!-- <div class="comrel_con_inp1"> -->
+       <!-- <van-field
           readonly
           clickable
           :value="value3"
           placeholder="所属分类"
           @click="showPicker3 = true"
-        />
-        <van-popup v-model="showPicker3" round position="bottom">
+        /> -->
+        <!-- <van-popup v-model="showPicker3" round position="bottom">
           <van-picker
             show-toolbar
             :columns="columns3"
             @cancel="showPicker3 = false"
             @confirm="onConfirm3"
           />
-        </van-popup>
-        <div class="comrel_up">
+        </van-popup> -->
+        <!-- <div class="comrel_up">
           <img src="../../assets/image/up_picker.png" alt="">
-        </div>
-      </div>
+        </div> -->
+      <!-- </div> -->
     </div>
     <div class="comrel_update">
       <div class="comrel_updates">
@@ -96,6 +96,7 @@
 
 <script>
 import { Toast } from 'vant';
+import { AddgoodsContent } from '../../api/home';
 export default {
   data() {
     return {
@@ -103,18 +104,21 @@ export default {
       columns: ['推荐','不推荐'],
       showPicker: false,
       value2: '',
-      columns2: ['分类1','分类2','分类3'],
+      columns2: ['测试','其他类','综合类','手术器械类','内视镜类'],
       showPicker2: false,
       value3: '',
-      columns3: ['分类1','分类2','分类3'],
       showPicker3: false,
       fileList: [
        
       ],
       names:'',
       price:'',
-      textareas:''
+      textareas:'',
+      sum:"",
     };
+  },
+  mounted(){
+    // this.AddgoodsContent()
   },
   methods: {
     onConfirm(value,index) {
@@ -145,8 +149,28 @@ export default {
       if(!this.value){Toast('请输入是否推荐');return}
       if(!this.value2){Toast('请输入商品状态');return}
       if(this.fileList.length == 0){Toast('请上传商品图片');return}
-      if(!this.value3){Toast('请输入所属分类');return}
+      // if(!this.value3){Toast('请输入所属分类');return}
       if(!this.textareas){Toast('请填写商品介绍');return}
+       if(this.value=="推荐"){
+        this.sum=1
+      }else{
+        this.sum=0
+      }
+      //添加商品信息
+      var goodsid=JSON.parse(sessionStorage.cidInfo)
+      let data = {
+        cid:goodsid.cid,
+        Price:this.price,
+        name:this.names,
+        isrecommend:this.sum,
+        classid:this.value2,
+        // imgurl:"",
+        Summary:this.textareas,
+        
+      }
+      AddgoodsContent(data).then(res=>{
+        console.log(res)
+      })
     }
   },
 }

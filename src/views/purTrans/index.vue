@@ -45,7 +45,7 @@ export default {
       console.log(data)
       newsList(data).then((res) => {
         this.busy = false
-        console.log('jhjhjhjhj',this.busy)
+        console.log('jhjhjhjhj',res)
         if (res.Success){
           // setTimeout(() => {
           if (res.Data.Data.length >0) {

@@ -24,13 +24,16 @@
       <div class="stand_updates">
         <div class="stand_update_top">请上传公司logo</div>
         <div class="stand_update_main">
-          <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/>
+          <!-- <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/> -->
+          <img :src="imgurl" alt="">
         </div>
       </div>
       <div class="stand_updates">
         <div class="stand_update_top">请上传公司图片</div>
         <div class="stand_update_main">
-          <van-uploader :after-read="afterRead2" v-model="fileList2" :max-count="1"/>
+          <!-- <van-uploader :after-read="afterRead2" v-model="fileList2" :max-count="1"/> -->
+          <img :src="imgurl1" alt="">
+
         </div>
       </div>
     </div>
@@ -48,6 +51,7 @@
 
 <script>
 import { Toast } from 'vant';
+import { ObtainContactUs} from '../../api/home';
 export default {
   data() {
     return{
@@ -61,10 +65,30 @@ export default {
       contacts:'',
       phones:'',
       email:'',
-      textareas:''
+      textareas:'',
+      imgurl:"",
+      imgurl1:"",
     }
   },
+  mounted(){
+    this.ObtainContactUs()
+  },
   methods:{
+    ObtainContactUs(){
+      var data = {
+        cid: JSON.parse(sessionStorage.cidInfo).cid
+      }
+      ObtainContactUs(data).then(res=>{
+        this.company = res.Data.abbreviation
+        this.phones = res.Data.phone
+        this.email = res.Data.mailbox
+        this.contacts = res.Data.contacts
+        this.imgurl = "https://www.zjylz.com" + res.Data.LOGO.split('&&')[0]
+        this.imgurl1 = "https://www.zjylz.com" + res.Data.imgurl.split('&&')[0]
+        this.textareas = res.Data.introduce
+        console.log( res.Data)
+      })
+    },
     goReturn() {
       this.$router.push('/mine')
     },
@@ -152,6 +176,9 @@ export default {
     }
     .stand_update_main{
       margin-top: px(30);
+      img{
+        width: px(200);
+      }
       .van-uploader{
         width: px(244);
         height: px(156);

@@ -109,6 +109,7 @@ export default {
         margin: 0 auto;
         margin-top: px(100);
         .new_a{
+            text-align: center;
             font-size:px(32);
             font-weight:600;
             color:rgba(34,34,34,1);

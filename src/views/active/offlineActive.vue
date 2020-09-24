@@ -10,8 +10,8 @@
       <div class="exchange_li"
       v-for="(item,index) in tabContents"
       :key="index">
-        <div class="exchange_li_left">
-          <img :src="item.ImgUrl" alt="">
+        <div class="exchange_li_left" @click="goDetail(item.Id)">
+          <img :src="item.ImgUrl" alt="" >
         </div>
         <div class="exchange_li_right">
           <div class="exchange_li_name">{{item.Title}}</div>
@@ -148,13 +148,20 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         margin-left: px(30);
+        flex-grow: 1;
+        width: 0;
         .exchange_li_name{
-          font-weight: bold;
-          font-size: 16px;
+        overflow:hidden; 
+        text-overflow:ellipsis;
+        white-space:nowrap;
+        font-weight: bold;
+        font-size: 16px;
         }
         .exchange_li_address{
           display: flex;
           align-items: center;
+          flex-grow: 1;
+          //  width: 0;
           .exchange_address_img{
             width: px(16);
             height: px(21);
@@ -168,11 +175,9 @@ export default {
             color: #565656;
             margin-left: px(17);
             word-break: break-all;
-            text-overflow: ellipsis;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
+            overflow:hidden; 
+            text-overflow:ellipsis;
+            white-space:nowrap;
           }
         }
         .exchange_li_time{

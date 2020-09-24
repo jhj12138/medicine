@@ -146,9 +146,9 @@
       <div class="home_video_swiper">
         <div class="swiper-container">
           <div class="swiper-wrapper">
-            <div class="swiper-slide swiper_item" v-for="(item,index) in swiper_list" :key="index">
+            <div class="swiper-slide swiper_item" v-for="(item,index) in swiper_list" :key="index" @click="govideoxq(item.LinkUrl)">
               <div class="home_video_top">
-                <img :src="item.ImgUrl" alt="">
+                <img :src="'https://www.zjylz.com' +  item.ImgUrl" alt="">
               </div>
               <div class="home_video_bottom">
                 <span>{{item.Title}}</span>
@@ -169,7 +169,7 @@
             <div class="making_activitys_list"
             v-for="(item,index) in review_list" 
             :key = "index"
-            @click="getReview(index)">
+            @click="getReview(index,item.ID)">
               <img :src="item.ImgUrl" alt="">
               <div class="home_review_flag"
               :class="review_index == index?'home_review_flags':''">
@@ -212,7 +212,7 @@
 <script>
 import Header from '../Header'
 import Footer from '../Footer'
-import {bannerImg,bannerList,homeData,homeVideo,homeHistory,homeCooperation,newsList,ServiceDownload,ServiceObtainCid} from '../../api/home'
+import {ObtainCid,bannerImg,bannerList,homeData,homeVideo,homeHistory,homeCooperation,newsList,ServiceDownload,ServiceObtainCid,homeHistorycontent} from '../../api/home'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { Toast,Dialog} from 'vant';
 export default {
@@ -247,10 +247,16 @@ export default {
       // review_list:[{time:'15'},{time:'16'},{time:'17'}]
       review_list:null,
       swiper_two:[],
-      clsId:9
+      clsId:9,
+      imgurlall:[],
     }
   },
   methods: {
+ 
+    //跳转视频详情
+    govideoxq(linkurl){
+      window.open(linkurl)
+    },
     // 跳转回首页
     toFlag() {
       event.stopPropagation()
@@ -307,8 +313,11 @@ export default {
         this.$router.push({ path: '/purtrans'})
       }
     },
-    getReview(index) {
+    getReview(index,id) {
       this.review_index = index
+       homeHistorycontent({id}).then(res=>{
+         window.open('###')
+       })
     },
     changeFlag(flag,event){
       this.flag = false
@@ -339,11 +348,15 @@ export default {
     },
     homeVideo(){
       homeVideo().then((res) => {
+       
         if (res.Success){
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
+            // ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
+            // this.imgurlall.push(ele.ImgUrl)
+              console.log(ele)
           })
           this.swiper_list = res.Data
+         
           this.$nextTick(function () {
             this.Swipers()
           })

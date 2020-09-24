@@ -10,7 +10,7 @@
       <div class="exchange_li"
       v-for="(item,index) in tabContents"
       :key="index">
-        <div class="exchange_li_left">
+        <div class="exchange_li_left" @click="goDetail(item.Id)">
           <img :src="item.ImgUrl" alt="">
         </div>
         <div class="exchange_li_right">
@@ -44,7 +44,13 @@ export default {
       CurPage:0,
       PageSize:5,
       busy: false,
-      tabContents:[]
+      tabContents:[],
+      nowTime:null,
+      getTime:{
+        state:"立即报名",
+        begin:"已结束",
+        nostate:"未开始"
+      }
     }
   },
   methods:{
@@ -72,8 +78,9 @@ export default {
               ele.ActivityTime = ele.ActivityTime.replace(/-/g,".")
               ele.ActivityTimeEnd = ele.ActivityTimeEnd.replace(/-/g,".")
               this.tabContents.push(ele)
+              // console.log(res)
             })
-            console.log(res.Data)
+            // console.log(res.Data)
           } else {
             this.busy = true
           }
@@ -148,7 +155,12 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         margin-left: px(30);
+         flex-grow: 1;
+         width: 0;
         .exchange_li_name{
+           overflow:hidden; 
+            text-overflow:ellipsis;
+            white-space:nowrap;
           font-weight: bold;
           font-size: 16px;
         }

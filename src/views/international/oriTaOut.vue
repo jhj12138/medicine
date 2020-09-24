@@ -33,6 +33,7 @@ export default {
         Id :this.$route.query.Id
       }
       intenalDetail(data).then((res) => {
+        console.log(res)
         if (res.Success){
           this.Title = res.Data.Title
           this.PubTime = res.Data.PubTime
@@ -97,13 +98,15 @@ export default {
         margin: 0 auto;
         margin-top: px(100);
         .new_a{
+            text-align: center;
             font-size:px(32);
-            font-weight:500;
+            font-weight:600;
             color:rgba(34,34,34,1);
             line-height:px(50);
             padding: px(25) 0;
         }
         .new_b{
+            text-align: center;
             font-size:px(24);
             font-weight:bold;
             color:rgba(136,136,136,1);

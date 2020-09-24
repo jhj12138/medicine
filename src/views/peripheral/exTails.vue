@@ -10,9 +10,9 @@
         <div class="new_top">
             <div class="new_a">{{Title}}</div>
             <div class="new_b">{{starttime}}--{{endtime}}</div>
-            <!-- <div class="new_c">
-                <img src="../../assets/image/fore_img.png" alt="">
-            </div> -->
+            <div class="new_c">
+                <img :src="imgurl" alt="">
+            </div>
             <div class="new_d" v-html="Content">
 
                 <!-- <div>飞利浦在历代经典产品的基础上，不断超越心脏、神经、肿瘤、血管介入等专业领域的创新。在全新的UNIQ高端融合平台上，我们的创新将突破传统硬件升级的局限，更长远的定位于融合优越图像和极低剂量的前沿趋势。 临床使用者将真正感受到极低剂量的差异，和多学科图像融合带来的震撼。尤其在发展迅速的肿瘤介入领域，UNIQ高端平台将支持临床做出更加快速精准的诊疗。</div>
@@ -32,7 +32,8 @@ export default {
       Title:'',
       starttime:'',
       endtime:'',
-      Content:''
+      Content:'',
+      imgurl:"",
     }
   },
   methods:{
@@ -41,7 +42,7 @@ export default {
     },
     ServiceObtainBsid() {
       ServiceObtainBsid().then((res) => {
-        // console.log(res.Data.Bsid)
+        console.log(res.Data)
         if (res.Success){
             ServiceExhibition({ID:res.Data.Bsid}).then((ele) => {
               console.log(ele)
@@ -50,6 +51,7 @@ export default {
                 this.starttime = ele.Data.starttime
                 this.endtime = ele.Data.endtime
                 this.Content = ele.Data.Content
+                this.imgurl = 'https://www.zjylz.com' + ele.Data.imgurl
               } else {
                 Toast(res.Msg)
               }
@@ -112,13 +114,15 @@ export default {
         margin: 0 auto;
         margin-top: px(100);
         .new_a{
+            text-align: center;
             font-size:px(32);
-            font-weight:500;
+            font-weight:600;
             color:#222222;
             line-height:px(50);
             padding: px(25) 0;
         }
         .new_b{
+            text-align: center;
             font-size:px(24);
             font-weight:bold;
             color:rgba(136,136,136,1);
