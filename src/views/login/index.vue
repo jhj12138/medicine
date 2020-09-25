@@ -41,7 +41,7 @@
 <script>
 import {login} from '../../api/register'
 import { Toast } from 'vant';
-import {ObtainCid,exhibitionGetBsid} from '../../api/user'
+import {ObtainCid,exhibitionGetBsid,ObtainOid} from '../../api/user'
 export default {
   data() {
     return{
@@ -57,6 +57,20 @@ export default {
       // }
       // this.$router.push('/retpassword').catch(err => err)
       // this.$router.replace({path:'/retpassword'})
+    },
+    ObtainOid(){
+      var data = {
+        cid:JSON.parse(sessionStorage.cidInfo).cid,
+        bsid:sessionStorage.bsid
+      }
+      ObtainOid(data).then(res=>{
+        if(res.Success){
+        sessionStorage.oid = res.data
+          
+        }else{
+          Toast(res.Msg)
+        }
+      })
     },
     goReturn(){
       this.$router.push('/home')
@@ -82,9 +96,8 @@ export default {
        console.log(res)
         if (res.Success) {
           sessionStorage.cidInfo = JSON.stringify(res.Data)
-          this.$router.push({
-            path: '/home'
-          })
+          this.ObtainOid()
+          this.$router.push('/home')
         } else {
           // this.$message.error(res.Msg)
           Toast(res.Msg)
@@ -102,9 +115,6 @@ export default {
       login(data).then((res) => {
         console.log(res)
         if(res.Success && res.Msg !== '用户名或密码错误'){
-          Toast({
-            message: '登录成功',
-          });
           
           console.log('res.Data',res.Data)
           localStorage.setItem('yzhToken', res.Data.Token)
@@ -121,7 +131,11 @@ export default {
           sessionStorage.Email = res.Data.Email
           this.getCidInfo()
           this.getBsid()
-          // this.$router.push('/home')
+          // this.ObtainOid()
+          this.$router.push('/home')
+          Toast({
+            message: '登录成功',
+          });
         }else{
           Toast({
             message: '登录失败',

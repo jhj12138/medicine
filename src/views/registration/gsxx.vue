@@ -8,27 +8,27 @@
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入用户昵称" v-model="username">
+        <input type="text" placeholder="请输入用户昵称" v-model="formData.username">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系人姓名" v-model="lxname">
+        <input type="text" placeholder="请输入联系人姓名" v-model="formData.name">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入职务"  v-model="userpost">
+        <input type="text" placeholder="请输入职务"  v-model="formData.post">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系电话"  v-model="suerphone">
+        <input type="text" placeholder="请输入联系电话"  v-model="formData.phone">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）"  v-model="Title">
+        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）"  v-model="formData.Title">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）"  v-model="eTitle">
+        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）"  v-model="formData.eTitle">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入统一社会信用代码"  v-model="code">
+        <input type="text" placeholder="请输入统一社会信用代码"  v-model="formData.code">
       </div>
       <div class="comrel_con_inp1">
         <van-cell is-link @click="showPopup" v-model="showAddr">
@@ -54,36 +54,36 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入详细地址"  v-model="address">
+        <input type="text" placeholder="请输入详细地址"  v-model="formData.address">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司网址"  v-model="website">
+        <input type="text" placeholder="请输入公司网址"  v-model="formData.website">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编"  v-model="Postcode">
+        <input type="text" placeholder="请输入邮编"  v-model="formData.Postcode">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司电话"  v-model="Telephone">
+        <input type="text" placeholder="请输入公司电话"  v-model="formData.Telephone">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司邮编"  v-model="Postcode">
+        <input type="text" placeholder="请输入公司邮编"  v-model="formData.Postcode">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司简称（1-5个中文字符）"  v-model="abbreviation">
+        <input type="text" placeholder="请输入公司简称（1-5个中文字符）"  v-model="formData.abbreviation">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请选择公司性质"  v-model="nature">
+        <input type="text" placeholder="请选择公司性质"  v-model="formData.nature">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期"  v-model="establish">
+        <input type="text" placeholder="请输入成立日期"  v-model="formData.establish">
       </div>
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="people"
+          :value="formData.people"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -100,13 +100,13 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期" v-model="establish">
+        <input type="text" placeholder="请输入成立日期" v-model="formData.establish">
       </div>
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="Industryrb"
+          :value="formData.Industryrb"
           placeholder="请选择公司主营产品"
           @click="showPicker3 = true"
         />
@@ -168,7 +168,7 @@ export default {
       columns: ['男','女'],
       showPicker: false,
       value2: '',
-      columns2: ['1','2'],
+      columns2: ['10-20','20-50','50-200','200-500','大于500'],
       showPicker2: false,
       value3: '',
       columns3: ['产品1','产品2'],
@@ -191,27 +191,30 @@ export default {
       fileList4: [
        {url:null}
       ],
-      username:"",
-      lxname:"",
-      userpost:"",
-      suerphone:"",
-      Title:"",
-      eTitle:"",
-      code:"",
-      address:"",
-      website:"",
-      Fax:"",
-      Telephone:"",
-      Postcode:"",
-      abbreviation:"",
-      nature:"",
-      establish:"",
-      Industryrb:"",
-      people:"",
-      imgurl:"",
-      imgurl2:"",
-      imgurl3:"",
-      imgurl4:""
+      formData:{
+        username:"",
+        name:"",
+        post:"",
+        phone:"",
+        Title:"",
+        eTitle:"",
+        code:"",
+        address:"",
+        website:"",
+        Fax:"",
+        Telephone:"",
+        Postcode:"",
+        abbreviation:"",
+        nature:"",
+        establish:"",
+        Industryrb:"",
+        people:"",
+        Patentcertificate:"",
+        authorization:"",
+        certificate:"",
+        license:""
+      },
+     
     }
   },
   mounted(){
@@ -219,17 +222,18 @@ export default {
   },
   methods:{
       goxzzw(){
-       if(!this.username){Toast('请输入用户名');return}
-        if(!this.lxname){Toast('请输入联系人姓名');return}
-        if(!this.Title){Toast('请输入公司中文名称（必须与营业执照公司名称一致）');return}
-        if(!this.eTitle){Toast('请输入公司英文名称（如无英文请填写公司拼音）');return}
-        if(!this.code){Toast('请输入统一社会信用代码');return}
-        if(!this.showAddr){Toast('请输入详细地址');return}
-        if(!this.address){Toast('请输入密码');return}
-        if(!this.website){Toast('请输入公司网址');return}
-        if(!this.Postcode){Toast('请输入邮编');return}
-        if(!this.Telephone){Toast('请输入公司电话');return}
-        if(!this.Postcode){Toast('请输入公司邮编');return}
+        if(!this.formData.username){Toast('请输入用户昵称');return}
+        if(!this.formData.name){Toast('请输入联系人姓名');return}
+        if(!this.formData.Title){Toast('请输入公司中文名称（必须与营业执照公司名称一致）');return}
+        if(!this.formData.eTitle){Toast('请输入公司英文名称（如无英文请填写公司拼音）');return}
+        if(!this.formData.code){Toast('请输入统一社会信用代码');return}
+        if(!this.formData.abbreviation){Toast('请输入详细地址');return}
+        if(!this.formData.address){Toast('请输入详细地址');return}
+        if(!this.formData.website){Toast('请输入公司网址');return}
+        if(!this.formData.Postcode){Toast('请输入邮编');return}
+        if(!this.formData.Telephone){Toast('请输入公司电话');return}
+        if(!this.formData.Postcode){Toast('请输入公司邮编');return}
+        sessionStorage.formdata = JSON.stringify(this.formData)
           this.$router.push("/ChooseBooth")
       },
     getObtainraccount(){
@@ -247,32 +251,32 @@ export default {
       getObtainraccount(data).then(res=>{
         console.log(res)
         if(res.Success){
-        this.username = res.Data.username
-        this.lxname = res.Data.name
-        this.userpost = res.Data.post
-        this.suerphone = res.Data.phone
-        this.Title = res.Data.Title
-        this.eTitle = res.Data.eTitle
-        this.code = res.Data.code
-        this.address = res.Data.address
-        this.website = res.Data.website
-        this.Fax = res.Data.Fax
-        this.Telephone = res.Data.Telephone
-        this.Postcode = res.Data.Postcode
-        this.abbreviation = res.Data.abbreviation
-        this.nature = res.Data.nature
-        this.establish = res.Data.establish
-        this.Industryrb = res.Data.Industryrb
-        this.people = res.Data.people
-        this.imgurl = 'https://www.zjylz.com' + res.Data.Patentcertificate.split("&&")[0]
-        this.imgurl2 = 'https://www.zjylz.com' + res.Data.authorization.split("&&")[0]
-        this.imgurl3 = 'https://www.zjylz.com' + res.Data.certificate.split("&&")[0]
-        this.imgurl4 = 'https://www.zjylz.com' + res.Data.license.split("&&")[0]
-        this.fileList4[0].url = this.imgurl4
-        this.fileList3[0].url = this.imgurl3
-        this.fileList2[0].url = this.imgurl2
-        this.fileList[0].url = this.imgurl
-        console.log(this.imgurl)
+        this.formData.username = res.Data.username
+        this.formData.name = res.Data.name
+        this.formData.post = res.Data.post
+        this.formData.phone = res.Data.phone
+        this.formData.Title = res.Data.Title
+        this.formData.eTitle = res.Data.eTitle
+        this.formData.code = res.Data.code
+        this.formData.address = res.Data.address
+        this.formData.website = res.Data.website
+        this.formData.Fax = res.Data.Fax
+        this.formData.Telephone = res.Data.Telephone
+        this.formData.Postcode = res.Data.Postcode
+        this.formData.abbreviation = res.Data.abbreviation
+        this.formData.nature = res.Data.nature
+        this.formData.establish = res.Data.establish
+        this.formData.Industryrb = res.Data.Industryrb
+        this.formData.people = res.Data.people
+        this.formData.Patentcertificate = 'https://www.zjylz.com' + res.Data.Patentcertificate.split("&&")[0]
+        this.formData.authorization = 'https://www.zjylz.com' + res.Data.authorization.split("&&")[0]
+        this.formData.certificate = 'https://www.zjylz.com' + res.Data.certificate.split("&&")[0]
+        this.formData.license = 'https://www.zjylz.com' + res.Data.license.split("&&")[0]
+        this.fileList4[0].url = this.formData.license
+        this.fileList3[0].url = this.formData.certificate
+        this.fileList2[0].url = this.formData.authorization
+        this.fileList[0].url =  this.formData.Patentcertificate
+        console.log(this.formData)
         }else{
           Toast(res.Msg)
         }

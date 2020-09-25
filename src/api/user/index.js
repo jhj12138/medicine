@@ -10,6 +10,14 @@ export const OnlineCode = apiParams => { //
     params: apiParams,
   })
 }
+//判断是否报名
+export const ObtainOid = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/Exhibitorinfo/Obtainoid',
+    params: apiParams,
+  })
+}
 // 报名参加展会
 
 export const userJoin = apiParams => { //

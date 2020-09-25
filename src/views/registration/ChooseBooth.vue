@@ -28,7 +28,7 @@
       <van-collapse v-model="activeNames" class="xzzw">
           <van-collapse-item :title="title" name="1">
             <div class="header_li">
-              <p v-for="(item,index) in list"  :key="index" @click="changetitle(index)" >{{item.name}}</p>
+              <p v-for="(item,index) in list"  :key="index" @click="changetitle(index)" >{{item.Title}}</p>
             </div>
           </van-collapse-item>
         </van-collapse>
@@ -38,8 +38,8 @@
         <div class="explain">
           <div class="explain1">说明:</div>
           <div>
-            <p>1、室内救护车位 10000 元/每车位。</p>
-            <p>2、在 2018 年 12 月 20 日前全额缴纳展位费可优惠 1000 元/每展位。</p>
+            <p v-html="explain1"></p>
+            <!-- <p>2、在 2018 年 12 月 20 日前全额缴纳展位费可优惠 1000 元/每展位。</p> -->
           </div>
         </div>
           <div class="stand_bottoms">
@@ -49,24 +49,18 @@
 </template>
 
 <script>
+import { Toast } from 'vant';
 import {exhibitionBooth,exhibitionOrderAdd} from '../../api/user'
 export default {
   data() {
     return {
       active: 1,
-      list:[{
-        name:"1D馆"
-      },
-      {
-        name:"1A、1B馆、1C馆-02"
-      },{
-        name:"1A、1B馆、1C馆-01"
-      },{
-        name:"1A、1B馆、1C馆(特区馆)"
-      }],
+      list:[],
       activeNames: [],
       title:"请选择展位",
-      msum:""
+      msum:"",
+      explain1:'',
+      formdata:{}
     };
   },
   mounted(){
@@ -76,19 +70,35 @@ export default {
     exhibitionBooth(){
       let data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
-        Uid:sessionStorage.Uid
+        Uid:sessionStorage.Uid,
+        bsid:sessionStorage.bsid,
+        action:"Booth"
       }
-      exhibitionOrderAdd(data).then(res=>{
-        console.log(res)
+      exhibitionBooth(data).then(res=>{
+        this.list = res.Data
+        this.explain1 = res.Data[0].Summary
       })
     },
     changetitle(index){
-     this.title = this.list[index].name 
+     this.title = this.list[index].Title 
      this.activeNames = []
     },
      goxzzw(){
-       console.log(this.msum)
-       this.$router.push('/ChooseBoothpass')
+      //  console.log(this.msum)
+      if(this.title=="请选择展位"){Toast('请选择展位');return}
+       if(!this.msum){
+         Toast('请输入参展数与面积')
+         return
+         }
+         this.formdata = JSON.parse(sessionStorage.formdata)
+         this.formdata.action = "GenerateOrder"
+         this.formdata.bsid = sessionStorage.bsid
+         this.formdata.cid = JSON.parse(sessionStorage.cidInfo).cid
+         console.log(this.formdata)
+         exhibitionOrderAdd(this.formdata).then(res=>{
+           console.log(res)
+         })
+      //  this.$router.push('/ChooseBoothpass')
      },
      goReturn(){
        this.$router.push('/gsxx')

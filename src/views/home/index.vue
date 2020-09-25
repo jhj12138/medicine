@@ -212,6 +212,7 @@
 <script>
 import Header from '../Header'
 import Footer from '../Footer'
+import {ObtainOid} from '../../api/user'
 import {ObtainCid,bannerImg,bannerList,homeData,homeVideo,homeHistory,homeCooperation,newsList,ServiceDownload,ServiceObtainCid,homeHistorycontent} from '../../api/home'
 import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
 import { Toast,Dialog} from 'vant';
@@ -252,7 +253,30 @@ export default {
     }
   },
   methods: {
- 
+    //获取是否报名
+   ObtainOid(){
+      var data = {
+        cid:JSON.parse(sessionStorage.cidInfo).cid,
+        bsid:sessionStorage.bsid,
+      }
+      ObtainOid(data).then(res=>{
+        console.log(res)
+        if(res.Success){
+           sessionStorage.oid = res.data
+           if(res.Msg=="已报名"){
+              Toast("您已报名参展，请前往展商中心查看")
+              this.$router.push('mine')
+           }else if(res.Msg==null){
+              Toast("信息出错，请重新登录")
+           }else{
+            this.$router.push('/gsxx')
+           }
+          
+        }else{
+          Toast(res.Msg)
+        }
+      })
+    },
     //跳转视频详情
     govideoxq(linkurl){
       window.open(linkurl)
@@ -473,7 +497,7 @@ export default {
             Toast("您是个人用户，只有展商才能参展")
             }else{
               if(IdentityType){
-                this.$router.push('/gsxx')
+                this.ObtainOid()
               }else{
                 Toast("未登录")
               }
