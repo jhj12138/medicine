@@ -1,7 +1,14 @@
 import request from '../../plugins/request'
 
 const urlParams = 'https://www.zjylz.com/api/'
-
+// 获取展商详细信息
+export const getObtainraccount = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/Obtainraccount',
+    params: apiParams,
+  })
+}
 // Banner图片
 export const bannerImg = apiParams => { //
   return request({
@@ -383,7 +390,7 @@ export const exhibitorcommoditys = apiParams => { //
 // 添加商品
 export const AddgoodsContent = apiParams => { //
   return request({
-    method: 'post',
+    method: 'get',
     url: urlParams + 'Exhibitorinfo/ObtainProductType',
     params: apiParams,
   })

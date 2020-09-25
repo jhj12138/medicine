@@ -163,11 +163,13 @@ export default {
         Price:this.price,
         name:this.names,
         isrecommend:this.sum,
-        classid:this.value2,
-        // imgurl:"",
+        classid:2,
+        ImgList:"",
         Summary:this.textareas,
+        topclassid:"30"
         
       }
+      console.log(data)
       AddgoodsContent(data).then(res=>{
         console.log(res)
       })

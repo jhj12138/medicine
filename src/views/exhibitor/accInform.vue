@@ -8,10 +8,10 @@
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入用户昵称">
+        <input type="text" placeholder="请输入用户昵称" v-model="username">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系人姓名">
+        <input type="text" placeholder="请输入联系人姓名" v-model="lxname">
       </div>
       <div class="comrel_con_inp1">
        <van-field
@@ -34,21 +34,21 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入职务">
+        <input type="text" placeholder="请输入职务"  v-model="userpost">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系电话">
+        <input type="text" placeholder="请输入联系电话"  v-model="suerphone">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）">
+        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）"  v-model="Title">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）">
+        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）"  v-model="eTitle">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入统一社会信用代码">
+        <input type="text" placeholder="请输入统一社会信用代码"  v-model="code">
       </div>
       <div class="comrel_con_inp1">
         <van-cell is-link @click="showPopup" v-model="showAddr">
@@ -74,36 +74,36 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入详细地址">
+        <input type="text" placeholder="请输入详细地址"  v-model="address">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司网址">
+        <input type="text" placeholder="请输入公司网址"  v-model="website">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编">
+        <input type="text" placeholder="请输入邮编"  v-model="Postcode">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司电话">
+        <input type="text" placeholder="请输入公司电话"  v-model="Telephone">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司邮编">
+        <input type="text" placeholder="请输入公司邮编"  v-model="Postcode">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司简称（1-5个中文字符）">
+        <input type="text" placeholder="请输入公司简称（1-5个中文字符）"  v-model="abbreviation">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请选择公司性质">
+        <input type="text" placeholder="请选择公司性质"  v-model="nature">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期">
+        <input type="text" placeholder="请输入成立日期"  v-model="establish">
       </div>
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="value2"
+          :value="people"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -120,13 +120,13 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期">
+        <input type="text" placeholder="请输入成立日期" v-model="establish">
       </div>
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="value3"
+          :value="Industryrb"
           placeholder="请选择公司主营产品"
           @click="showPicker3 = true"
         />
@@ -152,13 +152,14 @@
         <div class="comrel_updates">
           <div class="comrel_update_top">请上传商标注册证</div>
           <div class="comrel_update_main">
-            <van-uploader :after-read="afterRead2" v-model="fileList2" :max-count="3"/>
+            <van-uploader :after-read="afterRead2" v-model="fileList2"   :max-count="3"/>
           </div>
         </div>
         <div class="comrel_updates">
           <div class="comrel_update_top">请上传商标注册证</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead3" v-model="fileList3" :max-count="3"/>
+
           </div>
         </div>
         <div class="comrel_updates">
@@ -177,6 +178,8 @@
 
 <script>
 import areaList from '../../assets/js/area.js'
+import {getObtainraccount} from "../../api/home"
+import { Toast } from 'vant'
 export default {
   data() {
     return{
@@ -196,20 +199,82 @@ export default {
       addFlag:false,
       resAddr: '',       //传给后端的位置信息
       fileList: [
-       
+        {url:"https://www.zjylz.com/Upload/image/202009/20200905165259_5803.jpg"}
       ],
       fileList2: [
-       
+       {url:"https://www.zjylz.com/Upload/image/202009/20200905165259_5803.jpg"}
       ],
       fileList3: [
-       
+       {url:"https://www.zjylz.com/Upload/image/202009/20200905165259_5803.jpg"}
       ],
       fileList4: [
-       
+       {url:""}
       ],
+      username:"",
+      lxname:"",
+      userpost:"",
+      suerphone:"",
+      Title:"",
+      eTitle:"",
+      code:"",
+      address:"",
+      website:"",
+      Fax:"",
+      Telephone:"",
+      Postcode:"",
+      abbreviation:"",
+      nature:"",
+      establish:"",
+      Industryrb:"",
+      people:"",
+      imgurl:"",
+      imgurl2:"",
+      imgurl3:"",
+      imgurl4:""
     }
   },
+  mounted(){
+    this.getObtainraccount()
+  },
   methods:{
+    getObtainraccount(){
+      let data = {
+        cid:JSON.parse(sessionStorage.cidInfo).cid
+      }
+      getObtainraccount(data).then(res=>{
+        console.log(res)
+        if(res.Success){
+        this.username = res.Data.username
+        this.lxname = res.Data.name
+        this.userpost = res.Data.post
+        this.suerphone = res.Data.phone
+        this.Title = res.Data.Title
+        this.eTitle = res.Data.eTitle
+        this.code = res.Data.code
+        this.address = res.Data.address
+        this.website = res.Data.website
+        this.Fax = res.Data.Fax
+        this.Telephone = res.Data.Telephone
+        this.Postcode = res.Data.Postcode
+        this.abbreviation = res.Data.abbreviation
+        this.nature = res.Data.nature
+        this.establish = res.Data.establish
+        this.Industryrb = res.Data.Industryrb
+        this.people = res.Data.people
+        this.imgurl = 'https://www.zjylz.com' + res.Data.Patentcertificate.split("&&")[0]
+        this.imgurl2 = 'https://www.zjylz.com' + res.Data.authorization.split("&&")[0]
+        this.imgurl3 = 'https://www.zjylz.com' + res.Data.certificate.split("&&")[0]
+        this.imgurl4 = 'https://www.zjylz.com' + res.Data.license.split("&&")[0]
+        this.fileList4[0].url = this.imgurl4
+        this.fileList3[0].url = this.imgurl3
+        this.fileList2[0].url = this.imgurl2
+        this.fileList[0].url = this.imgurl
+        console.log(this.imgurl)
+        }else{
+          Toast(res.Msg)
+        }
+      })
+    },
     goReturn() {
       this.$router.push('/mine')
     },
