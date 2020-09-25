@@ -14,7 +14,7 @@
           </div>
           <div class="exhibit_tit_right">
             <div class="exhibit_tit_name">{{introduce}}</div>
-            <div class="exhibit_tit_zhanwei">A101</div>
+            <div class="exhibit_tit_zhanwei">{{number}}</div>
           </div>
         </div>
         <div class="exhibit_con_lianx">
@@ -65,6 +65,7 @@ export default {
       mailbox:null,
       list:null,
       imgUrl:"",
+      number:""
     }
   },
   methods:{
@@ -88,6 +89,8 @@ export default {
           this.introduce = res.Data.introduce
           this.phone = res.Data.phone
           this.mailbox = res.Data.mailbox
+          this.number = res.Data.number
+          console.log(res)
           // res.Data.forEach(ele => {
           //   this.colu1.push(ele.Id)
           //   this.columns1.push(ele.Name)
@@ -177,13 +180,14 @@ export default {
       background: #fff;
       .exhibit_con_tit{
         display: flex;
+        justify-content: space-between;
         align-items: center;
         padding: px(30) 0;
         margin:0 px(20);
         border-bottom: 1px solid rgba(38,104,192,.1);
         .exhibit_tit_img{
-          width: px(120);
-          height: px(120);
+          width: px(200);
+          height: px(200);
           border-radius: 50%;
           margin-right: px(26);
           img{
@@ -194,6 +198,7 @@ export default {
         }
         .exhibit_tit_right{
           .exhibit_tit_name{
+            width: px(450);
             font-size: 16px;
             font-weight: bold;
             color: #222222;

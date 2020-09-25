@@ -25,73 +25,62 @@
         <div class="xx"></div>
         <div class="xx xx1"></div>
     </div>
-      <van-collapse v-model="activeNames" class="xzzw">
-          <van-collapse-item :title="title" name="1">
-            <div class="header_li">
-              <p v-for="(item,index) in list"  :key="index" @click="changetitle(index)" >{{item.name}}</p>
-            </div>
-          </van-collapse-item>
-        </van-collapse>
-        <div class="area">
-           <input type="text" placeholder="请输入要求参展数与面积(3*3)" v-model="msum">
-        </div>
-        <div class="explain">
-          <div class="explain1">说明:</div>
-          <div>
-            <p>1、室内救护车位 10000 元/每车位。</p>
-            <p>2、在 2018 年 12 月 20 日前全额缴纳展位费可优惠 1000 元/每展位。</p>
-          </div>
-        </div>
-          <div class="stand_bottoms">
+    <div class="updataimg">
+        <img src="../../assets/image/sczf.png" alt="" @click="updatazf">
+        <img src="../../assets/image/sjxx.png" alt="" @click="kaipxx">
+        <img src="../../assets/image/kaip.png" alt="" @click="rest">
+    </div>
+      <div class="stand_bottoms">
              <div class="stand_bottom" @click="goxzzw">下一步</div>
-         </div>
+        </div>
   </div>
 </template>
 
 <script>
-import {exhibitionBooth,exhibitionOrderAdd} from '../../api/user'
+import { Toast } from 'vant';
+import { exhibitionObtainrbInvoice } from '../../api/user';
 export default {
   data() {
     return {
       active: 1,
       list:[{
-        name:"1D馆"
-      },
-      {
-        name:"1A、1B馆、1C馆-02"
-      },{
-        name:"1A、1B馆、1C馆-01"
-      },{
-        name:"1A、1B馆、1C馆(特区馆)"
+        name:111
       }],
       activeNames: [],
-      title:"请选择展位",
-      msum:""
+      Invoices:false,
     };
   },
   mounted(){
-    this.exhibitionBooth()
+      this.updataym()
   },
   methods:{
-    exhibitionBooth(){
-      let data = {
-        cid:JSON.parse(sessionStorage.cidInfo).cid,
-        Uid:sessionStorage.Uid
-      }
-      exhibitionOrderAdd(data).then(res=>{
-        console.log(res)
-      })
-    },
-    changetitle(index){
-     this.title = this.list[index].name 
-     this.activeNames = []
-    },
+      updataym(){
+          var data = {
+              rb : sessionStorage.rb
+          }
+       exhibitionObtainrbInvoice(data).then(res=>{
+           console.log(res)
+       })
+      },
+    updatazf(){
+      this.$router.push('/Upload')
+        
+     },
+     kaipxx(){
+      this.$router.push('/Invoicesj')
+
+     },
+     rest(){
+        this.$router.push('/Invoices')
+
+     },
      goxzzw(){
-       console.log(this.msum)
-       this.$router.push('/ChooseBoothpass')
+         Toast('报名成功')
+        this.$router.push('/mine')
+       
      },
      goReturn(){
-       this.$router.push('/gsxx')
+         this.$router.push('/ChooseBooth1')
      }
   }
 };
@@ -123,6 +112,38 @@ export default {
             font-weight: bold;
         }
     }  
+}
+.stand_bottoms{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: px(100);
+    background: #fff;
+    .stand_bottom{
+      width: px(710);
+      height: px(87);
+      position: absolute;
+      // bottom: px(12);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #2668C0;
+      border-radius: px(6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+    }
+  }
+.updataimg{
+  position: absolute;
+  top: px(430);
+  left: 0;
+  
+    img{
+        width: px(750);
+        height: px(145);
+    }
 }
 .explain{
   display: flex;
@@ -168,22 +189,8 @@ line-height: px(36);
     text-align: center;
     line-height: px(40);
     }
-.Articlestepssum-li:nth-child(3){
-    opacity: 0.4;
-    }
-.Articlestepssum-li:nth-child(4){
-    opacity: 0.4;
- }
  .Articlestepstext{
       color: #fff;  
- }
- .Articlestepstext-li:nth-child(3){
-    opacity: 0.4;
-
- }
- .Articlestepstext-li:nth-child(4){
-    opacity: 0.4;
-
  }
  .xzzw{
    margin-top:px(500) ;

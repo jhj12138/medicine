@@ -1,11 +1,11 @@
 <template>
-  <div id = "useAttend">
-    <div class="commodity_top">
-      <div class="commodity_return" @click="goReturn">
+  <div id = "evedail">
+    <div class="evemage_top">
+      <div class="evemage_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="commodity_middle">我参加的展会</div>
-      <div class="commodity_right">管理</div>
+      <div class="evemage_cont">展会列表</div>
+      <div class="evemage_right" @click="Administrator">管理</div>
     </div>
     <div class="evedail_con">
       <ul>
@@ -14,20 +14,25 @@
         :key = "index"
         >
           <div class="evedail_li_top">
-            <div class="commodity_li_left">
-              <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="commodity_li_name">{{item.Title}}</div>
-              <div class="commodity_li_jin">
-                <!-- <span>进行中</span> -->
+            <div class="evedail_li_left">
+              <div class="evedail_li_yuan"></div>
+              <div class="evedail_li_name">{{item.Title}}</div>
+            </div>
+            <div class="evedail_li_right" @click="goAdd">
+              <span>{{item.number}}</span>
+              <div class="evedail_li_img">
+                <img src="../../assets/image/mine_go.png" alt="">
               </div>
             </div>
           </div>
           <div class="evedail_li_bottom">
-            <div class="evedail_li_span1">申请状态：已成功</div>
-            <div class="evedail_li_span2">展会时间：{{item.starttime}} -- {{item.endttime}}</div>
-            <!-- <div class="evedail_li_share">
-              <span @click="download1">重新申请</span>
-              <span @click="download">下载门票</span>
+            <div class="evedail_li_span1">申请状态：已申请</div>
+            <div class="evedail_li_span2">订单金额：{{item.Orderamount}}元</div>
+            <div class="evedail_li_span1">申请时间：{{item.addtime}}</div>
+            <div class="evedail_li_span2">展会时间：{{item.starttime}}--{{item.endttime}}</div>
+            <!-- <div class="evedail_li_share" v-show="flag">
+              <span>重新提交</span>
+              <span>取消申请</span>
             </div> -->
           </div>
         </li>
@@ -37,42 +42,32 @@
 </template>
 
 <script>
-import { Toast } from 'vant'
 import {getlist} from "../../api/home"
 export default {
   data() {
     return{
       list:[],
-      lists:{
-        state:"进行中",
-        bgein:"已结束",
-        nostate:"未开始"
-      },
-      states:""
+      flag:false,
     }
   },
-   mounted(){
+  mounted(){
       this.getlist()
   },
   methods:{
-    download(){
-      Toast('请前往官网下载')
-    },
-    download1(){
-      Toast('请前往官网申请')
-
-    },
+      Administrator(){
+          console.log(1111)
+          if(!this.flag){
+              this.flag = true
+          }else{
+              this.flag = false
+          }
+      },
       getlist(){
           var data = {
               cid:JSON.parse(sessionStorage.cidInfo).cid
           }
           getlist(data).then(res=>{
             this.list = res.Data.Data
-            // var statetime = new Date().getTime()
-            // var nostatetime = new Date(res.Data.Data.starttime).getTime()
-            // var bintime = new Date(res.Data.Data.endttime).getTime()
-            console.log(res.Data.Data)
-            // console.log(nostatetime)
           })
       },
     goAdd() {
@@ -80,14 +75,7 @@ export default {
     },
     goReturn() {
       this.$router.push('/evemanage') 
-    },
-    getList(item,checked,index){
-      // if(checked){
-
-      // }
-      // console.log(index)
-      // console.log(item)
-    },
+    }
   }
 }
 </script>
@@ -98,45 +86,41 @@ export default {
   @return ($px/ $rem) + rem;
 }
 
-#useAttend{
+#evedail{
   width: 100%;
   height: 100%;
   overflow-x: hidden;
   position: fixed;
   background-color: #f5f7fa;
-  .commodity_top{
-    height: px(100);
+  .evemage_top{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 px(20);
-    position: relative;
-    background: #fff;
-    color: #222222;
     position: fixed;
+    justify-content: space-between;
     top:0;
     left: 0;
     width: 100%;
-    z-index: 99;
-    .commodity_return{
+    padding: 0 px(20);
+    height: px(100);
+    background-color: #ffffff;
+    z-index: 999;
+    .evemage_return{
       width: px(21);
       img{
         width: 100%;
       }
     }
-    .commodity_middle{
-      position: absolute;
-      left: 50%;
-      top:50%;
-      transform: translate(-50%,-50%);
-      font-size: 16px;
+    .evemage_cont{
+        font-size: 18px;
+        margin-left:px(30) ;
     }
-    .commodity_right{
-      font-size: 16px;
+    .evemage_right{
+      color:rgba(33,33,33,1);
+      font-size: 18px;
     }
   }
   .evedail_con{
-    padding-top:px(130);
+    padding-top:px(170);
     margin:0 px(20);
     ul{
       li{
@@ -150,38 +134,26 @@ export default {
           display: flex;
           align-items: center;
           justify-content: space-between;
-          .commodity_li_left{
+          .evedail_li_left{
             display: flex;
             align-items: center;
             // justify-content: space-between;
-            .commodity_li_yuan{
+            .evedail_li_yuan{
               width:px(20);
               height:px(20);
               border:1px solid rgba(135,135,135,1);
               opacity:0.6;
               border-radius:50%;
-              margin-right: px(24);
+              margin-right: px(46);
             }
-            .commodity_li_name{
-              
-              width:px(600);    
-              overflow: hidden;    
-              text-overflow:ellipsis;    
-              white-space: nowrap;
+            .evedail_li_name{
+                width: px(500);
+                overflow: hidden;    
+                text-overflow:ellipsis;    
+                white-space: nowrap;
               font-size: 16px;
               color: #212121;
-              margin:0 px(30) 0 px(24);
-            }
-            .commodity_li_jin{
-              span{
-                display: block;
-                padding: 0 px(13);
-                text-align: center;
-                background: #2567BF;
-                border-radius:px(3);
-                font-size: 12px;
-                color: #fff;
-              }
+              margin-right: px(30);
             }
           }
           .evedail_li_right{
@@ -208,7 +180,8 @@ export default {
           }
           .evedail_li_span2{
             color: #555555;
-            margin-bottom: px(58);
+            margin-bottom: px(17);
+            // margin-bottom: px(58);
           }
           .evedail_li_share{
             display: flex;

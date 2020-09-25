@@ -4,15 +4,15 @@
       <div class="invoice_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="invoice_middle">发票信息</div>
+      <div class="invoice_middle">收件信息</div>
     </div>
-    <div class="comrel_con">
+    <!-- <div class="comrel_con">
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
           :value="value"
-          :placeholder="columnss"
+          placeholder="请选择开票类型"
           @click="showPicker = true"
         />
         <van-popup v-model="showPicker" round position="bottom">
@@ -39,7 +39,7 @@
       <div class="comrel_con_inp" >
         <input type="text" placeholder="开票纳税人识别号" v-model="axpayer">
       </div>
-    </div>
+    </div> -->
     <div class="comrel_con2">
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入收件公司" v-model="receiv">
@@ -62,13 +62,12 @@
 
 <script>
 import { Toast } from 'vant';
-import {addObtainInvoiceList,getObtain} from "../../api/home"
+import {addObtainInvoiceList} from "../../api/home"
 export default {
   data() {
     return{
       value: '',
-      columnss:"请选择开票类型",
-      columns: ['普通发票','增值税专用发票'],
+      columns: ['推荐','不推荐'],
       showPicker: false,
       corporate:'',
       address:'',
@@ -80,37 +79,18 @@ export default {
       rename:''
     }
   },
-  mounted(){
-    this.getObtain()
-  },
   methods:{
-    getObtain(){
-      var data = {
-         cid: JSON.parse(sessionStorage.cidInfo).cid
-      }
-      getObtain(data).then(res=>{
-        this.columnss = res.Data.type
-        this.corporate = res.Data.company
-        this.address = res.Data.address
-        this.iphone = res.Data.Telephone
-        this.axpayer = res.Data.number
-        this.receiv = res.Data.collectcompany
-        this.readdress = res.Data.collectaddress
-        this.readdress = res.Data.collectaddress
-        this.reiphone = res.Data.collectTelephone
-        this.rename = res.Data.collectname
-        this.bank = res.Data.collectTelephone
-      })
-    },
     onConfirm(value,index) {
       this.value = value;
       // console.log(index)
       this.showPicker = false;
     },
     goReturn() {
-      this.$router.push('/invdetail')
+      this.$router.push('/ChooseBooth2')
     },
     goinv() {
+        this.$router.push('/ChooseBooth2')
+
       if(!this.value){Toast('请选择开票类型');return}
       if(!this.corporate){Toast('请输入开票公司名称');return}
       if(!this.address){Toast('请输入开票地址');return}
@@ -136,7 +116,9 @@ export default {
       }
      addObtainInvoiceList(data).then(res=>{
        if(res.Success){
-        console.log(res)
+        Toast(res.Msg)
+        this.$router.query({invoices:true})
+        this.$router.push('/ChooseBooth2')
        }else{
          Toast(res.Msg)
        }
@@ -195,49 +177,8 @@ export default {
       font-size: 16px;
     }
   }
-  .comrel_con{
-    margin-top: px(100);
-    .comrel_con_inp{
-      height: px(89);
-      padding: 0 px(32);
-      background: #FFFFFF;
-      border-bottom: 1px solid rgba(38,104,192,.1);
-      // margin-bottom: px(30);
-      input{
-        width: 100%;
-        height: 100%;
-        border: none;
-        font-size: 14px;
-      }
-    }
-    .comrel_con_inp1{
-      height: px(89);
-      padding: 0 px(32);
-      background: #FFFFFF;
-      border-bottom: 1px solid rgba(38,104,192,.1);
-      position: relative;
-      .van-cell{
-        padding: 0;
-        height: 100%;
-        .van-field__body{
-          height: 100%;
-        }
-      }
-      .comrel_up{
-        position: absolute;
-        width: px(16);
-        right: px(32);
-        z-index: 9;
-        top:50%;
-        transform: translateY(-50%);
-        img{
-          width: 100%;
-        }
-      }
-    }
-  }
   .comrel_con2{
-    margin-top: px(28);
+    margin-top: px(103);
     .comrel_con_inp{
       height: px(89);
       padding: 0 px(32);

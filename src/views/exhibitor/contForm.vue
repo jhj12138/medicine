@@ -4,7 +4,7 @@
       <div class="commodity_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="commodity_middle">商品信息</div>
+      <div class="commodity_middle">联系表单</div>
       <div class="commodity_right">管理</div>
     </div>
     <div class="message_con">

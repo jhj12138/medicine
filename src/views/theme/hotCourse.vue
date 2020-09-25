@@ -141,6 +141,7 @@ export default {
       }
         getcomm(daty).then(res=>{
         if(res.Success){
+          console.log(res)
         this.uo = ''
         }else{
         Toast(res.Msg)

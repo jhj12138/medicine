@@ -465,7 +465,23 @@ export default {
       })
     },
     goExam() {
-      this.$router.push('/enterfor')
+      var IdentityType = sessionStorage.IdentityType
+      // var cid = JSON.parse(sessionStorage.cidInfo).cid
+      console.log(IdentityType)
+      // if(cid){
+          if(IdentityType=="个人用户"){
+            Toast("您是个人用户，只有展商才能参展")
+            }else{
+              if(IdentityType){
+                this.$router.push('/gsxx')
+              }else{
+                Toast("未登录")
+              }
+          }
+      // }else{
+      //   Toast('未登录')
+      // }
+      
     },
     golinex() {
       this.$router.push('/onlinex')
@@ -478,11 +494,20 @@ export default {
       });
     },
     gosubmit2() {
-      Dialog.alert({
-        message: '此功能暂未开发',
-      }).then(() => {
-        // on close
-      });
+      // Dialog.alert({
+      //   message: '此功能暂未开发',
+      // }).then(() => {
+      //   // on close
+      // });
+      var IdentityType = sessionStorage.IdentityType
+      if(IdentityType=="展商"){
+        //  this.$router.push('/exam')
+        Toast("您是展商")
+      }else{
+         this.$router.push('/exam')
+      }
+         
+
     },
     // 
   },

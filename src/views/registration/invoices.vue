@@ -4,7 +4,7 @@
       <div class="invoice_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="invoice_middle">发票信息</div>
+      <div class="invoice_middle">开票信息</div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp1">
@@ -12,7 +12,7 @@
           readonly
           clickable
           :value="value"
-          :placeholder="columnss"
+          placeholder="请选择开票类型"
           @click="showPicker = true"
         />
         <van-popup v-model="showPicker" round position="bottom">
@@ -34,13 +34,16 @@
         <input type="text" placeholder="请输入开票地址" v-model="address">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入开票电话" v-model="iphone">
+        <input type="text" placeholder="请输入开票纳税人识别号" v-model="iphone">
       </div>
       <div class="comrel_con_inp" >
-        <input type="text" placeholder="开票纳税人识别号" v-model="axpayer">
+        <input type="text" placeholder="请输入开户银行" v-model="axpayer">
+      </div>
+      <div class="comrel_con_inp" >
+        <input type="text" placeholder="请输入银行账号" v-model="axpayer">
       </div>
     </div>
-    <div class="comrel_con2">
+    <!-- <div class="comrel_con2">
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入收件公司" v-model="receiv">
       </div>
@@ -53,7 +56,7 @@
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入收件人姓名" v-model="rename">
       </div>
-    </div>
+    </div> -->
     <div class="stand_bottoms">
       <div class="stand_bottom" @click="goinv">确定</div>
     </div>
@@ -62,12 +65,11 @@
 
 <script>
 import { Toast } from 'vant';
-import {addObtainInvoiceList,getObtain} from "../../api/home"
+import {addObtainInvoiceList} from "../../api/home"
 export default {
   data() {
     return{
       value: '',
-      columnss:"请选择开票类型",
       columns: ['普通发票','增值税专用发票'],
       showPicker: false,
       corporate:'',
@@ -80,37 +82,18 @@ export default {
       rename:''
     }
   },
-  mounted(){
-    this.getObtain()
-  },
   methods:{
-    getObtain(){
-      var data = {
-         cid: JSON.parse(sessionStorage.cidInfo).cid
-      }
-      getObtain(data).then(res=>{
-        this.columnss = res.Data.type
-        this.corporate = res.Data.company
-        this.address = res.Data.address
-        this.iphone = res.Data.Telephone
-        this.axpayer = res.Data.number
-        this.receiv = res.Data.collectcompany
-        this.readdress = res.Data.collectaddress
-        this.readdress = res.Data.collectaddress
-        this.reiphone = res.Data.collectTelephone
-        this.rename = res.Data.collectname
-        this.bank = res.Data.collectTelephone
-      })
-    },
     onConfirm(value,index) {
       this.value = value;
       // console.log(index)
       this.showPicker = false;
     },
     goReturn() {
-      this.$router.push('/invdetail')
+      this.$router.push('/ChooseBooth2')
     },
     goinv() {
+        this.$router.push('/ChooseBooth2')
+
       if(!this.value){Toast('请选择开票类型');return}
       if(!this.corporate){Toast('请输入开票公司名称');return}
       if(!this.address){Toast('请输入开票地址');return}
@@ -136,7 +119,9 @@ export default {
       }
      addObtainInvoiceList(data).then(res=>{
        if(res.Success){
-        console.log(res)
+        Toast(res.Msg)
+        this.$router.query({invoices:true})
+        this.$router.push('/ChooseBooth2')
        }else{
          Toast(res.Msg)
        }

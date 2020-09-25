@@ -9,6 +9,22 @@ export const getObtainraccount = apiParams => { //
     params: apiParams,
   })
 }
+//删除商品信息
+export const DELcommodity = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + 'Exhibitorinfo/DELcommodity',
+    params: apiParams,
+  })
+}
+export const getlist = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'Exhibitorinfo/list',
+    params: apiParams,
+  })
+}
+
 // Banner图片
 export const bannerImg = apiParams => { //
   return request({
@@ -424,6 +440,14 @@ export const getObtainInvoiceList = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'Exhibitorinfo/ObtainInvoiceList',
+    params: apiParams,
+  })
+}
+//获取发票信息xxx
+export const getObtain = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/Exhibitorinfo/Invoice/Obtain',
     params: apiParams,
   })
 }

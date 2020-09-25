@@ -27,6 +27,56 @@ export const ObtainCid = apiParams => { //
     params: apiParams
   })
 }
+  // 展商报名第二步 获取展位信息
+export const exhibitionBooth = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo.ashx',
+    method: 'get',
+    params: apiParams
+  })
+}
+  // 展商报名第二步 提交展位申请
+export const exhibitionOrderAdd = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo/Order/Add',
+    method: 'POST',
+    params: apiParams
+  })
+}
+  // 展商报名第二步 重新提交
+export const exhibitionOrderModify = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo/ModifyOrder',
+    method: 'POST',
+    params: apiParams
+  })
+}
+  // 展商报名第三步 审核状态 下载申请表
+export const exhibitionOrderObtain = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo/Order/Obtain',
+    method: 'GET',
+    params: apiParams
+  })
+}
+  // 展商报名第四步 获取平台账号信息
+
+export const exhibitionObtainrbInvoice = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo/ObtainrbInvoice',
+    method: 'GET',
+    params: apiParams
+  })
+}
+  // 展商报名第四步 上传付款凭证
+
+export const exhibitionVoucher = apiParams => { //
+  return request({
+    url: urlParams + '/Exhibitorinfo/voucher',
+    method: 'POST',
+    params: apiParams
+  })
+}
 //获取bsid
 export const exhibitionGetBsid = apiParams => { //
   return request({

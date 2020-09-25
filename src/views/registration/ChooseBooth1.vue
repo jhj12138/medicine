@@ -25,73 +25,36 @@
         <div class="xx"></div>
         <div class="xx xx1"></div>
     </div>
-      <van-collapse v-model="activeNames" class="xzzw">
-          <van-collapse-item :title="title" name="1">
-            <div class="header_li">
-              <p v-for="(item,index) in list"  :key="index" @click="changetitle(index)" >{{item.name}}</p>
-            </div>
-          </van-collapse-item>
-        </van-collapse>
-        <div class="area">
-           <input type="text" placeholder="请输入要求参展数与面积(3*3)" v-model="msum">
+    <div class="banimgage">
+        <img src="../../assets/image/zhanhi3.png" alt="">
+        <div class="banimgage-text">
+            <p>您提交的展商申请资料，未通过审核</p>
+            <a href="###">未通过原因为：1、公司名称与营业执照名称不符合</a>
         </div>
-        <div class="explain">
-          <div class="explain1">说明:</div>
-          <div>
-            <p>1、室内救护车位 10000 元/每车位。</p>
-            <p>2、在 2018 年 12 月 20 日前全额缴纳展位费可优惠 1000 元/每展位。</p>
-          </div>
-        </div>
-          <div class="stand_bottoms">
-             <div class="stand_bottom" @click="goxzzw">下一步</div>
-         </div>
+    </div>
+    <div class="stand_bottoms">
+        <div class="stand_bottom" @click="goxzzw">重新填写</div>
+    </div>
   </div>
 </template>
 
 <script>
-import {exhibitionBooth,exhibitionOrderAdd} from '../../api/user'
 export default {
   data() {
     return {
       active: 1,
       list:[{
-        name:"1D馆"
-      },
-      {
-        name:"1A、1B馆、1C馆-02"
-      },{
-        name:"1A、1B馆、1C馆-01"
-      },{
-        name:"1A、1B馆、1C馆(特区馆)"
+        name:111
       }],
       activeNames: [],
-      title:"请选择展位",
-      msum:""
     };
   },
-  mounted(){
-    this.exhibitionBooth()
-  },
   methods:{
-    exhibitionBooth(){
-      let data = {
-        cid:JSON.parse(sessionStorage.cidInfo).cid,
-        Uid:sessionStorage.Uid
-      }
-      exhibitionOrderAdd(data).then(res=>{
-        console.log(res)
-      })
-    },
-    changetitle(index){
-     this.title = this.list[index].name 
-     this.activeNames = []
-    },
      goxzzw(){
-       console.log(this.msum)
-       this.$router.push('/ChooseBoothpass')
-     },
-     goReturn(){
        this.$router.push('/gsxx')
+     },
+      goReturn(){
+         this.$router.push('/ChooseBooth')
      }
   }
 };
@@ -124,17 +87,8 @@ export default {
         }
     }  
 }
-.explain{
-  display: flex;
-  padding:px(10) px(30) ;
-  
-font-family: PingFangSC;
-font-weight: 400;
-color: #888888;
-line-height: px(36);
-  .explain1{
-    width: px(100);
-  }
+.banimgage-text{
+    text-align: center;
 }
  .stand_bottoms{
     position: fixed;
@@ -158,6 +112,13 @@ line-height: px(36);
       font-size: 16px;
     }
   }
+.banimgage{
+    margin-top:px(490) ;
+    img{
+        width: px(780);
+        height: px(500);
+    }
+ }
 .Articlestepssum-li{
     display: block;
     width: px(40);
@@ -168,35 +129,15 @@ line-height: px(36);
     text-align: center;
     line-height: px(40);
     }
-.Articlestepssum-li:nth-child(3){
-    opacity: 0.4;
-    }
 .Articlestepssum-li:nth-child(4){
     opacity: 0.4;
  }
  .Articlestepstext{
       color: #fff;  
  }
- .Articlestepstext-li:nth-child(3){
-    opacity: 0.4;
-
- }
  .Articlestepstext-li:nth-child(4){
     opacity: 0.4;
 
- }
- .xzzw{
-   margin-top:px(500) ;
- }
- .area{
-   border-bottom:px(2) solid  #2669c007;
-   input{
-      width: 100%;
-      height: px(100);
-      outline: none;
-      border: none;
-      padding-left:px(30) ;
-   }
  }
  .hx{
         position: absolute;

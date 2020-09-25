@@ -30,11 +30,11 @@
             <span>{{usermessagelgth}}</span>
             <span>站内信</span>
           </div>
-          <div class="mine_heng"></div>
-          <div class="mine_con_mailbox" @click="goForm">
+          <!-- <div class="mine_heng"></div> -->
+          <!-- <div class="mine_con_mailbox" @click="goForm">
             <span>999</span>
             <span>联系表单</span>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="mine_admin_cons">
           <ul class="mine_admin_ul">
-            <li class="mine_admin_li">
+            <li class="mine_admin_li" @click="goshowlist">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine1.png" alt="">
               </div>
@@ -144,6 +144,10 @@ export default {
       //   res.Data.Data.length
       // })
     },
+    goshowlist(){
+       this.$router.push('/showlist') //返回首页
+
+    },
     returnHome(){
        this.$router.push('/home') //返回首页
     },
@@ -165,9 +169,9 @@ export default {
     goMessage(){
       this.$router.push('/message') //跳转到站内信
     },
-    goForm(){
-      this.$router.push('/contform') //跳转到联系表单
-    },
+    // goForm(){
+    //   this.$router.push('/contform') //跳转到联系表单
+    // },
     goInv(){
       this.$router.push('/invdetail') //跳转到发票管理
     },
@@ -268,9 +272,10 @@ export default {
         display: flex;
         align-items: center;
         padding: 0 px(140);
-        justify-content: space-between;
+        justify-content: center;
         margin-top: px(60);
         .mine_con_mailbox{
+          text-align: center;
           display: flex;
           flex-direction: column;
           align-items: center;

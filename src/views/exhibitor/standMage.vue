@@ -24,15 +24,15 @@
       <div class="stand_updates">
         <div class="stand_update_top">请上传公司logo</div>
         <div class="stand_update_main">
-          <!-- <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/> -->
-          <img :src="imgurl" alt="">
+          <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/>
+          <!-- <img :src="imgurl" alt=""> -->
         </div>
       </div>
       <div class="stand_updates">
         <div class="stand_update_top">请上传公司图片</div>
         <div class="stand_update_main">
-          <!-- <van-uploader :after-read="afterRead2" v-model="fileList2" :max-count="1"/> -->
-          <img :src="imgurl1" alt="">
+          <van-uploader :after-read="afterRead2" v-model="fileList2" :max-count="1"/>
+          <!-- <img :src="imgurl1" alt=""> -->
 
         </div>
       </div>
@@ -56,9 +56,10 @@ export default {
   data() {
     return{
       fileList: [
-       
+        {url:""}
       ],
       fileList2: [
+        {url:""}
        
       ],
       company:'',
@@ -85,6 +86,8 @@ export default {
         this.contacts = res.Data.contacts
         this.imgurl = "https://www.zjylz.com" + res.Data.LOGO.split('&&')[0]
         this.imgurl1 = "https://www.zjylz.com" + res.Data.imgurl.split('&&')[0]
+        this.fileList[0].url = this.imgurl
+        this.fileList2[0].url = this.imgurl1
         this.textareas = res.Data.introduce
         console.log( res.Data)
       })
@@ -108,7 +111,8 @@ export default {
       if(this.fileList.length == 0){Toast('请上传公司图片');return}
       if(!this.textareas){Toast('请输入邮箱地址');return}
       if (!(/^1[3456789]\d{9}$/.test(this.phones))){Toast('联系人电话有误');return} 
-      if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return} 
+      if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return}
+      this.$router.push('/mine')
     }
   }
 }

@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="commodity_middle">商品信息</div>
-      <div class="commodity_right">管理</div>
+      <div class="commodity_right" @click="delites">管理</div>
     </div>
     <div class="commodity_con">
       <ul>
@@ -22,7 +22,7 @@
               </div>
             </div>
             <div class="commodity_li_right">
-              <span>编辑</span>
+              <span @click="gogoodsxq(item.Pid,index)">{{lists}}</span>
               <div class="commodity_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
               </div>
@@ -51,19 +51,42 @@
 </template>
 
 <script>
-import {Obtaincommodity} from "../../api/home"
+import { Toast } from 'vant'
+import {Obtaincommodity,DELcommodity} from "../../api/home"
 export default {
   data() {
     return{
       cid:null,
       list:[],
-      imgurl:[]
+      imgurl:[],
+      lists:"编辑",
+      compiles:true,
     }
   },
   mounted(){
     this.Obtaincommodity()
   },
   methods:{
+    delites(){
+      if(this.compiles){
+        this.lists= "编辑"
+        this.compiles = false
+      }else{
+        this.lists= "删除"
+        this.compiles = true
+      }
+    },
+    gogoodsxq(Pid,sum){
+      console.log(Pid)
+      if(this.lists=="编辑"){
+      this.$router.push({ path: '/comrel', query: { Id: Pid ,sum:sum} })
+      }else{
+        DELcommodity({Pid}).then(res=>{
+          Toast(res.Msg)
+          this.$router.go(0)
+        })
+      }
+    },
     Obtaincommodity(){
       this.cid = JSON.parse(sessionStorage.cidInfo)
       var data = {
@@ -74,7 +97,7 @@ export default {
        res.Data.Data.forEach(ele => {
         this.imgurl.push(ele.ImgList.split('&&')[0])
        });
-       console.log(this.imgurl)
+       console.log(this.list)
       })
     },
     getList(item,checked,index){

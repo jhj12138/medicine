@@ -78,7 +78,7 @@
       <div class="comrel_updates">
         <div class="comrel_update_top">请上传商品图片</div>
         <div class="comrel_update_main">
-          <van-uploader :after-read="afterRead" v-model="fileList" :max-count="3"/>
+          <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/>
         </div>
       </div>
     </div>
@@ -96,7 +96,7 @@
 
 <script>
 import { Toast } from 'vant';
-import { AddgoodsContent } from '../../api/home';
+import { AddgoodsContent ,Obtaincommodity} from '../../api/home';
 export default {
   data() {
     return {
@@ -109,18 +109,55 @@ export default {
       value3: '',
       showPicker3: false,
       fileList: [
-       
+       {url:""}
       ],
       names:'',
       price:'',
       textareas:'',
       sum:"",
+      list:"",
     };
   },
   mounted(){
     // this.AddgoodsContent()
+    this.Obtaincommodity()
   },
   methods: {
+    delite(){
+
+    },
+     Obtaincommodity(){
+      this.cid = JSON.parse(sessionStorage.cidInfo)
+      // var pid = this.$route.query.Id
+      var sum = this.$route.query.sum
+      var data = {
+        cid: this.cid.cid
+      }
+      Obtaincommodity(data).then(res=>{
+        if(res.Success){
+         this.list=res.Data.Data[sum]
+         this.names = this.list.name
+         this.price = this.list.Price
+         if(this.list.isrecommend == 1){
+           this.value = "推荐" 
+         }else{
+           this.value = "不推荐" 
+
+         }
+         if(this.list.isrelease == 1){
+           this.value2 = "已发布" 
+         }else{
+           this.value2 = "未发布" 
+         }
+         this.fileList[0].url = 'https://www.zjylz.com' + this.list.ImgList.split("&&")[0]
+         this.textareas = this.list.Summary
+         console.log(this.list)
+        }else{
+          Toast(res.Msg)
+        }
+       
+      })
+    },
     onConfirm(value,index) {
       this.value = value;
       // console.log(index)
@@ -158,20 +195,46 @@ export default {
       }
       //添加商品信息
       var goodsid=JSON.parse(sessionStorage.cidInfo)
-      let data = {
-        cid:goodsid.cid,
-        Price:this.price,
-        name:this.names,
-        isrecommend:this.sum,
-        classid:2,
-        ImgList:"",
-        Summary:this.textareas,
-        topclassid:"30"
-        
-      }
-      console.log(data)
-      AddgoodsContent(data).then(res=>{
-        console.log(res)
+      // let data = {
+      //   cid:goodsid.cid,
+      //   Price:this.price,
+      //   name:this.names,
+      //   isrecommend:this.sum,
+      //   isrelease:1,
+      //   classid:2,
+      //   ImgList:"",
+      //   Summary:this.textareas,
+      //   topclassid:12,
+      //   Pid:60,
+      //   Status:0,
+      //   addtime:""
+      // }
+     var formData = {
+          name: '11111',
+          Pid: 1,
+          cid: goodsid,
+          imgurl: '',
+          ImgList: '',
+          topclassid: '',
+          classid: 2,
+          Summary: '',
+          Price: 333,
+          isrecommend: '',
+          isrelease: '',
+          Status: '',
+          advice: '',
+          status: '',
+          content: ''
+        }
+      AddgoodsContent(formData).then(res=>{
+         this.$router.push('/commodity')
+
+        if(res.Success){
+          Toast(res.Msg)
+        }else{
+          Toast(res.Msg)
+
+        }
       })
     }
   },
@@ -223,6 +286,9 @@ export default {
       top:50%;
       transform: translate(-50%,-50%);
       font-size: 16px;
+    }
+    comrel_middle1{
+      margin-right:px(20) ;
     }
   }
   .comrel_con{

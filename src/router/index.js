@@ -58,6 +58,14 @@ const Search = () => import('@/views/search') //搜索
 const exhibitionxq = () => import('@/views/search/exhibitionxq') //展商
 const comdetail = () => import('@/views/search/comDetail') //商品详情
 const ChooseBooth = () => import('@/views/registration/ChooseBooth') //展商报名
+const ChooseBooth1 = () => import('@/views/registration/ChooseBooth1') //展商报名1
+const ChooseBooth2 = () => import('@/views/registration/ChooseBooth2') //展商报名2
+const showList = () => import('@/views/exhibitor/showlist') //展会列表
+const gsxx = () => import('@/views/registration/gsxx') //展会报名信息
+const ChooseBoothpass = () => import('@/views/registration/ChooseBoothpass') //展会报名信息
+const Invoices = () => import('@/views/registration/invoices') //发票信息
+const Invoicesj = () => import('@/views/registration/invoicesj') //公司收件
+const Upload = () => import('@/views/registration/Upload') //上传付款凭证
 // const aaaa = () => import('@/views/registration/aaaa') //商品详情
 const ceshi = () => import('@/views/user/ceshi') //测试
 // const newsform = () => import('@/views/newsform') 
@@ -302,6 +310,41 @@ const routes = [{
             path: 'ChooseBooth',
             name: '展商报名',
             component: ChooseBooth
+        },{
+            path: 'ChooseBooth1',
+            name: '等待审核',
+            component: ChooseBooth1
+        },{
+            path: 'ChooseBooth2',
+            name: '上传支付凭证',
+            component: ChooseBooth2
+        },{
+            path: 'ChooseBoothpass',
+            name: '上传支付凭证',
+            component: ChooseBoothpass
+        },{
+            path: 'showList',
+            name: '展商列表',
+            component: showList
+        },
+        {
+            path: 'gsxx',
+            name: '展会报名信息',
+            component: gsxx
+        }
+        ,{
+            path: 'invoices',
+            name: '发票信息',
+            component: Invoices
+        }
+        ,{
+            path: 'invoicesj',
+            name: '公司收件',
+            component: Invoicesj
+        },{
+            path: 'Upload',
+            name: '公司收件',
+            component: Upload
         }]
     },
     

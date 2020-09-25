@@ -75,8 +75,9 @@ export default {
       // if(checked){
 
       // }
-      // console.log(index)
-      // console.log(item)
+      console.log(checked)
+      console.log(index)
+      console.log(item)
     },
   }
 }
