@@ -71,10 +71,10 @@ export default {
           })
       },
     goAdd() {
-      this.$router.push('/eveadd') //跳转到添加人员
+      // this.$router.push('/eveadd') //跳转到添加人员  
     },
     goReturn() {
-      this.$router.push('/evemanage') 
+      this.$router.push('/mine') 
     }
   }
 }

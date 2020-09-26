@@ -96,12 +96,12 @@
 
 <script>
 import { Toast } from 'vant';
-import { AddgoodsContent ,Obtaincommodity} from '../../api/home';
+import { AddgoodsContent ,Obtaincommodity,exhibitionAddGoods} from '../../api/home';
 export default {
   data() {
     return {
       value: '',
-      columns: ['推荐','不推荐'],
+      columns: ['发布','不发布'],
       showPicker: false,
       value2: '',
       columns2: ['测试','其他类','综合类','手术器械类','内视镜类'],
@@ -116,6 +116,7 @@ export default {
       textareas:'',
       sum:"",
       list:"",
+      imgurl:''
     };
   },
   mounted(){
@@ -175,6 +176,7 @@ export default {
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
+      this.imgurl = file.file.name
       console.log(file)
     },
     goReturn() {
@@ -188,49 +190,53 @@ export default {
       if(this.fileList.length == 0){Toast('请上传商品图片');return}
       // if(!this.value3){Toast('请输入所属分类');return}
       if(!this.textareas){Toast('请填写商品介绍');return}
-       if(this.value=="推荐"){
+       if(this.value=="发布"){
         this.sum=1
       }else{
         this.sum=0
       }
       //添加商品信息
-      var goodsid=JSON.parse(sessionStorage.cidInfo)
-      // let data = {
-      //   cid:goodsid.cid,
-      //   Price:this.price,
-      //   name:this.names,
-      //   isrecommend:this.sum,
-      //   isrelease:1,
-      //   classid:2,
-      //   ImgList:"",
-      //   Summary:this.textareas,
-      //   topclassid:12,
-      //   Pid:60,
-      //   Status:0,
-      //   addtime:""
-      // }
-     var formData = {
-          name: '11111',
-          Pid: 1,
-          cid: goodsid,
-          imgurl: '',
-          ImgList: '',
-          topclassid: '',
-          classid: 2,
-          Summary: '',
-          Price: 333,
-          isrecommend: '',
-          isrelease: '',
-          Status: '',
-          advice: '',
-          status: '',
-          content: ''
-        }
-      AddgoodsContent(formData).then(res=>{
-         this.$router.push('/commodity')
-
+      var goodsid=JSON.parse(sessionStorage.cidInfo).cid
+      let data = {
+        ImgList: this.imgurl ,
+        pid:"",
+        Price:this.price,
+        status:"",
+        Summary:this.textareas,
+        advice: "",
+        cid:goodsid,
+        classid:300,
+        content:"",
+        imgurl:"",
+        isrecommend:this.sum,
+        isrelease:1,
+        name:this.names,
+        topclassid: 100
+      }
+    //  var formData = {
+    //       name: '11111',
+    //       Pid: 1,
+    //       cid: goodsid,
+    //       imgurl: '',
+    //       ImgList: '',
+    //       topclassid: '',
+    //       classid: 2,
+    //       Summary: '',
+    //       Price: 333,
+    //       isrecommend: '',
+    //       isrelease: '',
+    //       Status: '',
+    //       advice: '',
+    //       status: '',
+    //       content: ''
+    //     }
+    console.log(data)
+      exhibitionAddGoods(data).then(res=>{
+          console.log(res)
+          
         if(res.Success){
           Toast(res.Msg)
+           this.$router.push('/commodity')
         }else{
           Toast(res.Msg)
 

@@ -10,11 +10,12 @@
       </div>
       <div class="footer_l2">
         <span>友情链接：</span>
-        <span v-for="(item,index) in footList" :key = "index" class="footer_span"
-        @click="goHref(item.LinkUrl)">
-          <span>{{item.ImgUrl}}</span>
-          <span class="footer_border"></span>
-        </span>
+        <!-- <span v-for="(item,index) in footList" :key = "index" class="footer_span" -->
+          <!-- @click="goHref(item.LinkUrl)"> -->
+          <!-- <span>{{item.Title}}</span> -->
+          <a :href="footList[0].LinkUrl" class="footer_border">{{footList[0].Title}}</a>
+          <a :href="footList[1].LinkUrl" class="footer_border">{{footList[1].Title}}</a>
+        <!-- </span> -->
         <!-- <span>浙江省医疗卫生国际合作发展中心</span>
         <span class="footer_border"></span>
         <span>浙江省科技厅</span>
@@ -64,6 +65,7 @@ export default {
         if (res.Success){
           console.log(res)
           this.footList = res.Data
+          console.log(this.footList)
         } else {
           Toast(res.Msg)
         }
@@ -119,19 +121,19 @@ export default {
     .footer_l2{
       padding:0 px(22);
       font-size: 12px;
-      line-height: 2.4;
+      line-height: 1;
       color: rgba(255,255,255,.5);
       margin:px(40) 0;
+      display: flex;
       .footer_span:last-child{
-        .footer_border{
-          width: 0px;
-        }
+       
       }
       .footer_border{
-        display: inline-block;
+        // display: inline-block;
         height: 10px;
-        width: 1px;
-        background: rgba(255,255,255,.5);
+        color:rgba(255,255,255,.5);
+        // width: 1px;
+        // background: rgba(255,255,255,.5);
         margin:0 px(10);
       }
     }

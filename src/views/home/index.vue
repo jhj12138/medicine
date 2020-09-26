@@ -24,7 +24,7 @@
               <span>展品</span>
               <div class="home_textbox_img"><img src="../../assets/image/home_san.png" alt=""></div>
             </div>
-            <div class="home_textup" @click="goUps" v-if ="flagUp">会展产品</div>
+            <div class="home_textup" @click="goUps" v-if ="flagUp">展商</div>
           </div>
           <div class="home_textbox_right">
             <div class="home_textbox_shou"><img src="../../assets/image/home_shou.png" alt=""></div>
@@ -250,6 +250,7 @@ export default {
       swiper_two:[],
       clsId:9,
       imgurlall:[],
+      flagsnews:true,
     }
   },
   methods: {
@@ -340,7 +341,14 @@ export default {
     getReview(index,id) {
       this.review_index = index
        homeHistorycontent({id}).then(res=>{
-         window.open('###')
+         console.log(res)
+         this.$router.push({
+           path:"/newsform",
+           query:{
+              Id:res.Data.ID,
+              flagsnews:this.flagsnews
+           }
+         })
        })
     },
     changeFlag(flag,event){
@@ -495,6 +503,7 @@ export default {
       // if(cid){
           if(IdentityType=="个人用户"){
             Toast("您是个人用户，只有展商才能参展")
+            // this.$router.push('/gsxx')
             }else{
               if(IdentityType){
                 this.ObtainOid()
@@ -1065,7 +1074,7 @@ export default {
     background: #f5f7fa;
     display: flex;
     flex-direction: column;
-    padding-bottom: px(90);
+    padding-bottom: px(60);
     position: relative;
     .home_coop_tit{
       padding: 0 px(20);
@@ -1104,7 +1113,8 @@ export default {
           }
         }
         .swiper-pagination-bullets{
-          bottom: px(60);
+          // margin-top:px(100) ;
+          bottom: px(20);
         }
       }
     }

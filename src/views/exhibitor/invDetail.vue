@@ -36,7 +36,7 @@
       </ul>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom" @click="goInvoice">发票信息</div>
+      <div class="stand_bottom" @click="goInvoice">发票信息管理</div>
     </div>
   </div>
 </template>

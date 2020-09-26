@@ -16,6 +16,7 @@
       <div class="evemage_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
+      <div class="evemage_right">参展人员管理</div>
       <div class="evemage_right">管理</div>
     </div>
     <div class="evemage_con">
@@ -29,7 +30,7 @@
               <div class="evemage_li_yuan"></div>
               <div class="evemage_li_name">{{item.Title}}</div>
               <div class="evemage_li_jin">
-                <span>进行中</span>
+                <!-- <span>进行中</span> -->
               </div>
             </div>
             <div class="evemage_li_right">
@@ -40,9 +41,9 @@
             </div>
           </div>
           <div class="evemage_li_bottom">
-            <div class="evemage_li_span1">展位号：D15/A26</div>
-            <div class="evemage_li_span2">参展人数：10人</div>
-            <div class="evemage_li_span3">展会时间：2020年8月20日-2020年9月20日</div>
+            <div class="evemage_li_span1">展位号：{{item.number}}</div>
+            <div class="evemage_li_span2">参展人数：0人</div>
+            <div class="evemage_li_span3">展会时间：{{item.starttime}}-{{item.starttime}}</div>
           </div>
         </li>
       </ul>
@@ -52,6 +53,8 @@
 <script>
 import { Toast } from 'vant';
 import { getParticipants } from '../../api/user/index';
+import { getlist } from '../../api/home';
+
 export default {
   data() {
     return {
@@ -68,11 +71,14 @@ export default {
       this.params.cid = JSON.parse(sessionStorage.cidInfo).cid
       getParticipants(this.params).then(res=>{
         if(res.Success){
-        this.list = res.Data.Data
+        // this.list = res.Data.Data
 
         }else{
           Toast(res.Msg)
         }
+        getlist( this.params).then(res=>{
+         this.list = res.Data.Data
+        })
       })
     },
     goDetail(){
@@ -184,6 +190,10 @@ export default {
               margin-right: px(16);
             }
             .evemage_li_name{
+              width: px(400);
+              overflow:hidden;
+              text-overflow:ellipsis;
+              white-space:nowrap;
               font-size: 16px;
               color: #212121;
               margin-right: px(30);

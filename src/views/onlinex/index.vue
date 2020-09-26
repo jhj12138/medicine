@@ -35,7 +35,7 @@
                   <div class="om">
                       <div v-for="(item,ind) in list" :key="ind" @click="goDetail(item.cid)">
                         <p>{{item.Title}}</p>
-                        <span>{{item.rb}}</span>
+                        <span>{{item.number}}</span>
                     </div>
                   </div>
               </div>

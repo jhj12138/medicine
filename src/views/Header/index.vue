@@ -68,10 +68,10 @@
           <img src="../../assets/image/head_reight.png" alt="">
         </div>
       </div>
-      <div class="header_btn2" @click="goRegist">
+      <div class="header_btn2" v-show="flag" @click="goRegist">
         <div class="header_btn_txt">个人注册</div>
       </div>
-      <div class="header_btn2" @click="goRegist">
+      <div class="header_btn2" v-show="flag" @click="goRegist">
         <div class="header_btn_txt">展商注册</div>
       </div>
     </div>
@@ -344,7 +344,7 @@ export default {
     .header_btn1{
       display: flex;
       align-items: center;
-      width: px(164);
+      // width: px(164);
       height: px(70);
       background: #2b75d8;
       border-radius: px(40);
@@ -356,9 +356,9 @@ export default {
       .header_btn_txt{
         font-size: px(32);
         color: #fff;
-        overflow: hidden;    
-        text-overflow:ellipsis;    
-        white-space: nowrap;
+        // overflow: hidden;    
+        // text-overflow:ellipsis;    
+        // white-space: nowrap;
         padding-left:px(10);
       }
       .header_btn_cont{

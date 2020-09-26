@@ -61,12 +61,11 @@ export default {
     ObtainOid(){
       var data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
-        bsid:sessionStorage.bsid
+        bsid:2
       }
       ObtainOid(data).then(res=>{
         if(res.Success){
-        sessionStorage.oid = res.data
-          
+        sessionStorage.oid = res.Data
         }else{
           Toast(res.Msg)
         }
@@ -84,6 +83,8 @@ export default {
         if (res.Success) {
           sessionStorage.bsid = res.Data.Bsid
           // this.getOid()
+          this.ObtainOid()
+
         } else {
           // this.$message.error(res.Msg)
           Toast(res.Msg)
@@ -97,7 +98,7 @@ export default {
         if (res.Success) {
           sessionStorage.cidInfo = JSON.stringify(res.Data)
           this.ObtainOid()
-          this.$router.push('/home')
+          // this.$router.push('/home')
         } else {
           // this.$message.error(res.Msg)
           Toast(res.Msg)
@@ -115,7 +116,6 @@ export default {
       login(data).then((res) => {
         console.log(res)
         if(res.Success && res.Msg !== '用户名或密码错误'){
-          
           console.log('res.Data',res.Data)
           localStorage.setItem('yzhToken', res.Data.Token)
           localStorage.setItem('tokenId', res.Data.Id)
@@ -137,9 +137,7 @@ export default {
             message: '登录成功',
           });
         }else{
-          Toast({
-            message: '登录失败',
-          });
+          Toast(res.Msg);
         }
       })
     }

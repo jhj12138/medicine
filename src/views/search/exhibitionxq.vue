@@ -37,7 +37,7 @@
         <div class="exhibit_con_li" v-for="(item,index) in list"
         :key = "index">
           <div class="exhibit_li_img">
-            <img :src="imgUrl" alt="">
+            <img :src="imgUrl[index]" alt="">
           </div>
           <div class="exhibit_li_bottom">
             <div class="exhibit_li_name">{{item.name}}</div>
@@ -64,7 +64,7 @@ export default {
       phone:null,
       mailbox:null,
       list:null,
-      imgUrl:"",
+      imgUrl:[],
       number:""
     }
   },
@@ -73,7 +73,7 @@ export default {
       this.$router.push('/search')
     },
     goDetail(ids) {
-      this.$router.push({ path: '/comdetail', query: { Id: ids} })
+      this.$router.push({ path: '/comdetail', query: { Id: ids ,cid:this.list[0].cid} })
     },
     ObtainContactUs() {
       console.log(this.$route.query.Id)
@@ -110,9 +110,10 @@ export default {
         if (res.Success){
           this.list = res.Data.Data
           res.Data.Data.forEach(ele => {
-           this.imgUrl = 'https://www.zjylz.com'+ ele.ImgList.split("&&")[0]
-           console.log(ele)
+           this.imgUrl.push('https://www.zjylz.com'+ ele.ImgList.split("&&")[0])
+           console.log(this.imgUrl)
           })
+          console.log(this.list)
           // res.Data.LOGO = res.Data.LOGO.split("&&")[0]
           // this.LOGO = 'https://www.zjylz.com'+ res.Data.LOGO 
           // this.contacts = res.Data.contacts

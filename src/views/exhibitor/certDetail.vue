@@ -8,10 +8,10 @@
     </div>
     <div class="cert_con">
       <div class="cert_con_inp">
-        <input type="text" placeholder="请输入证书名称">
+        <input type="text" placeholder="请输入证书名称" v-model="name">
       </div>
       <div class="cert_con_inp">
-        <input type="text" placeholder="请输入证书排序">
+        <input type="text" placeholder="请输入证书排序" v-model="OrdNum">
       </div>
     </div>
     <div class="cert_update">
@@ -20,26 +20,102 @@
         <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/>
       </div>
     </div>
-    <div class="cert_bottom">确定</div>
+    <div class="cert_bottom" @click="tijao">确定</div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+import{EditCertificate,getObtainCertificate,uploadimg,ADDCertificate} from "../../api/home"
 export default {
   data() {
     return{
-      fileList: [
-       
-      ]
+      fileList: [{url:"",isImage: true }],
+      content:"",
+      imgurl:"",
+      name:"",
+      OrdNum:"",
     }
   },
+  mounted(){
+    this.getquery()
+  },
   methods:{
+    getquery(){
+      this.content = this.$route.query
+        console.log(this.content.flag)
+      if(this.content.flag == true){
+        var data = {
+          cid:JSON.parse(sessionStorage.cidInfo).cid,
+          ID:this.content.ID
+        }
+        // console.log(this.imgurl)
+        getObtainCertificate(data).then(res=>{
+          this.name = res.Data.Data[0].name
+          this.OrdNum = res.Data.Data[0].OrdNum
+          this.fileList[0].url = res.Data.Data[0].imgurl.split('&&')[0]
+          console.log(res.Data)
+        })
+      }else{
+     
+
+      }
+    },
+    tijao(){
+      this.content = this.$route.query
+      if(this.content.flag == true){
+        var nowtime  = new Date().toLocaleDateString()
+        var data = {
+          cid:JSON.parse(sessionStorage.cidInfo).cid,
+          ID:this.content.ID,
+          name:this.name,
+          OrdNum:this.OrdNum,
+          imgurl:this.fileList[0].url,
+          Status:"",
+          addtime:nowtime
+        }
+        console.log(data)
+        EditCertificate(data).then(res=>{
+          if(res.Success){
+            Toast(res.Msg)
+            this.$router.push("/certifcate")
+          }
+        })
+      }else{
+        var nowtime  = new Date().toLocaleDateString()
+      var data = {
+          cid:JSON.parse(sessionStorage.cidInfo).cid,
+          name:this.name,
+          OrdNum:this.OrdNum,
+          imgurl:this.imgurl,
+          Status:"",
+          addtime:nowtime
+        }
+        ADDCertificate(data).then(res=>{
+          if(res.Success){
+            Toast(res.Msg)
+            this.$router.push('/certifcate')
+          }else{
+            Toast(res.Msg)
+          }
+        })  
+      }
+    },
     goReturn() {
       this.$router.push('/certifcate')
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-      console.log(file)
+        console.log(file.file)
+      var data = {
+        File:file.file,
+        FileType:file
+      }
+      uploadimg(data).then(res=>{
+        console.log(res)
+      })
+      this.imgurl = file.file.name
+    
     }
   }
 }

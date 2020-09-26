@@ -45,7 +45,7 @@
       </ul>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom" @click="goRel">商品发布</div>
+      <div class="stand_bottom" @click="goRel">添加商品</div>
     </div>
   </div>
 </template>

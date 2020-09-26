@@ -9,6 +9,23 @@ export const getObtainraccount = apiParams => { //
     params: apiParams,
   })
 }
+// 上传图片
+export const uploadimg = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'common/upload',
+    params: apiParams,
+  })
+}
+//添加证书
+export const ADDCertificate = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/Exhibitorinfo/ADDCertificate',
+    params: apiParams,
+  })
+}
+
 //删除商品信息
 export const DELcommodity = apiParams => { //
   return request({
@@ -17,10 +34,27 @@ export const DELcommodity = apiParams => { //
     params: apiParams,
   })
 }
+//添加商品信息
+export const exhibitionAddGoods = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + '/Exhibitorinfo/ADDcommodity',
+    params: apiParams,
+  })
+}
+//获取展商列表
 export const getlist = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'Exhibitorinfo/list',
+    params: apiParams,
+  })
+}
+//获取参展人员
+export const Participants = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + '/Exhibitorinfo/Participants',
     params: apiParams,
   })
 }
@@ -419,6 +453,14 @@ export const getObtainCertificate = apiParams => { //
     params: apiParams,
   })
 }
+// 修改证书列表
+export const EditCertificate = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/EditCertificate',
+    params: apiParams,
+  })
+}
 // 获取新闻详情
 export const NewsContent = apiParams => { //
   return request({
@@ -456,6 +498,14 @@ export const addObtainInvoiceList = apiParams => { //
   return request({
     method: 'post',
     url: urlParams + 'Exhibitorinfo/ADDInvoice',
+    params: apiParams,
+  })
+}
+//编辑发票信息
+export const exhibitionEditInvoice = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/Exhibitorinfo/EditInvoice',
     params: apiParams,
   })
 }

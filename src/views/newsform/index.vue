@@ -25,7 +25,7 @@
 
 <script>
 import { Toast} from 'vant';
-import {NewsContent} from '../../api/home'
+import {NewsContent,homeHistorycontent} from '../../api/home'
 export default {
   data() {
     return{
@@ -33,11 +33,31 @@ export default {
       ShowDate:null,
       Title:null,
       Time:null,
+      WJHGid:"",
+      flagsnews:"",
     }
   },
   methods:{
+    newsxq(){
+      var data = {
+        ID: this.WJHGid
+      }
+    console.log(data)
+      homeHistorycontent(data).then(res=>{
+        console.log(res)
+          if(res.Success){
+            this.Title = res.Data.Title
+            this.Content = res.Data.Content
+          }
+      })
+    },
     goReturn() {
-      this.$router.push({ path: '/news', query: { Id: this.$route.query.clsId} })
+      if(this.$route.query.flagsnews){
+      this.$router.push('/home')
+        
+    }else{
+          this.$router.push({ path: '/news', query: { Id: this.$route.query.clsId} })
+    }
     },
     NewsContent() {
       const data = {
@@ -59,7 +79,13 @@ export default {
     },
   },
   mounted(){
+   if(this.$route.query.flagsnews){
+      this.WJHGid = this.$route.query.Id
+      this.flagsnews = this.$route.query.flagsnews
+      this.newsxq()
+    }else{
     this.NewsContent()
+    }
     // console.log(this.$route.query.Id,this.$route.query.clsId)
   }
 }

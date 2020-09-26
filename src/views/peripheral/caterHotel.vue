@@ -151,60 +151,60 @@ export default {
         padding: 0 px(20);
       }
       .caterHotel_li{
-        display: flex;
-        flex-direction: row;
+        // display: flex;
+        // flex-direction: row;
         padding: px(30) px(20);
         border-bottom: 1px solid rgba(44,118,217,.1);
         .caterHotel_li_left{
-          width: px(309);
-          height: px(175);
+          // width: px(309);
+          // height: px(175);
           img{
             width: 100%;
             height: 100%;
           }
         }
         .caterHotel_li_right{
-          flex:1;
-          margin-left: px(34);
+          // flex:1;
+          // margin-left: px(34);
           .caterHotel_li_name{
             font-size: 16px;
             font-weight:bold;
-            line-height: 1;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            overflow: hidden;
-            -webkit-box-orient: vertical;
+            line-height: 1.2;
+            // text-overflow: ellipsis;
+            // display: -webkit-box;
+            // -webkit-line-clamp: 1;
+            // overflow: hidden;
+            // -webkit-box-orient: vertical;
           }
           .caterHotel_li_address{
             margin-top: px(14);
             color: #565656;
-            line-height: 1;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            overflow: hidden;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
+            line-height: 1.2;
+            // text-overflow: ellipsis;
+            // display: -webkit-box;
+            // overflow: hidden;
+            // -webkit-line-clamp: 1;
+            // -webkit-box-orient: vertical;
           }
           .caterHotel_li_phone{
             margin-top: px(14);
             color: #565656;
-            line-height: 1;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            overflow: hidden;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
+            line-height: 1.2;
+            // text-overflow: ellipsis;
+            // display: -webkit-box;
+            // overflow: hidden;
+            // -webkit-line-clamp: 1;
+            // -webkit-box-orient: vertical;
           }
           .caterHotel_li_jieshao{
             margin-top: px(14);
             color: #565656;
-            line-height: 1;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 1;
-            -webkit-box-orient: vertical;
+            line-height: 1.2;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+            // display: -webkit-box;
+            // -webkit-line-clamp: 1;
+            // -webkit-box-orient: vertical;
           }
         }
       }

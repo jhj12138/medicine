@@ -71,13 +71,14 @@ export default {
   methods:{
     gosubmit() {
       Dialog.alert({
-        message: '请转到官网询价',
+        message: '联系我们的表单',
       }).then(() => {
         // on close
       });
     },
     goReturn() {
-      this.$router.push('/exhibitionxq')
+      
+      this.$router.push('/exhibitionxq?Id='+ this.$route.query.cid)
     },
     exhibitorcommoditys() {
       const data = {

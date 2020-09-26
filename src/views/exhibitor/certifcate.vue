@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="certif_middle">证书管理</div>
-      <div class="certif_right">管理</div>
+      <div class="certif_right" @click="change">管理</div>
     </div>
     <div class="certif_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
       <ul ref="scrollRef" v-if="listlen">
@@ -18,8 +18,8 @@
               <div class="certif_li_yuan"></div>
               <div class="certif_li_name">{{item.name}}</div>
             </div>
-            <div class="certif_li_right" @click="goDetail">
-              <span>编辑</span>
+            <div class="certif_li_right" @click="goDetail(item.ID)">
+              <span>{{content1}}</span>
               <div class="certif_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
               </div>
@@ -54,12 +54,28 @@ export default {
       busy: false,
       list:null,
       listlen:true,
+      content:{
+        bj:"编辑",
+        add:"添加"
+      },
+      content1:"编辑",
+      flag:true,
+      ID:""
     }
   },
   mounted(){
     this.getObtainCertificate()
   },
   methods:{
+    change(){
+      if(this.flag){
+        this.flag=false
+        this.content1 = this.content.add
+      }else{
+        this.flag=true
+        this.content1 = this.content.bj
+      }
+    },
     getObtainCertificate(){
       var cid = JSON.parse(sessionStorage.cidInfo)
       let data = {
@@ -68,7 +84,6 @@ export default {
    getObtainCertificate(data).then(res=>{
       if(res.Success){
         this.list = res.Data.Data
-        console.log(this.list.length)
         if(this.list.length == 0){
           this.listlen = false
         }else{
@@ -82,8 +97,11 @@ export default {
     goReturn() {
       this.$router.push('/mine') 
     },
-    goDetail() {
-      this.$router.push('/cerdetail') 
+    goDetail(ID) {
+      this.$router.push({
+        path:'/cerdetail',
+        query:{flag:this.flag,
+        ID:ID}}) 
     },
     loadMore: function() {
       this.busy = true

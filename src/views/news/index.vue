@@ -164,7 +164,7 @@ export default {
   flex-direction: column;
   background-color: #f5f7fa;
   .news_top{
-    height: px(400);
+    height: px(230);
     width: 100%;
     position: relative;
     background: #FFFFFF;
@@ -184,9 +184,11 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        // margin-bottom:px(100) ;
         .news_top_left{
           display: flex;
           flex-direction: column;
+          // margin-bottom:px(30) ;
           color: #FFFFFF;
           .news_titlec{
             width: px(353);
@@ -213,14 +215,14 @@ export default {
     .news_top_txt1{
       position: absolute;
       left: 50%;
-      top:60%;
+      top:75%;
       font-size: 18px;
       transform: translate(-50%,-50%);
     }
     .news_top_txt2{
       position: absolute;
       left: 50%;
-      top:70%;
+      top:95%;
       font-size: 16px;
       transform: translate(-50%,-50%);
     }

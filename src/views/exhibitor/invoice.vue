@@ -62,7 +62,7 @@
 
 <script>
 import { Toast } from 'vant';
-import {addObtainInvoiceList,getObtain} from "../../api/home"
+import {addObtainInvoiceList,getObtain,exhibitionEditInvoice} from "../../api/home"
 export default {
   data() {
     return{
@@ -77,7 +77,8 @@ export default {
       receiv:'',
       readdress:'',
       reiphone:'',
-      rename:''
+      rename:'',
+      ID:"",
     }
   },
   mounted(){
@@ -100,6 +101,8 @@ export default {
         this.reiphone = res.Data.collectTelephone
         this.rename = res.Data.collectname
         this.bank = res.Data.collectTelephone
+        this.ID = res.Data.ID
+        console.log(res)
       })
     },
     onConfirm(value,index) {
@@ -124,6 +127,7 @@ export default {
       if (!(/^1[3456789]\d{9}$/.test(this.iphone))){Toast('收件手机有误');return} 
      
       let data={
+        ID:this.ID,
         cid:JSON.parse(sessionStorage.cidInfo).cid,
         company:this.corporate,
         address:this.address,
@@ -134,14 +138,19 @@ export default {
         collectaddress:this.readdress,
         collectname:this.rename
       }
-     addObtainInvoiceList(data).then(res=>{
-       if(res.Success){
-        console.log(res)
-       }else{
-         Toast(res.Msg)
-       }
-       
+      exhibitionEditInvoice(data).then(res=>{
+        if(res.Success){
+          this.$router.push('invdetail')
+        }
       })
+    //  addObtainInvoiceList(data).then(res=>{
+    //    if(res.Success){
+    //     console.log(res)
+    //    }else{
+    //      Toast(res.Msg)
+    //    }
+       
+    //   })
   
   }
   }
