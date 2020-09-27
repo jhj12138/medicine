@@ -5,6 +5,7 @@ const Layout = () => import ('@/layout')
 const notFount = () => import ('@/views/error404') // 404页面
 const Home = () => import ('@/views/home') // 首页
 const Mine = () => import('@/views/exhibitor/Mine') //展商中心    
+const Mines = () => import('@/views/user/Mines') //个人中心    
 const Evemanage = () => import('@/views/exhibitor/eveManage') //参展人员管理
 const Evedail = () => import('@/views/exhibitor/eveDail') //参展人员管理详情
 const Eveadd = () => import('@/views/exhibitor/eveAdd') //参展人员管理添加人员
@@ -37,6 +38,7 @@ const HighIevel = () => import('@/views/international/highIevel') //高层次人
 const Login = () => import('@/views/login') //登录
 const RetPassword = () => import('@/views/retPassword') //找回密码
 const Register = () => import('@/views/register') //注册
+const exhibitors = () => import('@/views/register/exhibitors') //注册
 const Newsform = () => import('@/views/newsform') //新闻详情
 const AcdeTails = () => import('@/views/active/acdeTails') //活动详情
 const OriTails = () => import('@/views/international/oriTails') //国内详情
@@ -67,7 +69,7 @@ const Invoices = () => import('@/views/registration/invoices') //发票信息
 const Invoicesj = () => import('@/views/registration/invoicesj') //公司收件
 const Upload = () => import('@/views/registration/Upload') //上传付款凭证
 // const aaaa = () => import('@/views/registration/aaaa') //商品详情
-const ceshi = () => import('@/views/user/ceshi') //测试
+// const ceshi = () => import('@/views/user/ceshi') //测试
 // const newsform = () => import('@/views/newsform') 
 // Standard 
 
@@ -98,6 +100,10 @@ const routes = [{
             path: 'mine',
             name: '展商中心',
             component: Mine
+        },{
+            path: 'mines',
+            name: '个人中心',
+            component: Mines
         },{
             path: 'evemanage',
             name: '参展人员管理',
@@ -226,6 +232,10 @@ const routes = [{
             path: 'register',
             name: '注册',
             component: Register
+        },{
+            path: 'exhibitors',
+            name: '展商注册',
+            component: exhibitors
         },{
             path: 'newsform',
             name: '新闻详情',

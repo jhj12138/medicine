@@ -74,7 +74,12 @@ export default {
       }
     },
     goReturn() {
-      this.$router.push('/mine') 
+     if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
+      this.$router.push('/mine')
+      }
     },
     goRel() {
       this.$router.push('/comrel')  //跳转到商品发布

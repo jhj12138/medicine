@@ -25,6 +25,14 @@ export const ADDCertificate = apiParams => { //
     params: apiParams,
   })
 }
+//修改展商信息
+export const companyAdd = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/company/Add',
+    params: apiParams,
+  })
+}
 
 //删除商品信息
 export const DELcommodity = apiParams => { //

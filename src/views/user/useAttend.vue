@@ -7,7 +7,7 @@
       <div class="commodity_middle">我参加的展会</div>
       <div class="commodity_right">管理</div>
     </div>
-    <div class="evedail_con">
+    <div class="evedail_con" v-if="flag">
       <ul>
         <li
         v-for="(item,index) in list "
@@ -33,12 +33,39 @@
         </li>
       </ul>
     </div>
+    <div class="evedail_con" v-else>
+      <ul>
+        <li
+        v-for="(item,index) in list "
+        :key = "index"
+        >
+          <div class="evedail_li_top">
+            <div class="commodity_li_left">
+              <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
+              <div class="commodity_li_name">{{item.ExhibitionName}}</div>
+              <div class="commodity_li_jin">
+                <span>{{item.ExhiStatus}}</span>
+              </div>
+            </div>
+          </div>
+          <div class="evedail_li_bottom">
+            <div class="evedail_li_span1">申请状态：{{item.ApplyStatus}}</div>
+            <div class="evedail_li_span2">展会时间：{{item.StartTime}} -- {{item.EndTime}}</div>
+            <!-- <div class="evedail_li_share">
+              <span @click="download1">重新申请</span>
+              <span @click="download">下载门票</span>
+            </div> -->
+          </div>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
 import {getlist} from "../../api/home"
+import {getlists} from "../../api/user"
 export default {
   data() {
     return{
@@ -48,11 +75,19 @@ export default {
         bgein:"已结束",
         nostate:"未开始"
       },
-      states:""
+      states:"",
+      flag:true,
     }
   },
    mounted(){
+     if(sessionStorage.IdentityType == "个人用户"){
+       this.getlists()
+       this.flag = false
+     }else{
       this.getlist()
+       this.flag = true
+
+     }
   },
   methods:{
     download(){
@@ -62,6 +97,18 @@ export default {
       Toast('请前往官网申请')
 
     },
+    getlists(){
+      getlists({}).then(res=>{
+        if(res.Success){
+        this.list = res.Data.Data
+
+        }else{
+          Toast(res.Msg)
+        }
+        console.log(res)
+      })
+    },
+    //展商
       getlist(){
           var data = {
               cid:JSON.parse(sessionStorage.cidInfo).cid
@@ -79,7 +126,13 @@ export default {
       this.$router.push('/eveadd') //跳转到添加人员
     },
     goReturn() {
-      this.$router.push('/evemanage') 
+       if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
+      this.$router.push('/mine')
+      }
+      // this.$router.push('/evemanage') 
     },
     getList(item,checked,index){
       // if(checked){

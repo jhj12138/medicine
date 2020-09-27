@@ -71,7 +71,7 @@
       <div class="header_btn2" v-show="flag" @click="goRegist">
         <div class="header_btn_txt">个人注册</div>
       </div>
-      <div class="header_btn2" v-show="flag" @click="goRegist">
+      <div class="header_btn2" v-show="flag" @click="goRegist1">
         <div class="header_btn_txt">展商注册</div>
       </div>
     </div>
@@ -113,7 +113,12 @@ export default {
     },
     //用户中心跳转
     uesrcont(){
-     this.$router.push('/mine')
+      // console.log(sessionStorage.IdentityType)
+      if(sessionStorage.IdentityType == "个人用户"){
+       this.$router.push('/mines')
+      }else{
+      this.$router.push('/mine')
+      }
     },
     //采购交易库
     goProcurement(){
@@ -165,6 +170,9 @@ export default {
     },
     goRegist() {
       this.$router.push('/register')
+    },
+    goRegist1() {
+      this.$router.push('/exhibitors')
     },
     download() {
       this.$router.push('/download')

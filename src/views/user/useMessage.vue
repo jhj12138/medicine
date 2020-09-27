@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="commodity_middle">站内信</div>
-      <div class="commodity_right">管理</div>
+      <div class="commodity_right" @click="delet">管理</div>
     </div>
     <div class="message_con">
       <ul>
@@ -16,22 +16,22 @@
           <div class="message_li_top">
             <div class="message_li_left">
               <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="message_li_name">上海展会</div>
+              <div class="message_li_name">{{item.Title}}</div>
               <div class="message_li_jin">
-                <span>已读</span>
+                <span>{{item.IsRead}}</span>
               </div>
             </div>
             <div class="message_li_right">
-              <span>回复</span>
+              <span @click="del(item.Id)">删除</span>
               <div class="message_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
               </div>
             </div>
           </div>
           <div class="message_li_bottom">
-            <div class="message_li_span"><div class="message_li_tit"><span>主</span><span>题</span></div>：<span>系统</span></div>
-            <div class="message_li_span"><div class="message_li_tit"><span>内</span><span>容</span><span>摘</span><span>要</span></div>：<span style="line-height:1.2">我对这我对这个商品很感我对这个商个商品很感我对这个商</span></div>
-            <div class="message_li_span"><div class="message_li_tit"><span>发</span><span>送</span><span>时</span><span>间</span></div>：<span>2020.10.11 12:00</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>主</span><span>题</span></div>：<span>{{item.Title}}</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>内</span><span>容</span><span>摘</span><span>要</span></div>：<span style="line-height:1.2">{{item.Content}}</span></div>
+            <div class="message_li_span"><div class="message_li_tit"><span>发</span><span>送</span><span>时</span><span>间</span></div>：<span>{{item.CreateTime}}</span></div>
           </div>
         </li>
       </ul>
@@ -39,13 +39,41 @@
   </div>
 </template>
 <script>
+import { Toast } from 'vant'
+import {usermessagelist,del} from "../../api/user"
 export default {
   data() {
     return {
-      list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
+      list:[],
+      lists:{
+        hf:"回复",
+        del:"删除"
+      },
+      flag:true,
     }
   },
+  mounted(){
+    this.usermessagelist()
+  },
   methods:{
+    usermessagelist(){
+      usermessagelist({}).then(res=>{
+          this.list = res.Data.Data
+      })
+    },
+    delet(){
+        if(this.flag){
+          this.flag = false
+        }else{
+          this.flag = true
+        }
+    },
+    del(ids){
+        del({ids}).then(res=>{
+          Toast(res.Msg)
+          this.$router.go(0)
+        })
+    },
     getList(item,checked,index){
       // if(checked){
 
@@ -54,7 +82,12 @@ export default {
       // console.log(item)
     },
     goReturn() {
-      this.$router.push('/mine') 
+      if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
+      this.$router.push('/mine')
+      }
     },
   }
 }

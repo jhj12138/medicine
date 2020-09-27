@@ -18,6 +18,21 @@ export const ObtainOid = apiParams => { //
     params: apiParams,
   })
 }
+export const exRegister = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + 'Exhibitorinfo/Register',
+    params: apiParams,
+  })
+}
+//修改个人用户信息
+export const edit = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + 'user/info/edit',
+    params: apiParams,
+  })
+}
 // 报名参加展会
 
 export const userJoin = apiParams => { //
@@ -155,6 +170,22 @@ export const userCollectionDel = apiParams => { //
     params: apiParams,
   })
 }
+// 线下活动
+export const activities = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'user/lessionsactivity/list',
+    params: apiParams,
+  })
+}
+// 删除线下活动
+export const delactivities = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'user/lessions/activity/del',
+    params: apiParams,
+  })
+}
 // 获取站内信
 export const usermessagelist = apiParams => { //
   return request({
@@ -163,7 +194,46 @@ export const usermessagelist = apiParams => { //
     params: apiParams,
   })
 }
-
+//删除站内信
+export const del = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'user/message/del',
+    params: apiParams,
+  })
+}
+//获取课程
+export const lessions = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'api/user/lessions',
+    params: apiParams,
+  })
+}
+//用户评论列表
+export const commentlist = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'user/lession/comment/list',
+    params: apiParams,
+  })
+}
+//删除评论列表
+export const delcommentlist = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'user/lession/comment/del',
+    params: apiParams,
+  })
+}
+//获取参展信息
+export const getlists = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'user/exhibition/list',
+    params: apiParams,
+  })
+}
 //获取公司信息
 export const getcompany = apiParams => { //
   return request({

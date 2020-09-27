@@ -5,13 +5,14 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="comrel_middle">账户信息</div>
+      <div class="comrel_middle1" @click="change">编辑</div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入用户昵称" v-model="username">
+        <input type="text" placeholder="请输入用户昵称" v-model="username" :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系人姓名" v-model="lxname">
+        <input type="text" placeholder="请输入联系人姓名" v-model="lxname" :readonly="flags">
       </div>
       <div class="comrel_con_inp1">
        <van-field
@@ -34,21 +35,21 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入职务"  v-model="userpost">
+        <input type="text" placeholder="请输入职务"  v-model="userpost"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系电话"  v-model="suerphone">
+        <input type="text" placeholder="请输入联系电话"  v-model="suerphone"  :readonly="flags">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）"  v-model="Title">
+        <input type="text" placeholder="请输入公司中文名称（必须与营业执照公司名称一致）"  v-model="Title"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）"  v-model="eTitle">
+        <input type="text" placeholder="请输入公司英文名称（如无英文请填写公司拼音）"  v-model="eTitle"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入统一社会信用代码"  v-model="code">
+        <input type="text" placeholder="请输入统一社会信用代码"  v-model="code"  :readonly="flags">
       </div>
       <div class="comrel_con_inp1">
         <van-cell is-link @click="showPopup" v-model="showAddr">
@@ -74,30 +75,30 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入详细地址"  v-model="address">
+        <input type="text" placeholder="请输入详细地址"  v-model="address"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司网址"  v-model="website">
+        <input type="text" placeholder="请输入公司网址"  v-model="website"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编"  v-model="Postcode">
+        <input type="text" placeholder="请输入邮编"  v-model="Postcode"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司电话"  v-model="Telephone">
+        <input type="text" placeholder="请输入公司电话"  v-model="Telephone"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司邮编"  v-model="Postcode">
+        <input type="text" placeholder="请输入公司邮编"  v-model="Postcode"  :readonly="flags">
       </div>
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司简称（1-5个中文字符）"  v-model="abbreviation">
+        <input type="text" placeholder="请输入公司简称（1-5个中文字符）"  v-model="abbreviation"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请选择公司性质"  v-model="nature">
+        <input type="text" placeholder="请选择公司性质"  v-model="nature"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期"  v-model="establish">
+        <input type="text" placeholder="请输入成立日期"  v-model="establish"  :readonly="flags">
       </div>
       <div class="comrel_con_inp1">
        <van-field
@@ -120,7 +121,7 @@
         </div>
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期" v-model="establish">
+        <input type="text" placeholder="请输入成立日期" v-model="establish"  :readonly="flags">
       </div>
       <div class="comrel_con_inp1">
        <van-field
@@ -156,14 +157,14 @@
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传产品授权书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead3" v-model="fileList3" :max-count="3"/>
 
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传专利证书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead4" v-model="fileList4" :max-count="3"/>
           </div>
@@ -171,14 +172,14 @@
       </div>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom">发票信息</div>
+      <div class="stand_bottom">确定</div>
     </div>
   </div>
 </template>
 
 <script>
 import areaList from '../../assets/js/area.js'
-import {getObtainraccount} from "../../api/home"
+import {getObtainraccount,companyAdd} from "../../api/home"
 import { Toast } from 'vant'
 export default {
   data() {
@@ -187,10 +188,10 @@ export default {
       columns: ['男','女'],
       showPicker: false,
       value2: '',
-      columns2: ['1','2'],
+      columns2: ['0-19','20-50','50-200','大于500'],
       showPicker2: false,
       value3: '',
-      columns3: ['产品1','产品2'],
+      columns3: ['综合','内窥镜','手术室供应室消杀','放射','超声','检验'],
       showPicker3: false,
       show: false,  //是否显示弹出层
       detailAddress: '',  //绑定详细地址输入框
@@ -230,13 +231,18 @@ export default {
       imgurl:"",
       imgurl2:"",
       imgurl3:"",
-      imgurl4:""
+      imgurl4:"",
+      flags:true,
     }
   },
   mounted(){
     this.getObtainraccount()
   },
   methods:{
+    //编辑信息
+    change(){
+      this.flags = false
+    },
     getObtainraccount(){
       let data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid
@@ -386,6 +392,13 @@ export default {
       transform: translate(-50%,-50%);
       font-size: 16px;
     }
+  }
+  .comrel_middle1{
+     position: absolute;
+      right:5%;
+      top:50%;
+      transform: translate(-50%,-50%);
+      font-size: px(28);
   }
   .comrel_con{
     margin: 0 0 px(30);

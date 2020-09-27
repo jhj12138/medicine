@@ -37,6 +37,9 @@ export default {
       textareas:''
     }
   },
+  mounted(){
+
+  },
   methods:{
     Determine(){
       var NewPwd = {
@@ -63,10 +66,20 @@ export default {
       
     },
     cancel(){
+       if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
       this.$router.push('/mine')
+      }
     },
     goReturn() {
+      // console.log(this.$route.query.flag)
+      if(this.$route.query.flag == "true"){
+      this.$router.push('/mines')
+      }else{
       this.$router.push('/mine')
+      }
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器

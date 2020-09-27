@@ -28,8 +28,8 @@
         </div>
         <div class="login_con_go">
           <div class="login_con_gos">
-            <div class="login_con_l" @click="goRegister">立即注册</div>
-            <div class="login_con_s"></div>
+            <!-- <div class="login_con_l" @click="goRegister">立即注册</div> -->
+            <!-- <div class="login_con_s"></div> -->
             <div class="login_con_w" @click="goPass">忘记密码？</div>
           </div>
         </div>

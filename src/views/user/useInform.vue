@@ -4,23 +4,24 @@
       <div class="stand_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
-      <div class="stand_middle">展位信息</div>
+      <div class="stand_middle">个人信息</div>
+      <div class="stand_middle1" @click="chengeflag">编辑</div>
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入所属公司" v-model="company">
+        <input type="text" placeholder="请输入所属公司" v-model="company"  :readOnly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系人姓名" v-model="contacts">
+        <input type="text" placeholder="请输入联系人姓名" v-model="contacts"  :readOnly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入职务信息" v-model="phones">
+        <input type="text" placeholder="请输入职务信息" v-model="PosiTion"  :readOnly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系电话" v-model="email">
+        <input type="text" placeholder="请输入联系电话" v-model="phones"  :readOnly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入电子邮件" v-model="email">
+        <input type="text" placeholder="请输入电子邮件" v-model="email"  :readOnly="flag">
       </div>
     </div>
     <div class="stand_bottom" @click="submits">确定</div>
@@ -29,6 +30,7 @@
 
 <script>
 import { Toast } from 'vant';
+import { edit } from '../../api/user';
 export default {
   data() {
     return{
@@ -36,12 +38,39 @@ export default {
       contacts:'',
       phones:'',
       email:'',
-      textareas:''
+      textareas:'',
+      PosiTion:"",
+      flag:true,
+      formData:{
+        Phone:"",
+        PosiTion:"",
+        Company:"" ,
+        ContactPerson:"" ,
+        Email:""
+      }
     }
   },
+  mounted(){
+    this.getxx()
+  },
   methods:{
+    chengeflag(){
+      this.flag = false
+    },
+    getxx(){
+      this.company = sessionStorage.Company
+      this.phones = sessionStorage.Phone
+      this.PosiTion = sessionStorage.PosiTion
+      this.email = sessionStorage.Email
+      this.contacts = sessionStorage.ContactPerson
+    },
     goReturn() {
+      if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
       this.$router.push('/mine')
+      }
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
@@ -51,15 +80,38 @@ export default {
       console.log(file)
     },
     submits() {
+      if(this.flag){
+        this.$router.push('/mines')
+
+      }else{
       if(!this.company){Toast('请输入公司简称');return}
       if(!this.contacts){Toast('请输入联系人');return}
       if(!this.phones){Toast('请输入联系电话');return}
       if(!this.email){Toast('请输入邮箱地址');return}
-      if(this.fileList.length == 0){Toast('请上传公司logo');return}
-      if(this.fileList.length == 0){Toast('请上传公司图片');return}
-      if(!this.textareas){Toast('请输入邮箱地址');return}
+      if(!this.PosiTion){Toast('请输入职务信息');return}
+      // if(this.fileList.length == 0){Toast('请上传公司图片');return}
+      // if(!this.textareas){Toast('请输入邮箱地址');return}
       if (!(/^1[3456789]\d{9}$/.test(this.phones))){Toast('联系人电话有误');return} 
-      if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return} 
+      if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return}
+      this.formData.Phone = this.phones
+      this.formData.PosiTion = this.PosiTion
+      this.formData.Company = this.company
+      this.formData.ContactPerson = this.contacts
+      this.formData.Email = this.email
+      edit(this.formData).then(res=>{
+        if(res.Success){
+          Toast(res.Msg)
+        sessionStorage.Company = this.company
+        sessionStorage.Phone=this.phones 
+        sessionStorage.PosiTion=this.PosiTion 
+        sessionStorage.Email= this.email 
+        sessionStorage.ContactPerson=this.contacts 
+          this.$router.push('/mines')
+        }else{
+         Toast(res.Msg)
+        }
+      }) 
+    }
     }
   }
 }
@@ -99,6 +151,11 @@ export default {
       transform: translate(-50%,-50%);
       font-size: 16px;
     }
+  }
+  .stand_middle1{
+    position: absolute;
+    top: px(30);
+    right: px(30);
   }
   .stand_con{
     margin-top: px(130);

@@ -16,10 +16,8 @@
           </div>
           <div class="mine_name">
             <div class="mine_names">
-              <span>{{userList.Title}}</span>
-              <!-- <div class="mine_names_img">
-                <img src="../../assets/image/mine_six.png" alt="">
-              </div> -->
+              <span>{{Title}}</span>
+              
             </div>
             <div class="mine_message" @click="goAcc">查看个人主页</div>
           </div>
@@ -53,19 +51,19 @@
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine1.png" alt="">
               </div>
-              <div class="mine_admin_name">展会列表</div>
+              <div class="mine_admin_name">参加展会</div>
             </li>
             <li class="mine_admin_li" @click="goExhib">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine2.png" alt="">
               </div>
-              <div class="mine_admin_name">参展人员管理</div>
+              <div class="mine_admin_name">学习课程</div>
             </li>
             <li class="mine_admin_li" @click="goStand">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine3.png" alt="">
               </div>
-              <div class="mine_admin_name">线上展位管理</div>
+              <div class="mine_admin_name">课程评论</div>
             </li>
           </ul>
           <ul class="mine_admin_ul">
@@ -73,26 +71,26 @@
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine4.png" alt="">
               </div>
-              <div class="mine_admin_name">商品管理</div>
+              <div class="mine_admin_name">关注商品</div>
             </li>
             <li class="mine_admin_li" @click="goCertif">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine5.png" alt="">
               </div>
-              <div class="mine_admin_name">证书管理</div>
+              <div class="mine_admin_name">线下活动</div>
             </li>
             <!-- 用于占位置 -->
             <li class="mine_admin_li" style=" visibility: hidden;">
               <div class="mine_admin_top2">
                 <img src="../../assets/image/mine3.png" alt="">
               </div>
-              <div class="mine_admin_name">线上展位管理</div>
+              <div class="mine_admin_name">展位管理</div>
             </li>
           </ul>
         </div>
       </div>
       <!-- 发票管理及修改密码 -->
-      <div class="mine_invocie" @click="goInv">
+      <!-- <div class="mine_invocie" @click="goInv">
         <div class="mine_invocie_left">
           <div class="mine_invocie_ing">
             <img src="../../assets/image/mine_invoice.png" alt="">
@@ -100,7 +98,7 @@
           <span>发票管理</span>
         </div>
         <div class="mine_invocie_right"><img src="../../assets/image/mine_go.png" alt=""></div>
-      </div>
+      </div> -->
       <div class="mine_invocie" @click="goChangepw">
         <div class="mine_invocie_left">
           <div class="mine_invocie_ing">
@@ -122,6 +120,8 @@ export default {
       userList:null,
       username:null,
       usermessagelgth:null,
+      flag:true,
+      Title:"",
 
     }
   },
@@ -130,6 +130,7 @@ export default {
   },
   methods:{
     getInformation(){
+      this.Title = sessionStorage.Uname
       this.userList = JSON.parse(sessionStorage.cidInfo) 
       console.log(this.userList)
       //获取站内信列表
@@ -145,38 +146,38 @@ export default {
       // })
     },
     goshowlist(){
-       this.$router.push('/showlist') //返回首页
+       this.$router.push('/useAttend') //参加的展会
 
     },
     returnHome(){
        this.$router.push('/home') //返回首页
     },
     goChangepw(){
-      this.$router.push('/changePass') //跳转修改密码
+      this.$router.push({path:'/changePass',query:{flag:this.flag}}) //跳转修改密码
     },
     goExhib(){
-      this.$router.push('/evemanage') //跳转到参展人员管理
+      this.$router.push('/usestudy') //参加的课程
     },
     goCertif(){
-      this.$router.push('/certifcate') //跳转到证书管理
+      this.$router.push('/useOffline') //线下活动
     },
     goCommodity(){
-      this.$router.push('/commodity') //跳转到商品管理
+      this.$router.push('/useCare') //跳转到商品管理
     },
     goStand(){
-      this.$router.push('/standmage') //跳转到展位管理
+      this.$router.push('/useCourse') //课程评论
     },
     goMessage(){
-      this.$router.push('/message') //跳转到站内信
+      this.$router.push('/useMessage') //跳转到站内信
     },
     // goForm(){
     //   this.$router.push('/contform') //跳转到联系表单
     // },
     goInv(){
-      this.$router.push('/invdetail') //跳转到发票管理
+      // this.$router.push('/invdetail') //跳转到发票管理
     },
     goAcc(){
-      this.$router.push('/accinform') //跳转到账户信息
+      this.$router.push('/useInform') //跳转到账户信息
     }
   }
 }
@@ -342,6 +343,7 @@ export default {
           display: flex;
           flex-direction: column;
           align-items: center;
+          justify-content: center;
           // margin-right: px(10);
           .mine_admin_top2{
             width: px(100);

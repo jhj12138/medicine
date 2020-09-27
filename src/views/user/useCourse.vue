@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="certif_middle">我的课程评论</div>
-      <div class="certif_right">管理</div>
+      <div class="certif_right" @click="change">管理</div>
     </div>
     <div class="invdetail_con">
       <ul>
@@ -16,37 +16,81 @@
           <div class="invdetail_li_top">
             <div class="invdetail_li_left">
               <van-checkbox v-model="item.checked" @click="getList(item,item.checked,index)" icon-size="15px"></van-checkbox>
-              <div class="invdetail_li_name">最新课程</div>
+              <div class="invdetail_li_name">{{item.LessionName}}</div>
               <div class="invdetail_li_jin">
-                <span>已审核</span>
+                <span>{{item.Status}}</span>
+                
               </div>
+               <div class="message_li_right" v-show="flags">
+              <span @click="del(item.Id)">删除</span>
+              <div class="message_li_img">
+                <img src="../../assets/image/mine_go.png" alt="">
+              </div>
+            </div>
             </div>
           </div>
           <div class="invdetail_li_bottom">
-            <div class="message_li_span"><div class="message_li_tit">评论内容<span></span></div>：<span>我对这个商品很感兴趣我对这个商品很感兴趣我对这个商品很感兴趣我对这个商品很感兴趣</span></div>
-            <div class="message_li_span"><div class="message_li_tit">评论时间<span></span></div>：<span>2020.8.10 12:00</span></div>
+            <div class="message_li_span"><div class="message_li_tit">评论内容<span></span></div>：<span>{{item.Content}}</span></div>
+            <div class="message_li_span"><div class="message_li_tit">评论时间<span></span></div>：<span>{{item.CreateTime}}</span></div>
           </div>
         </li>
       </ul>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom" @click="goInvoice">发票信息</div>
+      <div class="stand_bottom" @click="goInvoice">确定</div>
     </div>
   </div>
 </template>
 <script>
+import { Toast } from 'vant'
+import {commentlist, delcommentlist} from "../../api/user"
 export default {
   data() {
     return{
-      list:[{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false},{'checked':false}],
+      list:[],
+      flags:false
     }
   },
+  mounted(){
+    this.commentlist()
+  },
   methods:{
+    del(ids){
+      delcommentlist({ids}).then(res=>{
+        // console.log(res)
+        Toast(res.Msg)
+        this.$router.go(0)
+      })
+    },
+    change(){
+      if(!this.flags){
+      this.flags = true
+
+      }else{
+        this.flags = false
+      }
+    },
+    commentlist(){
+      commentlist({}).then(res=>{
+        this.list = res.Data.Data
+          console.log(res)
+      })
+    },
     goReturn() {
+      if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
       this.$router.push('/mine')
+      }
     },
     goInvoice() {
-      this.$router.push('/invoice')
+      if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
+      this.$router.push('/mine')
+      }
     },
     getList(item,checked,index){
       // if(checked){
@@ -101,6 +145,21 @@ export default {
       font-size: 16px;
     }
   }
+   .message_li_right{
+     margin-left: px(35);
+            display: flex;
+            align-items: center;
+            span{
+              color: #2667BF;
+            }
+            .message_li_img{
+              width: px(9);
+              margin-left: px(11);
+              img{
+                width: 100%;
+              }
+            }
+          }
   .invdetail_con{
     padding:px(130) 0;
     margin:0 px(20);

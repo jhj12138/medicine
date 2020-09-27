@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {userLession,userLessionDel} from '../../api/user'
+import {userLession,userLessionDel,lessions} from '../../api/user'
 import { Toast } from 'vant';
 export default {
   data() {
@@ -47,7 +47,12 @@ export default {
   },
   methods:{
     goReturn() {
+      if(sessionStorage.IdentityType == "个人用户"){
+      this.$router.push('/mines')
+
+      }else{
       this.$router.push('/mine')
+      }
     },
     goInvoice() {
       this.$router.push('/invoice')
