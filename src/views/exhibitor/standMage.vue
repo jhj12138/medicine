@@ -5,19 +5,20 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="stand_middle">展位信息</div>
+      <div class="certif_right" @click="change">编辑</div>
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入公司简称" v-model="company">
+        <input type="text" placeholder="请输入公司简称" v-model="company" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系人" v-model="contacts">
+        <input type="text" placeholder="请输入联系人" v-model="contacts" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系电话" v-model="phones">
+        <input type="text" placeholder="请输入联系电话" v-model="phones" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入邮箱地址" v-model="email">
+        <input type="text" placeholder="请输入邮箱地址" v-model="email" :readonly="flag">
       </div>
     </div>
     <div class="stand_update">
@@ -42,7 +43,7 @@
         <img src="../../assets/image/stand_img.png" alt="">
       </div>
       <div class="stand_textarea_right">
-        <textarea placeholder="请填写公司的简介" v-model="textareas"></textarea>
+        <textarea placeholder="请填写公司的简介" v-model="textareas"  :readonly="flag"></textarea>
       </div>
     </div>
     <div class="stand_bottom" @click="submits">确定</div>
@@ -51,7 +52,7 @@
 
 <script>
 import { Toast } from 'vant';
-import { ObtainContactUs} from '../../api/home';
+import { ObtainContactUs,ADDContactUs} from '../../api/home';
 export default {
   data() {
     return{
@@ -69,17 +70,23 @@ export default {
       textareas:'',
       imgurl:"",
       imgurl1:"",
+      flag:true
     }
   },
   mounted(){
     this.ObtainContactUs()
   },
   methods:{
+    change(){
+        this.flag =false
+        console.log(111)
+    },
     ObtainContactUs(){
       var data = {
         cid: JSON.parse(sessionStorage.cidInfo).cid
       }
       ObtainContactUs(data).then(res=>{
+        console.log(res)
         this.company = res.Data.abbreviation
         this.phones = res.Data.phone
         this.email = res.Data.mailbox
@@ -89,7 +96,6 @@ export default {
         this.fileList[0].url = this.imgurl
         this.fileList2[0].url = this.imgurl1
         this.textareas = res.Data.introduce
-        console.log( res.Data)
       })
     },
     goReturn() {
@@ -112,7 +118,25 @@ export default {
       if(!this.textareas){Toast('请输入邮箱地址');return}
       if (!(/^1[3456789]\d{9}$/.test(this.phones))){Toast('联系人电话有误');return} 
       if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return}
-      this.$router.push('/mine')
+     var data={
+       cid:JSON.parse(sessionStorage.cidInfo).cid,
+       abbreviation:this.company,
+       contacts:this.contacts,
+       phone:this.phones,
+       mailbox:this.email,
+       LOGO:"https://www.zjylz.com",
+       imgurl:"https://www.zjylz.com",
+       introduce:this.textareas
+     }
+     console.log(data)
+     ADDContactUs(data).then(res=>{
+        if(res.Success){
+          Toast('修改成功')
+        this.$router.push('/mine')
+        }else{
+          Toast(res.Msg)
+        }
+      })
     }
   }
 }
@@ -144,6 +168,13 @@ export default {
       img{
         width: 100%;
       }
+    }
+    .certif_right{
+      position: absolute;
+      top: 30%;
+      right: 10%;
+      font-size: px(28);
+      color: #2668C0;
     }
     .stand_middle{
       position: absolute;

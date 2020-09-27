@@ -9,7 +9,7 @@
     <div class="purtrans_con" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="100" infinite-scroll-throttle-delay=“500”>
       <div class="purtrans_li"
       v-for="(itemList,index) in tabContents"
-      :key = "index">
+      :key = "index" @click="gonewxq(itemList.ID)">
         <div class="purtrans_li_left">{{itemList.Title}}</div>
         <div class="purtrans_li_right">{{itemList.ShowDate}}</div>
       </div>
@@ -32,6 +32,10 @@ export default {
   methods:{
     goReturn() {
       this.$router.push('/home')
+    },
+    gonewxq(id) {
+        this.$router.push({ path: '/newsform', query: { Id: id} })
+
     },
     loadMore() {
       // this.tabContents =[]

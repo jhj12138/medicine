@@ -59,9 +59,9 @@
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司网址"  v-model="formData.website">
       </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编"  v-model="formData.Postcode">
-      </div>
+      <!-- <div class="comrel_con_inp">
+        <input type="text" placeholder="请输入邮编"  v-model="formData.code">
+      </div> -->
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司电话"  v-model="formData.Telephone">
       </div>
@@ -83,7 +83,7 @@
        <van-field
           readonly
           clickable
-          :value="formData.people"
+          :value="value"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -99,9 +99,9 @@
           <img src="../../assets/image/up_picker.png" alt="">
         </div>
       </div>
-      <div class="comrel_con_inp">
+      <!-- <div class="comrel_con_inp">
         <input type="text" placeholder="请输入成立日期" v-model="formData.establish">
-      </div>
+      </div> -->
       <div class="comrel_con_inp1">
        <van-field
           readonly
@@ -171,7 +171,7 @@ export default {
       columns2: ['10-20','20-50','50-200','200-500','大于500'],
       showPicker2: false,
       value3: '',
-      columns3: ['产品1','产品2'],
+      columns3: ['综合','内窥镜','手术室供应室消杀','放射','超声','检验'],
       showPicker3: false,
       show: false,  //是否显示弹出层
       detailAddress: '',  //绑定详细地址输入框
@@ -218,7 +218,7 @@ export default {
     }
   },
   mounted(){
-    this.getObtainraccount()
+    // this.getObtainraccount()
   },
   methods:{
       goxzzw(){

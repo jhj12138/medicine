@@ -44,21 +44,20 @@ export default {
     getquery(){
       this.content = this.$route.query
         console.log(this.content.flag)
-      if(this.content.flag == true){
+      if(this.content.flag == "true"){
         var data = {
           cid:JSON.parse(sessionStorage.cidInfo).cid,
           ID:this.content.ID
         }
         // console.log(this.imgurl)
         getObtainCertificate(data).then(res=>{
-          this.name = res.Data.Data[0].name
-          this.OrdNum = res.Data.Data[0].OrdNum
-          this.fileList[0].url = res.Data.Data[0].imgurl.split('&&')[0]
+          this.name = res.Data.Data[this.$route.query.index].name
+          this.OrdNum = res.Data.Data[this.$route.query.index].OrdNum
+          this.fileList[0].url = res.Data.Data[this.$route.query.index].imgurl.split('&&')[0]
           console.log(res.Data)
         })
       }else{
-     
-
+        console.log(11111111)
       }
     },
     tijao(){
@@ -71,8 +70,6 @@ export default {
           name:this.name,
           OrdNum:this.OrdNum,
           imgurl:this.fileList[0].url,
-          Status:"",
-          addtime:nowtime
         }
         console.log(data)
         EditCertificate(data).then(res=>{
@@ -88,8 +85,6 @@ export default {
           name:this.name,
           OrdNum:this.OrdNum,
           imgurl:this.imgurl,
-          Status:"",
-          addtime:nowtime
         }
         ADDCertificate(data).then(res=>{
           if(res.Success){
@@ -108,8 +103,8 @@ export default {
       // 此时可以自行将文件上传至服务器
         console.log(file.file)
       var data = {
-        File:file.file,
-        FileType:file
+        File:file.name,
+        FileType:"image"
       }
       uploadimg(data).then(res=>{
         console.log(res)

@@ -140,15 +140,15 @@ export default {
          this.names = this.list.name
          this.price = this.list.Price
          if(this.list.isrecommend == 1){
-           this.value = "推荐" 
+           this.value2 = "推荐" 
          }else{
-           this.value = "不推荐" 
+           this.value2 = "不推荐" 
 
          }
          if(this.list.isrelease == 1){
-           this.value2 = "已发布" 
+           this.value = "已发布" 
          }else{
-           this.value2 = "未发布" 
+           this.value = "未发布" 
          }
          this.fileList[0].url = 'https://www.zjylz.com' + this.list.ImgList.split("&&")[0]
          this.textareas = this.list.Summary
@@ -198,20 +198,16 @@ export default {
       //添加商品信息
       var goodsid=JSON.parse(sessionStorage.cidInfo).cid
       let data = {
-        ImgList: this.imgurl ,
-        pid:"",
-        Price:this.price,
-        status:"",
-        Summary:this.textareas,
-        advice: "",
-        cid:goodsid,
-        classid:300,
-        content:"",
-        imgurl:"",
-        isrecommend:this.sum,
-        isrelease:1,
+        Pid:this.$route.query.Id,
         name:this.names,
-        topclassid: 100
+        imgurl:this.list.ImgList.split("&&")[0],
+        classid:2,
+        Summary:this.textareas,
+        Price:this.price,
+        isrecommend:1,
+        isrelease:1,
+        content:"1111 ",
+        ImgList:''
       }
     //  var formData = {
     //       name: '11111',
@@ -232,8 +228,7 @@ export default {
     //     }
     console.log(data)
       exhibitionAddGoods(data).then(res=>{
-          console.log(res)
-          
+          console.log(res) 
         if(res.Success){
           Toast(res.Msg)
            this.$router.push('/commodity')

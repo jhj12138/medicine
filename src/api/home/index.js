@@ -25,6 +25,14 @@ export const ADDCertificate = apiParams => { //
     params: apiParams,
   })
 }
+export const DELCertificate = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/DELCertificate',
+    params: apiParams,
+  })
+}
+
 //修改展商信息
 export const companyAdd = apiParams => { //
   return request({
@@ -424,6 +432,14 @@ export const ObtainContactUs = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'Exhibitorinfo/ObtainContactUs',
+    params: apiParams,
+  })
+}
+//添加展位联系我们
+export const ADDContactUs = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/ADDContactUs',
     params: apiParams,
   })
 }

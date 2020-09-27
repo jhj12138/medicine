@@ -170,7 +170,7 @@
             v-for="(item,index) in review_list" 
             :key = "index"
             @click="getReview(index,item.ID)">
-              <img :src="item.ImgUrl" alt="">
+              <img :src="item.MImgUrl" alt="">
               <div class="home_review_flag"
               :class="review_index == index?'home_review_flags':''">
                 <div class="home_review_time">
@@ -417,10 +417,11 @@ export default {
     },
     homeHistory() {
       homeHistory().then((res) => {
+        console.log(res)
         if (res.Success){
           this.review_list = res.Data
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
+            ele.MImgUrl = 'https://www.zjylz.com'+ele.MImgUrl
           })
           console.log(res)
         } else {
@@ -508,7 +509,8 @@ export default {
               if(IdentityType){
                 this.ObtainOid()
               }else{
-                Toast("未登录")
+                // Toast("未登录")
+               this.$router.push('/gsxx')
               }
           }
       // }else{

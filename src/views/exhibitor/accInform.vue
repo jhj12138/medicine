@@ -172,7 +172,7 @@
       </div>
     </div>
     <div class="stand_bottoms">
-      <div class="stand_bottom">确定</div>
+      <div class="stand_bottom" @click="xiugai">确定</div>
     </div>
   </div>
 </template>
@@ -180,12 +180,12 @@
 <script>
 import areaList from '../../assets/js/area.js'
 import {getObtainraccount,companyAdd} from "../../api/home"
-import { Toast } from 'vant'
+import { Form, Toast } from 'vant'
 export default {
   data() {
     return{
       value: '',
-      columns: ['男','女'],
+      columns: ["男","女"],
       showPicker: false,
       value2: '',
       columns2: ['0-19','20-50','50-200','大于500'],
@@ -233,12 +233,63 @@ export default {
       imgurl3:"",
       imgurl4:"",
       flags:true,
+      formData:{
+        action:"Addcompany",
+        Title:"",
+        eTitle:"",
+        province:"",
+        city:"",
+        country:"",
+        code:"",
+        address:"",
+        website:"",
+        mailbox:"",
+        Telephone:"",
+        Fax:"",
+        abbreviation:"",
+        nature:"",
+        establish:"",
+        people:"",
+        register:"",
+        Industryrb:"",
+        license:"",
+        certificate:"",
+        authorization:"",
+        Patentcertificate:"",
+        Postcode:"",
+        eid:''
+      }
+
     }
   },
   mounted(){
     this.getObtainraccount()
   },
   methods:{
+    xiugai(){
+      this.formData.Title = this.Title
+      this.formData.eTitle = this.eTitle
+      this.formData.code = this.code
+      this.formData.address = this.address
+      this.formData.website = this.website
+      this.formData.Telephone = this.Telephone
+      this.formData.Fax = this.Fax
+      this.formData.abbreviation = this.abbreviation
+      this.formData.nature = this.nature
+      this.formData.establish = this.establish
+      this.formData.people = this.people
+      this.formData.Industryrb = this.Industryrb
+      this.formData.license = "" 
+      this.formData.certificate = ""
+      this.formData.Industryrb = this.Industryrb
+      this.formData.authorization = ""
+      this.formData.Postcode = this.Postcode
+      this.formData.eid = sessionStorage.Uid
+      console.log(this.formData)
+      companyAdd(this.formData).then(res=>{
+        console.log(res)
+      })
+    },
     //编辑信息
     change(){
       this.flags = false
