@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="stand_middle">展位信息</div>
-      <div class="certif_right" @click="change">编辑</div>
+      <!-- <div class="certif_right" @click="change">编辑</div> -->
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
@@ -128,15 +128,17 @@ export default {
        imgurl:"https://www.zjylz.com",
        introduce:this.textareas
      }
-     console.log(data)
-     ADDContactUs(data).then(res=>{
-        if(res.Success){
-          Toast('修改成功')
         this.$router.push('/mine')
-        }else{
-          Toast(res.Msg)
-        }
-      })
+
+     console.log(data)
+    //  ADDContactUs(data).then(res=>{
+    //     if(res.Success){
+    //       Toast('修改成功')
+    //     this.$router.push('/mine')
+    //     }else{
+    //       Toast(res.Msg)
+    //     }
+    //   })
     }
   }
 }

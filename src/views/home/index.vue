@@ -24,7 +24,7 @@
               <span>展品</span>
               <div class="home_textbox_img"><img src="../../assets/image/home_san.png" alt=""></div>
             </div>
-            <div class="home_textup" @click="goUps" v-if ="flagUp">展商</div>
+            <div class="home_textup" @click="goUps" v-if="flagUp">展商</div>
           </div>
           <div class="home_textbox_right">
             <div class="home_textbox_shou"><img src="../../assets/image/home_shou.png" alt=""></div>
@@ -260,6 +260,8 @@ export default {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
         bsid:sessionStorage.bsid,
       }
+      //  this.$router.push('/gsxx')
+
       ObtainOid(data).then(res=>{
         console.log(res)
         if(res.Success){
@@ -267,9 +269,7 @@ export default {
            if(res.Msg=="已报名"){
               Toast("您已报名参展，请前往展商中心查看")
               this.$router.push('mine')
-           }else if(res.Msg==null){
-              Toast("信息出错，请重新登录")
-           }else{
+           }else  {
             this.$router.push('/gsxx')
            }
           
@@ -509,8 +509,8 @@ export default {
               if(IdentityType){
                 this.ObtainOid()
               }else{
-                // Toast("未登录")
-               this.$router.push('/gsxx')
+                Toast("登录之后才能报名")
+               this.$router.push('/login')
               }
           }
       // }else{

@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="comrel_middle">账户信息</div>
-      <div class="comrel_middle1" @click="change">编辑</div>
+      <!-- <div class="comrel_middle1" @click="change">编辑</div> -->
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
@@ -286,6 +286,7 @@ export default {
       this.formData.Postcode = this.Postcode
       this.formData.eid = sessionStorage.Uid
       console.log(this.formData)
+      this.$router.push('/mine')
       companyAdd(this.formData).then(res=>{
         console.log(res)
       })

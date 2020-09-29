@@ -33,6 +33,14 @@ export const edit = apiParams => { //
     params: apiParams,
   })
 }
+//删除参展人员
+export const delParticipants= apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Participants/DEL',
+    params: apiParams,
+  })
+}
 // 报名参加展会
 
 export const userJoin = apiParams => { //

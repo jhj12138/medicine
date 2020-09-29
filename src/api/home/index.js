@@ -41,6 +41,14 @@ export const companyAdd = apiParams => { //
     params: apiParams,
   })
 }
+//修改商品信息
+export const Editcommodity = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Editcommodity',
+    params: apiParams,
+  })
+}
 
 //删除商品信息
 export const DELcommodity = apiParams => { //
@@ -435,6 +443,14 @@ export const ObtainContactUs = apiParams => { //
     params: apiParams,
   })
 }
+// //修改联系我们
+// export const ADDContactUs = apiParams => { //
+//   return request({
+//     method: 'post',
+//     url: urlParams + '/Exhibitorinfo/ADDContactUs',
+//     params: apiParams,
+//   })
+// }
 //添加展位联系我们
 export const ADDContactUs = apiParams => { //
   return request({
@@ -443,6 +459,16 @@ export const ADDContactUs = apiParams => { //
     params: apiParams,
   })
 }
+//添加参展人员
+export const ADDParticipants= apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Participants/ADD',
+    params: apiParams,
+  })
+}
+//删除参展人员
+
 
 // 获取展商信息
 export const Obtaincommodity = apiParams => { //
@@ -530,6 +556,14 @@ export const exhibitionEditInvoice = apiParams => { //
   return request({
     method: 'post',
     url: urlParams + '/Exhibitorinfo/EditInvoice',
+    params: apiParams,
+  })
+}
+//编辑发票信息
+export const uploadimgs = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'common/upload',
     params: apiParams,
   })
 }

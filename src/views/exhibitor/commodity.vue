@@ -111,7 +111,8 @@ export default {
       this.$router.push('/mine') 
     },
     goRel() {
-      this.$router.push('/comrel')  //跳转到商品发布
+      Toast('请前往pc版添加商品信息')
+      // this.$router.push('/comrel')  //跳转到商品发布
     }
   }
 }

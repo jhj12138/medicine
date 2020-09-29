@@ -96,15 +96,15 @@
 
 <script>
 import { Toast } from 'vant';
-import { AddgoodsContent ,Obtaincommodity,exhibitionAddGoods} from '../../api/home';
+import { AddgoodsContent ,Obtaincommodity,exhibitionAddGoods,Editcommodity,uploadimgs} from '../../api/home';
 export default {
   data() {
     return {
       value: '',
-      columns: ['发布','不发布'],
+      columns: ['是','否'],
       showPicker: false,
       value2: '',
-      columns2: ['测试','其他类','综合类','手术器械类','内视镜类'],
+      columns2: ['已发布','未发布'],
       showPicker2: false,
       value3: '',
       showPicker3: false,
@@ -116,7 +116,10 @@ export default {
       textareas:'',
       sum:"",
       list:"",
-      imgurl:''
+      imgurl:'',
+      goods:"",
+      isrecommend:"",
+      isrelease:""
     };
   },
   mounted(){
@@ -140,15 +143,15 @@ export default {
          this.names = this.list.name
          this.price = this.list.Price
          if(this.list.isrecommend == 1){
-           this.value2 = "推荐" 
+           this.value = "是" 
          }else{
-           this.value2 = "不推荐" 
+           this.value = "否" 
 
          }
          if(this.list.isrelease == 1){
-           this.value = "已发布" 
+           this.value2 = "已发布" 
          }else{
-           this.value = "未发布" 
+           this.value2 = "未发布" 
          }
          this.fileList[0].url = 'https://www.zjylz.com' + this.list.ImgList.split("&&")[0]
          this.textareas = this.list.Summary
@@ -182,33 +185,102 @@ export default {
     goReturn() {
       this.$router.push('/commodity')
     },
+    afterRead(file) {
+     let Base64 = require('js-base64').Base64
+    var url =  Base64.encode(file.content)
+      // 此时可以自行将文件上传至服务器
+      console.log('111111',url)
+      var data = {
+          File:"https://www.zjylz.comhttps//www.zjylz.com/Upload/image/202009/20200929165438_1330.png",
+          FileType:"image"
+      }
+      uploadimgs(data).then(res=>{
+        console.log(res)
+      })
+      console.log(file);
+    },
     submits() {
-      if(!this.names){Toast('请输入商品名称');return}
+       if(this.value = "是"){
+           this.isrecommend = 1
+         }else{
+           this.isrecommend = 0
+         }
+         if( this.value2 = "已发布"){
+           this.isrelease = 1
+         }else{
+          this.isrelease = 0
+
+         }
+         console.log(this.value)
+         console.log(this.isrecommend)
+      if(this.$route.query.Id){
+        console.log(this.names)
+        var data = {
+          Pid:this.list.Pid,
+          name:this.names,
+          imgurl:"",
+          classid:this.list.classid,
+          Summary:this.textareas,
+          Price:this.price,
+          isrecommend:this.isrecommend,
+          isrelease:this.isrelease,
+          content:this.textareas,
+          topclassid:this.list.topclassid,
+          ImgList: this.fileList[0].url
+        }
+        console.log("111",this.fileList)
+        Editcommodity(data).then(res=>{
+          console.log(res)
+          if(res.Success){
+            Toast(res.Msg)
+            this.$router.push('/commodity')
+          }else{
+            Toast(res.Msg)
+          }
+        })
+      }else{
+   if(!this.names){Toast('请输入商品名称');return}
       if(!this.price){Toast('请输入商品价格');return}
       if(!this.value){Toast('请输入是否推荐');return}
       if(!this.value2){Toast('请输入商品状态');return}
       if(this.fileList.length == 0){Toast('请上传商品图片');return}
       // if(!this.value3){Toast('请输入所属分类');return}
       if(!this.textareas){Toast('请填写商品介绍');return}
-       if(this.value=="发布"){
+       if(this.value=="是"){
         this.sum=1
       }else{
         this.sum=0
       }
-      //添加商品信息
-      var goodsid=JSON.parse(sessionStorage.cidInfo).cid
+        var goodsid=JSON.parse(sessionStorage.cidInfo).cid
       let data = {
+        cid:JSON.parse(sessionStorage.cidInfo).cid,
         Pid:this.$route.query.Id,
         name:this.names,
-        imgurl:this.list.ImgList.split("&&")[0],
-        classid:2,
+        imgurl:"https://www.zjylz.com/",
+        classid:152,
         Summary:this.textareas,
         Price:this.price,
         isrecommend:1,
         isrelease:1,
-        content:"1111 ",
-        ImgList:''
+        content:this.textareas,
+        ImgList:'"https://www.zjylz.comhttps//www.zjylz.com/Upload/image/202009/20200929165438_1330.png"'
       }
+        console.log(data)
+      exhibitionAddGoods(data).then(res=>{
+          console.log(res) 
+        if(res.Success){
+          Toast(res.Msg)
+           this.$router.push('/commodity')
+        }else{
+          Toast(res.Msg)
+
+        }
+      })
+
+      }
+     
+      //添加商品信息
+    
     //  var formData = {
     //       name: '11111',
     //       Pid: 1,
@@ -226,17 +298,7 @@ export default {
     //       status: '',
     //       content: ''
     //     }
-    console.log(data)
-      exhibitionAddGoods(data).then(res=>{
-          console.log(res) 
-        if(res.Success){
-          Toast(res.Msg)
-           this.$router.push('/commodity')
-        }else{
-          Toast(res.Msg)
-
-        }
-      })
+  
     }
   },
 }

@@ -136,14 +136,14 @@
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传产品授权书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead3" v-model="fileList3" :max-count="1"/>
 
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传专利证书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead4" v-model="fileList4" :max-count="1"/>
           </div>

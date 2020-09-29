@@ -30,7 +30,7 @@ import{EditCertificate,getObtainCertificate,uploadimg,ADDCertificate} from "../.
 export default {
   data() {
     return{
-      fileList: [{url:"",isImage: true }],
+      fileList: [{url:""}],
       content:"",
       imgurl:"",
       name:"",
@@ -53,8 +53,9 @@ export default {
         getObtainCertificate(data).then(res=>{
           this.name = res.Data.Data[this.$route.query.index].name
           this.OrdNum = res.Data.Data[this.$route.query.index].OrdNum
-          this.fileList[0].url = res.Data.Data[this.$route.query.index].imgurl.split('&&')[0]
+          this.fileList[0].url = "https://www.zjylz.com/" +  res.Data.Data[this.$route.query.index].imgurl.split('&&')[0]
           console.log(res.Data)
+          console.log(  this.fileList[0].url )
         })
       }else{
         console.log(11111111)
@@ -62,7 +63,7 @@ export default {
     },
     tijao(){
       this.content = this.$route.query
-      if(this.content.flag == true){
+      if(this.content.flag){
         var nowtime  = new Date().toLocaleDateString()
         var data = {
           cid:JSON.parse(sessionStorage.cidInfo).cid,

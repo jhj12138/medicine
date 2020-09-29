@@ -75,6 +75,7 @@ export default {
         action:"Booth"
       }
       exhibitionBooth(data).then(res=>{
+        console.log(res)
         this.list = res.Data
         this.explain1 = res.Data[0].Summary
       })

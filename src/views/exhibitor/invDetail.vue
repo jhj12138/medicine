@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="certif_middle">发票管理</div>
-      <div class="certif_right">管理</div>
+      <div class="certif_right"></div>
     </div>
     <div class="invdetail_con">
       <ul>
@@ -43,7 +43,7 @@
 
 <script>
 import { Toast } from 'vant'
-import{getObtainInvoiceList} from "../../api/home"
+import{getObtainInvoiceList,getObtain} from "../../api/home"
 export default {
   data() {
     return{

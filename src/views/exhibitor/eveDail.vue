@@ -4,7 +4,7 @@
       <div class="evemage_return" @click="goReturn">
         <img src="../../assets/image/mine_return.png" alt="" />
       </div>
-      <div class="evemage_right">管理</div>
+      <div class="evemage_right" @click="changebj">管理</div>
     </div>
     <div class="evedail_con">
       <ul>
@@ -12,51 +12,92 @@
           <div class="evedail_li_top">
             <div class="evedail_li_left">
               <div class="evedail_li_yuan"></div>
-              <div class="evedail_li_name">姓名</div>
+              <div class="evedail_li_name">{{item.name}}</div>
             </div>
-            <div class="evedail_li_right" @click="goAdd">
-              <span>编辑</span>
+            <div class="evedail_li_right" @click="goAdd(item.ID,index)">
+              <span>{{changgelist}}</span>
               <div class="evedail_li_img">
                 <img src="../../assets/image/mine_go.png" alt="" />
               </div>
             </div>
           </div>
           <div class="evedail_li_bottom">
-            <div class="evedail_li_span1">身份证号：4546456456128702</div>
-            <div class="evedail_li_span2">手机号码：132456482</div>
+            <div class="evedail_li_span1">身份证号：{{item.certificates}}</div>
+            <div class="evedail_li_span2">手机号码：{{item.phone}}</div>
             <div class="evedail_li_share">
-              <span>下载餐券</span>
-              <span>下载门票</span>
+              <span @click="dowlond">下载餐券</span>
+              <span @click="dowlond">下载门票</span>
             </div>
           </div>
         </li>
       </ul>
     </div>
+    <div class="eveadd_bottom " @click="goAdds">添加人员</div>
   </div>
 </template>
 
 <script>
+import { Form, Toast } from 'vant';
 // import { Participants } from "../../api/home";
-import { getParticipants } from '../../api/user/index';
+import { getParticipants ,delParticipants} from '../../api/user/index';
+// import { delParticipants } from "../../api/home/index"
 export default {
   data() {
     return {
       list: [],
       params:{},
+      changgelist:"编辑",
+      flags:true,
+      id:""
     };
   },
   mounted() {
     this.Participants();
   },
   methods: {
+    changebj(){
+      if(this.flags){
+        this.flags = false
+        this.changgelist = "删除"
+      }else{
+        this.flags = true
+        this.changgelist = "编辑"
+      }
+    },
     Participants() {
      this.params.cid = JSON.parse(sessionStorage.cidInfo).cid
       getParticipants(this.params).then((res) => {
+        console.log(res)
+        this.id = res.Data.Data.ID
         this.list =res.Data.Data
       });
     },
-    goAdd() {
-      this.$router.push("/eveadd"); //跳转到添加人员
+    dowlond() {
+      Toast('请前往pc版官网下载')
+    },
+    goAdds(){
+         this.$router.push({path:"/eveadd"}); //跳转到添加人员
+
+    },
+    goAdd(id,ind) {
+      if(this.changgelist == "编辑"){
+         this.$router.push({path:"/eveadd",query:{id:id,ind:ind}}); //跳转到添加人员
+      }else{
+        console.log(id)
+        var data = {
+          cid:JSON.parse(sessionStorage.cidInfo).cid,
+          oid:sessionStorage.oid,
+          id:id
+        }
+         delParticipants(data).then(res=>{
+           if(res.Success){
+             Toast(res.Msg)
+             this.$router.go(0)
+           }else{
+             Toast(res.Msg)
+           }
+         })
+      }
     },
     goReturn() {
       this.$router.push("/evemanage");
@@ -99,6 +140,21 @@ export default {
       color: rgba(33, 33, 33, 1);
       font-size: 18px;
     }
+  }
+    .eveadd_bottom{
+    width: px(710);
+    height: px(87);
+    position: fixed;
+    bottom: px(12);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2668C0;
+    border-radius: px(6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
   }
   .evedail_con {
     padding-top: px(170);
