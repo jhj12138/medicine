@@ -38,7 +38,7 @@
               <div class="commodity_li_time"><div class="commodity_li_n">发布时间<span></span></div>：{{item.addtime}}</div>
             </div>
             <div class="commodity_lis_right">
-              <img :src="'https://www.zjylz.com' +  imgurl[index]" alt="">
+              <img :src="imgurl[index]" alt="">
             </div>
           </div>
         </li>
@@ -95,7 +95,13 @@ export default {
       Obtaincommodity(data).then(res=>{
        this.list=res.Data.Data
        res.Data.Data.forEach(ele => {
-        this.imgurl.push(ele.ImgList.split('&&')[0])
+         if(ele.ImgList.split('&&')[0].split('.')[1] == "png"){
+          this.imgurl.push('https://www.zjylz.com' + ele.ImgList.split('&&')[0])
+         }else{
+           this.imgurl.push(ele.ImgList.split('&&')[0])
+         }
+        console.log(ele.ImgList.split('&&')[0])
+        // this.imgurl.push(ele.ImgList.split('&&')[0])
        });
        console.log(this.list)
       })

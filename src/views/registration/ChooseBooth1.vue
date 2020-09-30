@@ -29,7 +29,7 @@
         <img src="../../assets/image/zhanhi3.png" alt="">
         <div class="banimgage-text">
             <p>您提交的展商申请资料，未通过审核</p>
-            <a href="###">未通过原因为：1、公司名称与营业执照名称不符合</a>
+            <a href="###">请重新填写</a>
         </div>
     </div>
     <div class="stand_bottoms">
@@ -40,6 +40,7 @@
 
 <script>
 export default {
+  //已废弃
   data() {
     return {
       active: 1,

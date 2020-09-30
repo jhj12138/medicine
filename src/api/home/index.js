@@ -559,7 +559,7 @@ export const exhibitionEditInvoice = apiParams => { //
     params: apiParams,
   })
 }
-//编辑发票信息
+//上传图片
 export const uploadimgs = apiParams => { //
   return request({
     method: 'post',

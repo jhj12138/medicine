@@ -83,7 +83,7 @@
        <van-field
           readonly
           clickable
-          :value="value"
+          :value="value2"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -106,7 +106,7 @@
        <van-field
           readonly
           clickable
-          :value="formData.Industryrb"
+          :value="value3"
           placeholder="请选择公司主营产品"
           @click="showPicker3 = true"
         />
@@ -212,13 +212,16 @@ export default {
         Patentcertificate:"",
         authorization:"",
         certificate:"",
-        license:""
+        license:"",
+        country:"",
+        province:"",
+        city:"",
       },
      
     }
   },
   mounted(){
-    // this.getObtainraccount()
+    this.getObtainraccount()
   },
   methods:{
       goxzzw(){
@@ -236,38 +239,46 @@ export default {
         sessionStorage.formdata = JSON.stringify(this.formData)
           this.$router.push("/ChooseBooth")
       },
-    getObtainraccount(){
-      let data = {
+    getObtainraccount(){  
+      if(JSON.parse(sessionStorage.cidInfo).cid){
+         let data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
         Uid:sessionStorage.Uid
       }
     //   exhibitionObtainCid(data).then(res=>{
     //       console.log(res)
     //   })
+
       ObtainCid(data).then(res=>{
          sessionStorage.rb = res.Data.rb
         this.showAddr= res.Data.country +  res.Data.province + res.Data.city
+        console.log(this.showAddr)
       })
       getObtainraccount(data).then(res=>{
         console.log(res)
         if(res.Success){
-        this.formData.username = res.Data.username
-        this.formData.name = res.Data.name
-        this.formData.post = res.Data.post
-        this.formData.phone = res.Data.phone
-        this.formData.Title = res.Data.Title
-        this.formData.eTitle = res.Data.eTitle
-        this.formData.code = res.Data.code
-        this.formData.address = res.Data.address
-        this.formData.website = res.Data.website
-        this.formData.Fax = res.Data.Fax
-        this.formData.Telephone = res.Data.Telephone
-        this.formData.Postcode = res.Data.Postcode
-        this.formData.abbreviation = res.Data.abbreviation
-        this.formData.nature = res.Data.nature
-        this.formData.establish = res.Data.establish
-        this.formData.Industryrb = res.Data.Industryrb
-        this.formData.people = res.Data.people
+              this.formData.username = res.Data.username
+              this.formData.name = res.Data.name
+              this.formData.post = res.Data.post
+              this.formData.phone = res.Data.phone
+         this.formData.Title = res.Data.Title
+         this.formData.eTitle = res.Data.eTitle
+         this.formData.code = res.Data.code
+         this.formData.address = res.Data.address
+         this.formData.website = res.Data.website
+         this.formData.Fax = res.Data.Fax
+         this.formData.Telephone = res.Data.Telephone
+         this.formData.Postcode = res.Data.Postcode
+         this.formData.abbreviation = res.Data.abbreviation
+         this.formData.nature = res.Data.nature
+         this.formData.establish = res.Data.establish
+         this.formData.Industryrb = res.Data.Industryrb
+         this.formData.people = res.Data.people
+        this.formData.country = res.Data.country
+        this.formData.province = res.Data.province
+        this.formData.city = res.Data.city
+        this.formData.register = res.Data.register
+        this.formData.mailbox = res.Data.mailbox
         this.formData.Patentcertificate = 'https://www.zjylz.com' + res.Data.Patentcertificate.split("&&")[0]
         this.formData.authorization = 'https://www.zjylz.com' + res.Data.authorization.split("&&")[0]
         this.formData.certificate = 'https://www.zjylz.com' + res.Data.certificate.split("&&")[0]
@@ -276,18 +287,22 @@ export default {
         this.fileList3[0].url = this.formData.certificate
         this.fileList2[0].url = this.formData.authorization
         this.fileList[0].url =  this.formData.Patentcertificate
-        console.log(this.formData)
+        console.log(res)
         }else{
           Toast(res.Msg)
         }
       })
+      }else{
+        console.log(1111)
+      }
+     
     },
     goReturn() {
       this.$router.push('/home')
     },
     onConfirm(value,index) {
       this.value = value;
-      console.log(this.con[index])
+      // console.log(this.con[index])
       this.showPicker = false;
     },
     onConfirm2(value,index) {
@@ -323,7 +338,10 @@ export default {
         }else{
           this.showAddr = this.resAddr[0].name + '-' + this.resAddr[1].name
         }
-        console.log(this.resAddr, '即将传给后端的省市区信息')
+       this.formData.country =  this.showAddr[0].name
+       this.formData.province =  this.showAddr[1].name
+       this.formData.city =  this.showAddr[2].name
+        console.log(this.formData.country, '即将传给后端的省市区信息')
       },
       afterRead(file) {
       // 此时可以自行将文件上传至服务器

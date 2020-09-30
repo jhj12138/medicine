@@ -119,7 +119,8 @@ export default {
       imgurl:'',
       goods:"",
       isrecommend:"",
-      isrelease:""
+      isrelease:"",
+      url:""
     };
   },
   mounted(){
@@ -138,8 +139,10 @@ export default {
         cid: this.cid.cid
       }
       Obtaincommodity(data).then(res=>{
+
         if(res.Success){
          this.list=res.Data.Data[sum]
+         console.log(this.list)
          this.names = this.list.name
          this.price = this.list.Price
          if(this.list.isrecommend == 1){
@@ -153,9 +156,19 @@ export default {
          }else{
            this.value2 = "未发布" 
          }
-         this.fileList[0].url = 'https://www.zjylz.com' + this.list.ImgList.split("&&")[0]
+          if(this.list.ImgList.split("&&")[1].split('.')[1] == "png"){
+            this.fileList[0].url = 'https://www.zjylz.com' + this.list.ImgList.split("&&")[0]
+          }else if(this.list.ImgList){
+            this.fileList[0].url = this.list.ImgList
+          }
+          //  if(this.list.ImgList){
+          //   this.fileList[0].url = this.list.ImgList
+          // }
+        //  this.fileList[0].url = this.list.ImgList
          this.textareas = this.list.Summary
-         console.log(this.list)
+         this.url = this.list.ImgList
+         console.log( this.list.ImgList)
+         
         }else{
           Toast(res.Msg)
         }
@@ -186,15 +199,18 @@ export default {
       this.$router.push('/commodity')
     },
     afterRead(file) {
-     let Base64 = require('js-base64').Base64
-    var url =  Base64.encode(file.content)
+    //  let Base64 = require('js-base64').Base64
+    //  let formData = new window.FormData();
+    //  formData.append('file', file.file);
+    //  formData.append('FileType', "image");
       // 此时可以自行将文件上传至服务器
-      console.log('111111',url)
+      // console.log('111111',url)
       var data = {
-          File:"https://www.zjylz.comhttps//www.zjylz.com/Upload/image/202009/20200929165438_1330.png",
-          FileType:"image"
+        File:file.file.name,
+        FileType:'image'
       }
-      uploadimgs(data).then(res=>{
+      this.url = file.file.name
+      uploadimgs({data}).then(res=>{
         console.log(res)
       })
       console.log(file);
@@ -211,8 +227,6 @@ export default {
           this.isrelease = 0
 
          }
-         console.log(this.value)
-         console.log(this.isrecommend)
       if(this.$route.query.Id){
         console.log(this.names)
         var data = {
@@ -226,9 +240,9 @@ export default {
           isrelease:this.isrelease,
           content:this.textareas,
           topclassid:this.list.topclassid,
-          ImgList: this.fileList[0].url
+          ImgList: this.url
         }
-        console.log("111",this.fileList)
+        console.log("111",data)
         Editcommodity(data).then(res=>{
           console.log(res)
           if(res.Success){
@@ -239,7 +253,7 @@ export default {
           }
         })
       }else{
-   if(!this.names){Toast('请输入商品名称');return}
+      if(!this.names){Toast('请输入商品名称');return}
       if(!this.price){Toast('请输入商品价格');return}
       if(!this.value){Toast('请输入是否推荐');return}
       if(!this.value2){Toast('请输入商品状态');return}

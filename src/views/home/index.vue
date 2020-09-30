@@ -261,7 +261,6 @@ export default {
         bsid:sessionStorage.bsid,
       }
       //  this.$router.push('/gsxx')
-
       ObtainOid(data).then(res=>{
         console.log(res)
         if(res.Success){
