@@ -130,7 +130,7 @@ export default {
           console.log(res)
           if(res.Success){
             Toast({
-              message: '报名成功',
+              message: res.Msg,
             });
             // this.$router.push('/login')
             this.$router.push({ path: '/inraim', query: { Id: res.Data.Id } })

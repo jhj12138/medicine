@@ -2,7 +2,7 @@
   <div id = "inraim">
     <div class="login_top">
       <div class="login_return">
-        <img src="../../assets/image/mine_return.png" alt="">
+        <img src="../../assets/image/mine_return.png" alt="" @click="goreturn">
       </div>
       <div class="login_middle">参观展会的目的</div>
     </div>
@@ -45,6 +45,9 @@ export default {
              this.arr.splice(key,1)
              console.log(this.arr)
           }
+      },
+      goreturn(){
+        this.$router.push('/inter')
       },
       quan(){
         var ib=document.getElementsByClassName("ix-b")[0].children
@@ -102,15 +105,24 @@ export default {
       submit() {
         if (this.arr.length != 0) {
           const data = {
-          Id : this.Id,
+            Id : this.Id,
             Purpose : this.arr.join('|'),
           }
           console.log(data)
           joinEdit(data).then((res) => {
-            Toast({
-              message: '选择成功'
-            });
             console.log(res)
+            if(res.Success){
+                 Toast({
+              message: res.Msg
+            });
+           this.$router.push({ path: '/home'})
+            console.log(res)
+            }else{
+               Toast({
+              message: res.Msg
+            });
+            }
+         
           })
         }
       }

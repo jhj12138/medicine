@@ -53,11 +53,11 @@ export default {
     },
     goReturn() {
       if(this.$route.query.flagsnews){
-      this.$router.push('/home')
-        
-    }else{
+       this.$router.push('/home')
+       }else{
+        //  console.log(this.$route.query.flagsnews)
           this.$router.push({ path: '/news', query: { Id: this.$route.query.clsId} })
-    }
+       }
     },
     NewsContent() {
       const data = {
@@ -168,6 +168,7 @@ export default {
   }
   .new_con{
     img{
+      height: 100% !important;
       width: 100% !important;
     }
   }

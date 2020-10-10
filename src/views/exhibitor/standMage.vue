@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="stand_middle">展位信息</div>
-      <!-- <div class="certif_right" @click="change">编辑</div> -->
+      <div class="certif_right" @click="change">编辑</div>
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
@@ -53,6 +53,7 @@
 <script>
 import { Toast } from 'vant';
 import { ObtainContactUs,ADDContactUs} from '../../api/home';
+import {EditContactUs} from '../../api/user';
 export default {
   data() {
     return{
@@ -91,10 +92,10 @@ export default {
         this.phones = res.Data.phone
         this.email = res.Data.mailbox
         this.contacts = res.Data.contacts
-        this.imgurl = "https://www.zjylz.com" + res.Data.LOGO.split('&&')[0]
-        this.imgurl1 = "https://www.zjylz.com" + res.Data.imgurl.split('&&')[0]
-        this.fileList[0].url = this.imgurl
-        this.fileList2[0].url = this.imgurl1
+        this.imgurl =  res.Data.LOGO.split('&&')[0]
+        this.imgurl1 =  res.Data.imgurl.split('&&')[0]
+        this.fileList[0].url = "https://www.zjylz.com" + this.imgurl
+        this.fileList2[0].url =  "https://www.zjylz.com" + this.imgurl1
         this.textareas = res.Data.introduce
       })
     },
@@ -109,6 +110,7 @@ export default {
       console.log(file)
     },
     submits() {
+      if(!this.flag){
       if(!this.company){Toast('请输入公司简称');return}
       if(!this.contacts){Toast('请输入联系人');return}
       if(!this.phones){Toast('请输入联系电话');return}
@@ -118,19 +120,52 @@ export default {
       if(!this.textareas){Toast('请输入邮箱地址');return}
       if (!(/^1[3456789]\d{9}$/.test(this.phones))){Toast('联系人电话有误');return} 
       if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return}
+    //  var data={
+    //    cid:JSON.parse(sessionStorage.cidInfo).cid,
+    //    abbreviation:this.company,
+    //    contacts:this.contacts,
+    //    phone:this.phones,
+    //    mailbox:this.email,
+    //    LOGO:"https://www.zjylz.com",
+    //    imgurl:"https://www.zjylz.com",
+    //    introduce:this.textareas
+    //  }
+        // this.$router.push('/mine')
+
+    //  console.log(1111)
+     //修改
+     var nowTime = new Date().toLocaleDateString()
      var data={
        cid:JSON.parse(sessionStorage.cidInfo).cid,
+       ID:"30",
        abbreviation:this.company,
        contacts:this.contacts,
        phone:this.phones,
        mailbox:this.email,
-       LOGO:"https://www.zjylz.com",
-       imgurl:"https://www.zjylz.com",
-       introduce:this.textareas
+       LOGO: this.imgurl,
+       imgurl: this.imgurl1,
+       introduce:this.textareas,
+       VideoUrl:"",
+       number:"",
+       addtime:nowTime,
+       QrCode:"",
+       QRcode:""
      }
+     console.log(data)
+     EditContactUs(data).then(res=>{
+       if(res.Success){
+         Toast(res.Msg)
+        this.$router.push('/mine')
+       }else{
+         Toast(res.Msg)
+
+       }
+     })
+      }else{
         this.$router.push('/mine')
 
-     console.log(data)
+      }
+     
     //  ADDContactUs(data).then(res=>{
     //     if(res.Success){
     //       Toast('修改成功')

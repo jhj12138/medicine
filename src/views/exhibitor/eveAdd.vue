@@ -74,6 +74,7 @@ export default {
           phone: this.phone,
         };
         ADDParticipants(data).then((res) => {
+          console.log(res)
           if (res.Success) {
             Toast(res.Msg);
             this.$router.push("/evedail");

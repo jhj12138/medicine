@@ -17,7 +17,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="evemage_right">参展人员管理</div>
-      <div class="evemage_right">管理</div>
+      <div class="evemage_right"></div>
     </div>
     <div class="evemage_con">
       <ul>

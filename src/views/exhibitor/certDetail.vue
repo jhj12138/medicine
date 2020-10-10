@@ -63,7 +63,8 @@ export default {
     },
     tijao(){
       this.content = this.$route.query
-      if(this.content.flag){
+      console.log(this.content)
+      if(this.content.flag == 'true'){
         var nowtime  = new Date().toLocaleDateString()
         var data = {
           cid:JSON.parse(sessionStorage.cidInfo).cid,
@@ -77,16 +78,19 @@ export default {
           if(res.Success){
             Toast(res.Msg)
             this.$router.push("/certifcate")
+          }else{
+            Toast(res.Msg)
           }
         })
       }else{
-        var nowtime  = new Date().toLocaleDateString()
+      var nowtime  = new Date().toLocaleDateString()
       var data = {
           cid:JSON.parse(sessionStorage.cidInfo).cid,
           name:this.name,
           OrdNum:this.OrdNum,
           imgurl:this.imgurl,
         }
+        console.log(111)
         ADDCertificate(data).then(res=>{
           if(res.Success){
             Toast(res.Msg)
@@ -102,12 +106,18 @@ export default {
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-        console.log(file.file)
+       console.log(file);//file文件如下图
+// 　　　var formData = new FormData(); //构造一个 FormData，把后台需要发送的参数添加
+// 　　      formData.append('file', file.file); //接口需要传的参数
+//           formData.append('FileType','image')
+          //  uploadimg
+　
       var data = {
-        File:file.name,
+        File:file.content,
         FileType:"image"
       }
-      uploadimg(data).then(res=>{
+      console.log(formData)
+      uploadimg(formData).then(res=>{
         console.log(res)
       })
       this.imgurl = file.file.name

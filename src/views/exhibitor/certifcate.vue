@@ -31,10 +31,10 @@
                 <span>{{item.ID}}</span>
                 <span>{{index+1}}</span>
               </div>
-              <div class="certif_li_time">发布时间：{{item.addTime}}</div>
+              <div class="certif_li_time">发布时间：{{item.addtime}}</div>
             </div>
             <div class="certif_lis_right">
-              <img src="../../assets/image/certif_img.png" alt="">
+              <img :src="'https://www.zjylz.com/' + item.imgurl.split('&&')[0]" alt="">
             </div>
           </div>
         </li>

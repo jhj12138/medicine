@@ -12,7 +12,7 @@
       <div class="mine_con">
         <div class="mine_con_top">
           <div class="mine_portrait">
-            <img src="../../assets/image/mine_header.png" alt="">
+            <img :src="imgurl" alt="">
           </div>
           <div class="mine_name">
             <div class="mine_names">
@@ -115,20 +115,30 @@
 </template>
 <script>
 import {usermessagelist} from '../../api/user'
-import {Obtaincommodity} from '../../api/home'
+import {Obtaincommodity,ObtainContactUs} from '../../api/home'
 export default {
   data() {
     return {
       userList:null,
       username:null,
       usermessagelgth:null,
+      imgurl:""
 
     }
   },
   mounted(){
     this.getInformation()
+    this.ObtainContactUs()
   },
   methods:{
+    ObtainContactUs(){
+     var data = {
+        cid: JSON.parse(sessionStorage.cidInfo).cid
+      }
+      ObtainContactUs(data).then(res=>{
+       this.imgurl = "https://www.zjylz.com" + res.Data.LOGO.split('&&')[0]
+      })
+    },
     getInformation(){
       this.userList = JSON.parse(sessionStorage.cidInfo) 
       console.log(this.userList)

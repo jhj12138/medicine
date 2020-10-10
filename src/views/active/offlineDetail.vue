@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     goReturn() {
-      this.$router.push('/exchange')
+      this.$router.push('/offlineActive')
     },
     goBao() {
       const data = {
@@ -195,8 +195,11 @@ export default {
     margin-top: px(40);
     img{
       width: 100%;
-      height: px(300);
+      height: 100%;
     }
+    // blockquote{
+    //   margin: 0;
+    // }
   }
 }
 </style>

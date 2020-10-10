@@ -288,7 +288,7 @@ export default {
     },
     //条状新闻详情
     gonewsxq(ID){
-      this.$router.push({ path: '/newsform', query: { Id: ID} })
+      this.$router.push({ path: '/newsform', query: { Id: ID , flagsnews:true} })
     },
     //跳转搜索页面
     goSearch(){
