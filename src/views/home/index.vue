@@ -262,18 +262,20 @@ export default {
       }
       //  this.$router.push('/gsxx')
       ObtainOid(data).then(res=>{
-        console.log(res)
         if(res.Success){
-           sessionStorage.oid = res.data
+           sessionStorage.oid = res.Data
            if(res.Msg=="已报名"){
               Toast("您已报名参展，请前往展商中心查看")
-              this.$router.push('mine')
+              this.$router.push('/mine')
            }else  {
-            this.$router.push('/gsxx')
+              this.$router.push('/gsxx')
            }
           
         }else{
-          Toast(res.Msg)
+          console.log(11111)
+          // Toast(res.Msg)
+              this.$router.push('/gsxx')
+
         }
       })
     },
@@ -292,7 +294,7 @@ export default {
     },
     //跳转搜索页面
     goSearch(){
-      this.$router.push({ path: '/ExhSearch'})
+      this.$router.push({ path: '/Search',query:{flagss:true}})
     },
     getActive(index){
       this.text_index = index

@@ -9,14 +9,15 @@ export const getObtainraccount = apiParams => { //
     params: apiParams,
   })
 }
-// 上传图片
-export const uploadimg = apiParams => { //
-  return request({
-    method: 'post',
-    url: urlParams + 'common/upload',
-    params: apiParams,
-  })
-}
+// // 上传图片
+// export const uploadimg = apiParams => { //
+//   return request({
+//     url: urlParams + '/common/upload',
+//     method: 'post',
+//     qs:false,
+//     params: apiParams
+//   })
+// }
 //添加证书
 export const ADDCertificate = apiParams => { //
   return request({
@@ -563,9 +564,25 @@ export const exhibitionEditInvoice = apiParams => { //
 export const uploadimgs = apiParams => { //
   return request({
     method: 'post',
-    url: urlParams + 'common/upload',
+    url: urlParams + '/common/upload',
+    qs:false,
+    params: apiParams,
+  })
+}
+//查询信息
+export const getad = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + '/Exhibitorinfo/ADDMessage',
     params: apiParams,
   })
 }
 
+export const imgcode = apiParams => { //
+  return request({
+    method: 'GET',
+    url: urlParams + '/common/imgcode',
+    params: apiParams,
+  })
+}
 

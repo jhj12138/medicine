@@ -36,7 +36,7 @@ export default {
         console.log(res)
         if (res.Success){
           this.Title = res.Data.Title
-          this.PubTime = res.Data.PubTime
+          this.PubTime = res.Data.PubTime.split(' ')[0]
           this.Content = res.Data.Content
         } else {
           Toast(res.Msg)

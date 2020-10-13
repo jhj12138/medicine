@@ -62,12 +62,12 @@ export default {
         swiper_list: null,
         it: ['商家', '行业'],
         num: 0,
-        list: null
+        list: null,
     }
   },
   methods:{
     goDetail(ids) {
-      this.$router.push({ path: '/exhibitionxq', query: { Id: ids} })
+      this.$router.push({ path: '/exhibitionxq', query: { Id: ids,flags:true} })
     },
       gos () {
           if (this.num == 0) {

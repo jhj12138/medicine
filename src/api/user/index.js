@@ -14,8 +14,8 @@ export const OnlineCode = apiParams => { //
 export const ObtainOid = apiParams => { //
   return request({
     method: 'get',
-    url: urlParams + '/Exhibitorinfo/Obtainoid',
-    params: apiParams,
+    url: urlParams + 'Exhibitorinfo/Obtainoid',
+    params: apiParams
   })
 }
 export const exRegister = apiParams => { //

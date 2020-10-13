@@ -70,7 +70,11 @@ export default {
   },
   methods:{
     goReturn() {
-      this.$router.push('/search')
+      if(this.$route.query.flags){
+       this.$router.push('/onlinex')
+      }else{
+       this.$router.push('/search')
+      }
     },
     goDetail(ids) {
       this.$router.push({ path: '/comdetail', query: { Id: ids ,cid:this.list[0].cid} })

@@ -26,7 +26,7 @@
 
 <script>
 import { Toast } from 'vant'
-import{EditCertificate,getObtainCertificate,uploadimg,ADDCertificate} from "../../api/home"
+import{EditCertificate,getObtainCertificate,ADDCertificate,uploadimgs} from "../../api/home"
 export default {
   data() {
     return{
@@ -106,18 +106,27 @@ export default {
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-       console.log(file);//file文件如下图
-// 　　　var formData = new FormData(); //构造一个 FormData，把后台需要发送的参数添加
-// 　　      formData.append('file', file.file); //接口需要传的参数
-//           formData.append('FileType','image')
+       console.log("11111",file.file);//file文件如下图
+       console.log("222",file);//file文件如下图
+       const fff = file.content
+    const fd = new FormData(); //构造一个 FormData，把后台需要发送的参数添加
+　　      fd.append('File',fff ); //接口需要传的参数
+          fd.append('FileType',"image")
           //  uploadimg
-　
-      var data = {
-        File:file.content,
-        FileType:"image"
-      }
-      console.log(formData)
-      uploadimg(formData).then(res=>{
+      // var dat = {}
+      // dat.lastModified = file.file.lastModified
+      // dat.name = file.file.name
+      // dat.size = file.file.size
+      // dat.type = file.file.type
+      console.log(fd.get('File'))
+      // var data = {
+      //   File:"../../assets/image/mine_return.png",
+      //   FileType:"image"
+      // }
+      var data = fd
+      console.log("fd",fd)
+      uploadimgs(data).then(res=>{
+        console.log(fd)
         console.log(res)
       })
       this.imgurl = file.file.name

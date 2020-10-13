@@ -68,6 +68,7 @@ const ChooseBoothpass = () => import('@/views/registration/ChooseBoothpass') //�
 const Invoices = () => import('@/views/registration/invoices') //发票信息
 const Invoicesj = () => import('@/views/registration/invoicesj') //公司收件
 const Upload = () => import('@/views/registration/Upload') //上传付款凭证
+const requestprice = () => import('@/views/search/requestprice') //快速询价
 // const aaaa = () => import('@/views/registration/aaaa') //商品详情
 // const ceshi = () => import('@/views/user/ceshi') //测试
 // const newsform = () => import('@/views/newsform') 
@@ -355,6 +356,10 @@ const routes = [{
             path: 'Upload',
             name: '公司收件',
             component: Upload
+        },{
+            path: 'requestprice',
+            name: '查询价格',
+            component: requestprice
         }]
     },
     

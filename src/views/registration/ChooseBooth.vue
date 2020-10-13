@@ -116,7 +116,7 @@ export default {
          this.formdata.cid = JSON.parse(sessionStorage.cidInfo).cid
          console.log(this.formdata)
          exhibitionOrderAdd(this.formdata).then(res=>{
-              this.$router.push('/ChooseBoothpass')
+              // this.$router.push('/ChooseBoothpass')
             console.log(res)
            if(res.Success){
               Toast(res.Msg)

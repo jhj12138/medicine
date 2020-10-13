@@ -13,6 +13,7 @@
           <input type="text" placeholder="请输入用户名称" v-model="UserName">
         </div>
       </div>
+      <!-- <div class="register_con_name">性别</div> -->
       <div class="register_con_input">
         <div class="register_con_name">联系电话</div>
         <div class="register_con_inputs">
@@ -77,6 +78,15 @@
           <input type="text" placeholder="请输入职务" v-model="post">
         </div>
       </div>
+      <div class="register_con_input">
+        <van-collapse v-model="activeNames" class="sex" :border = "false" ref="checkbox" >
+          <van-collapse-item :title='sexx' name="1" :border = "false" :toggle= 'flagss' >
+            <p @click="changgesex(1)">男</p>
+            <p @click="changgesex(2)">女</p>
+          </van-collapse-item>
+      </van-collapse>
+      </div>
+      
       <div class="retPass_con_btn" @click="goSubmit">
         <div class="retPass_con_btns">下一步</div>
       </div>
@@ -96,6 +106,7 @@ import { Toast } from 'vant';
 export default {
   data() {
     return{
+      activeNames: [],
       getCodeFlag:true,
       getCodeText: '获取验证码',
       times: 60,
@@ -112,10 +123,22 @@ export default {
       ContactPerson:'',
       Email:'',
       UserType:'',
-      post:""
+      post:"",
+      sexx:'性别',
+      flagss:true
     }
   },
   methods:{
+    changgesex(sum){
+      console.log(sum)
+      if(sum=="1"){
+        this.sexx = '男'
+        //  this.$refs.checkbox.toggle(this.flagss);
+      }else{
+        this.sexx = '女'
+      //  this.$refs.checkbox.toggle(this.flagss);
+      }
+    },
     goReturn(){
       this.$router.push('/login')
     },
@@ -157,7 +180,7 @@ export default {
       this.showPicker = false;
     },
     goSubmit() {
-      console.log(this.radio)
+      
       if(!this.UserName){Toast('请输入用户名');return}
       if(!this.UserPwd){Toast('请输入密码');return}
       if(!this.Phone){Toast('请输入联系电话');return}
@@ -170,12 +193,19 @@ export default {
       if (!(/^1[3456789]\d{9}$/.test(this.Phone))){Toast('联系人电话有误');return} 
       // if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.Email))){Toast('邮箱有误');return} 
       if(!this.radio){Toast('请同意使用条款');return}
+        
+      console.log(this.radio)
+      if(this.sexx = '男'){
+        this.sum1 = 2
+      }else{
+        this.sum1 = 1
+      }
       const data = {
         action:"Register",
         UserName: this.UserName,
         UserPwd: this.UserPwd,
         Phone: this.Phone,
-        sex:"男",
+        sex:this.sum1,
         name: this.ContactPerson,
         post: this.post,
         Code: this.Code,
@@ -257,6 +287,12 @@ export default {
       transform: translate(-50%,-50%);
       font-size: 16px;
     }
+  }
+  .sex{
+  }
+  .van-cell{
+    padding: 0;
+    font-size: px(32);
   }
   .register_con{
     margin-top: px(130);

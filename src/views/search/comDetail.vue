@@ -70,11 +70,17 @@ export default {
   },
   methods:{
     gosubmit() {
-      Dialog.alert({
-        message: '联系我们的表单',
-      }).then(() => {
-        // on close
-      });
+      if(sessionStorage.Uid){
+        this.$router.push({path:'/requestprice',query:{cid:this.$route.query.cid,id:this.$route.query.Id}})
+    // Dialog.alert({
+    //     message: '联系我们的表单',
+    //   }).then(() => {
+    //     // on close
+    //   });
+      }else{
+        Toast('未登录')
+      }
+      
     },
     goReturn() {
       
