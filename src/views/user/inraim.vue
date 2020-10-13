@@ -109,7 +109,7 @@ export default {
             Purpose : this.arr.join('|'),
           }
           console.log(data)
-          joinEdit(data).then((res) => {
+          joinEditList(data).then((res) => {
             console.log(res)
             if(res.Success){
                  Toast({
