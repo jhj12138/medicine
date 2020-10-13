@@ -15,6 +15,13 @@ export const uploadimg = apiParams => { //
     method: 'post',
     url: urlParams + 'common/upload',
     params: apiParams,
+    qs:false,
+    // dataType:"text",
+    // processData: false, // 告诉jQuery不要去处理发送的数据
+    // contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+    headers:{
+      'Content-Type':"multipart/form-data;; boundary=----WebKitFormBoundary63R1rrC1hCecnsfk"
+    }
   })
 }
 //添加证书

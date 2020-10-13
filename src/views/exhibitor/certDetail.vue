@@ -106,12 +106,14 @@ export default {
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-        console.log(file.file)
-      var data = {
-        File:file.file,
-        FileType:file
-      }
-      uploadimg(data).then(res=>{
+        // console.log(file.file)
+      const formdata = new FormData()
+      formdata.append("File",file.file)
+      formdata.append("FileType","image")
+    
+      console.log(file.file)
+      console.log(formdata)
+      uploadimg(formdata).then(res=>{
         console.log(res)
       })
       this.imgurl = file.file.name
