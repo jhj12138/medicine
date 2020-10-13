@@ -105,7 +105,7 @@ export default {
             fd.append('File', file.file) //接口需要传的参数
             fd.append('FileType', 'image')
             uploadimgs(fd).then(res => {
-                this.fileList[0].url = 'https://www.zjylz.com/' + res.Data
+                this.fileList[0].url =  res.Data
             })
             this.imgurl = file.file.name
         }
