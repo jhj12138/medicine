@@ -18,7 +18,7 @@
               <div class="certif_li_yuan"></div>
               <div class="certif_li_name">{{item.name}}</div>
             </div>
-            <div class="certif_li_right" @click="goDetail(item.ID)">
+            <div class="certif_li_right" @click="goDetail(item.ID,index)">
               <span>{{content1}}</span>
               <div class="certif_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
@@ -31,23 +31,23 @@
                 <span>{{item.ID}}</span>
                 <span>{{index+1}}</span>
               </div>
-              <div class="certif_li_time">发布时间：{{item.addTime}}</div>
+              <div class="certif_li_time">发布时间：{{item.addtime}}</div>
             </div>
             <div class="certif_lis_right">
-              <img src="../../assets/image/certif_img.png" alt="">
+              <img :src="'https://www.zjylz.com/' + item.imgurl.split('&&')[0]" alt="">
             </div>
           </div>
         </li>
       </ul>
         <div v-else class="certif_lis_cont">暂无内容....</div>
-      <div ref = "scrollRef"></div>
     </div>
+        <div class="cert_bottom" @click="tijao">添加证书</div>
   </div>
 </template>
 
 <script>
 import { Toast } from 'vant'
-import {getObtainCertificate} from "../../api/home"
+import {getObtainCertificate,DELCertificate} from "../../api/home"
 export default {
   data() {
     return {
@@ -56,7 +56,7 @@ export default {
       listlen:true,
       content:{
         bj:"编辑",
-        add:"添加"
+        add:"删除"
       },
       content1:"编辑",
       flag:true,
@@ -67,6 +67,9 @@ export default {
     this.getObtainCertificate()
   },
   methods:{
+    tijao(){
+
+    },
     change(){
       if(this.flag){
         this.flag=false
@@ -97,11 +100,25 @@ export default {
     goReturn() {
       this.$router.push('/mine') 
     },
-    goDetail(ID) {
-      this.$router.push({
+    goDetail(ID,index) {
+      if(this.content1 == "编辑"){
+        this.$router.push({
         path:'/cerdetail',
         query:{flag:this.flag,
-        ID:ID}}) 
+        ID:ID,
+        index:index}}) 
+      }else{
+       DELCertificate({ID}).then(res=>{
+         Toast(res.Msg)
+         this.$router.go(0)
+       })
+      }
+    },
+    tijao(){
+      this.$router.push({
+        path:'/cerdetail',
+        query:{flag:false
+        }})
     },
     loadMore: function() {
       this.busy = true
@@ -159,6 +176,21 @@ export default {
     .certif_right{
       font-size: 16px;
     }
+  }
+   .cert_bottom{
+    width: px(710);
+    height: px(87);
+    position: fixed;
+    bottom: px(12);
+    left: 50%;
+    transform: translateX(-50%);
+    background: #2668C0;
+    border-radius: px(6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
   }
   .certif_con{
     padding-top:px(130);

@@ -26,8 +26,8 @@
 
 <script>
 import { Toast } from 'vant';
-import {addObtainInvoiceList} from "../../api/home"
-import { exhibitionObtainrbInvoice } from '../../api/user';
+import {addObtainInvoiceList,uploadimgs} from "../../api/home"
+import { exhibitionObtainrbInvoice,exhibitionVoucher } from '../../api/user';
 
 export default {
   data() {
@@ -44,7 +44,10 @@ export default {
       readdress:'',
       reiphone:'',
       rename:'',
-      contentlist:""
+      contentlist:"",
+      url:"",
+      fromdata1:"",
+      file1:""
     }
   },
    mounted(){
@@ -61,7 +64,15 @@ export default {
       },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-      console.log(file);
+        // const formData = new FormData()
+        //   formData.append('File', file.file.name)
+        //   formData.append('FileType', 'image')
+        //   this.fromdata1 = formData
+        //   console.log(file.file.name)
+        //   console.log(this.fromdata1)
+        //   this.file1 = file
+        this.url = file.file.name
+        console.log(file)
      },
     onConfirm(value,index) {
       this.value = value;
@@ -72,36 +83,24 @@ export default {
       this.$router.push('/ChooseBooth2')
     },
     goinv() {
-        this.$router.push('/ChooseBooth2')
-
-      if(!this.value){Toast('请选择开票类型');return}
-      if(!this.corporate){Toast('请输入开票公司名称');return}
-      if(!this.address){Toast('请输入开票地址');return}
-      if(!this.iphone){Toast('请输入开票电话');return}
-      if(!this.axpayer){Toast('请输入开票纳税人识别号');return}
-      if(!this.receiv){Toast('请输入收件公司');return}
-      if(!this.readdress){Toast('请输入收件地址');return}
-      if(!this.reiphone){Toast('请输入收件手机');return}
-      if(!this.rename){Toast('请输入收件人姓名');return}
-      if (!(/^1[3456789]\d{9}$/.test(this.iphone))){Toast('开票电话有误');return} 
-      if (!(/^1[3456789]\d{9}$/.test(this.iphone))){Toast('收件手机有误');return} 
-     
+        // this.$router.push('/ChooseBooth2')
+        // var dat = {
+        //   File:"../../assets/image/sczf.png",
+        //   FileType:'image'
+        // }
+        // uploadimgs(dat).then(res=>{
+        //   console.log(res)
+        // })
       let data={
-        cid:JSON.parse(sessionStorage.cidInfo).cid,
-        company:this.corporate,
-        address:this.address,
-        Telephone:this.iphone,
-        number:this.axpayer,
-        collectcompany:this.receiv,
-        collectTelephone:this.reiphone,
-        collectaddress:this.readdress,
-        collectname:this.rename
+        oid:sessionStorage.oid,
+        // voucher:"../../assets/image/sczf.png"
+        voucher:this.url
       }
-     addObtainInvoiceList(data).then(res=>{
+     exhibitionVoucher(data).then(res=>{
+       console.log(res)
        if(res.Success){
         Toast(res.Msg)
-        this.$router.query({invoices:true})
-        this.$router.push('/ChooseBooth2')
+        this.$router.push({path:'/ChooseBooth2',query:{id:true}})
        }else{
          Toast(res.Msg)
        }

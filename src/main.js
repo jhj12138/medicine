@@ -5,11 +5,15 @@ import store from './store'
 import md5 from 'js-md5'
 // import './plugins/axios.js'
 import Vant from 'vant'
+import ElementUI from 'element-ui'
 import 'vant/lib/index.css'
 import 'swiper/dist/css/swiper.css'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import infiniteScroll from 'vue-infinite-scroll'
+// import Base64 from require('js-base64').Base64
+
 Vue.use(infiniteScroll)
+Vue.use(ElementUI)
 
 Vue.use(VueAwesomeSwiper)
 Vue.use(Vant)

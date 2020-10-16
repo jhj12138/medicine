@@ -38,6 +38,7 @@
         >
         <van-area
           :area-list="areaList"
+          :columns-placeholder="['请选择', '请选择', '请选择']"
           value="110000"
           title="选择地址"
           @change="changeAddr"

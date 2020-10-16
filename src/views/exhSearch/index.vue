@@ -56,13 +56,17 @@ export default {
       accountNameValue: '',
       licensePlateValue: '',
       accountNameOptions: [
-        { text: '类别', value: 0 },
-        { text: '类别2', value: 1 },
-        { text: '类别3', value: 2 },
+        { text: '放射', value: 0 },
+        { text: '内视镜', value: 1 },
+        { text: '手术室供应室消杀', value: 2 },
+        { text: '综合', value: 3 },
+        { text: '综合检验', value: 4 },
+        { text: '其他', value: 5 },
+
       ],
       licensePlateOptions: [
-        { text: '30天以前', value: 0 },
-        { text: '7天内', value: 1 },
+        // { text: '30天以前', value: 0 }, 
+        // { text: '7天内', value: 1 },
       ],
       list:[],
       imgUrl:[],
@@ -188,7 +192,7 @@ export default {
           color: #565656;
         }
         .fore_li_address{
-          margin-top:px(14);
+          margin-top:px(5);
           font-size: 12px;
           line-height: 1;
           color: #565656;
@@ -196,7 +200,7 @@ export default {
           text-overflow:ellipsis;
           display:-webkit-box; 
           -webkit-box-orient:vertical;
-          -webkit-line-clamp:1; 
+          -webkit-line-clamp:3; 
         }
         .fore_li_zhan{
           font-size: 12px;

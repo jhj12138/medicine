@@ -2,36 +2,92 @@
   <div id = "inter">
     <div class="login_top">
       <div class="login_return">
-        <img src="../../assets/image/mine_return.png" alt="">
+        <img src="../../assets/image/mine_return.png" alt="" @click="goreturn">
       </div>
       <div class="login_middle">我感兴趣的</div>
     </div>
     <div class="ix-top">
         <div class="ix-a">我感兴趣的</div>
         <div class="ix-b">
-            <div v-for="(item,ind) in list" :key="ind" @click="xz($event)" class="">{{item}}</div>
+            <div v-for="(item,ind) in list" :key="ind" @click="xz($event,ind,item)" class="">{{item}}</div>
         </div>
         <div class="ix-c">
-            <p>全部选择</p>
-            <div>下一步</div>
+             <p @click="quan" v-if ="now">全部选择</p>
+             <p @click="quans" v-if ="!now">取消选择</p>
+              <div @click="submit">下一步</div>
         </div>
     </div>
   </div>
 </template>
 
 <script>
+import { Toast } from 'vant'
+import {intrestget,intrestedit} from '../../api/user'
+
 export default {
   data() {
     return{
-        list:['我感兴趣的','我趣的','我感趣的','我趣的','我感兴的','我感兴趣的','我感兴趣的','我感兴趣的','我趣的','我感趣的','我趣的','我感兴的','我感兴趣的','我感兴趣的']
+        list:[],
+        now: true,
+        Id: null,
+        arr:[]
     }
   },
+  mounted(){
+    this.intrestget()
+  },
   methods:{
-      xz(e){
+    intrestget(){
+      intrestget({}).then(res=>{
+        this.list = res.Data.split('|')
+        console.log(res.Data)
+      })
+    },
+    quan(){
+        var ib=document.getElementsByClassName("ix-b")[0].children
+        this.list.forEach(ele => {
+          this.arr.push(ele)
+        })
+        // this.arr = this.list
+        for(var i=0;i<ib.length;i++){
+        ib[i].classList.add('sol')
+        }
+        console.log(this.arr)
+        this.now = !this.now
+      },
+        quans() {
+        var ib=document.getElementsByClassName("ix-b")[0].children
+        this.arr = []
+        this.now = !this.now
+        for(var i=0;i<ib.length;i++){
+          ib[i].classList.remove('sol')
+        }
+        console.log(this.arr)
+      },
+      submit(){
+         if (this.arr.length != 0) {
+          const data = {
+            Intrests : this.arr.join('|'),
+          }
+          console.log(data)
+          intrestedit(data).then((res) => {
+            console.log(res)
+            Toast(res.Msg)
+           this.$router.push({ path: '/home'})
+            console.log(res)
+          })
+        }
+      },
+      goreturn(){
+        this.$router.push({path:'/enterFor'})
+      },
+      xz(e,ind,item){
           if(e.target.classList[0]==undefined){
               e.target.classList.add('sol')
+               this.arr.push(item)
           }else{
               e.target.classList.remove('sol')
+              this.arr.splice(key,1)
           }
       }
   }

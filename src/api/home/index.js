@@ -9,34 +9,51 @@ export const getObtainraccount = apiParams => { //
     params: apiParams,
   })
 }
-// 上传图片
-export const uploadimg = apiParams => { //
-  return request({
-    method: 'post',
-    url: urlParams + 'common/upload',
-    params: apiParams,
-    qs:false,
-    // dataType:"text",
-    // processData: false, // 告诉jQuery不要去处理发送的数据
-    // contentType: false, // 告诉jQuery不要去设置Content-Type请求头
-    headers:{
-      'Content-Type':"multipart/form-data;; boundary=----WebKitFormBoundary63R1rrC1hCecnsfk"
-    }
-  })
-}
+// // 上传图片
+// export const uploadimg = apiParams => { //
+//   return request({
+//     url: urlParams + '/common/upload',
+//     method: 'post',
+//     qs:false,
+//     params: apiParams
+//   })
+// }
 //添加证书
 export const ADDCertificate = apiParams => { //
   return request({
     method: 'post',
     url: urlParams + '/Exhibitorinfo/ADDCertificate',
     params: apiParams,
+    // qs:false,
+    // // dataType:"text",
+    // // processData: false, // 告诉jQuery不要去处理发送的数据
+    // // contentType: false, // 告诉jQuery不要去设置Content-Type请求头
+    // headers:{
+    //   'Content-Type':"multipart/form-data;; boundary=----WebKitFormBoundary63R1rrC1hCecnsfk"
+    // }
   })
 }
-//修改展商信息
+export const DELCertificate = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/DELCertificate',
+    params: apiParams,
+  })
+}
+
+//完善展商信息
 export const companyAdd = apiParams => { //
   return request({
     method: 'post',
     url: urlParams + 'Exhibitorinfo/company/Add',
+    params: apiParams,
+  })
+}
+//修改商品信息
+export const Editcommodity = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Editcommodity',
     params: apiParams,
   })
 }
@@ -159,6 +176,13 @@ export const homeLinks = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'hone/links',
+    params: apiParams,
+  })
+}
+export const Editcompany = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/Exhibitorinfo/Editcompany',
     params: apiParams,
   })
 }
@@ -434,6 +458,32 @@ export const ObtainContactUs = apiParams => { //
     params: apiParams,
   })
 }
+// //修改联系我们
+// export const ADDContactUs = apiParams => { //
+//   return request({
+//     method: 'post',
+//     url: urlParams + '/Exhibitorinfo/ADDContactUs',
+//     params: apiParams,
+//   })
+// }
+//添加展位联系我们
+export const ADDContactUs = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/ADDContactUs',
+    params: apiParams,
+  })
+}
+//添加参展人员
+export const ADDParticipants= apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Participants/ADD',
+    params: apiParams,
+  })
+}
+//删除参展人员
+
 
 // 获取展商信息
 export const Obtaincommodity = apiParams => { //
@@ -524,5 +574,44 @@ export const exhibitionEditInvoice = apiParams => { //
     params: apiParams,
   })
 }
+//上传图片
+export const uploadimgs = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/common/upload',
+    qs:false,
+    params: apiParams,
+  })
+}
+//查询信息
+export const getad = apiParams => { //
+  return request({
+    method: 'POST',
+    url: urlParams + '/Exhibitorinfo/ADDMessage',
+    params: apiParams,
+  })
+}
 
-
+export const imgcode = apiParams => { //
+  return request({
+    method: 'GET',
+    url: urlParams + '/common/imgcode',
+    params: apiParams,
+  })
+}
+//主营产品
+export const ObtainIndustry = apiParams => { //
+  return request({
+    method: 'GET',
+    url: urlParams + '/Exhibitorinfo/ObtainIndustry',
+    params: apiParams,
+  })
+}
+//咨询内容
+export const Inquiry = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + '/user/inquiry',
+    params: apiParams,
+  })
+}

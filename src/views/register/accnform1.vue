@@ -5,41 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="comrel_middle">账户信息</div>
-      <div class="comrel_middle1" @click="change">编辑</div>
-    </div>
-    <div class="comrel_con">
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入用户昵称" v-model="username" :readonly="flags">
-      </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系人姓名" v-model="lxname" :readonly="flags">
-      </div>
-      <div class="comrel_con_inp1">
-       <van-field
-          readonly
-          clickable
-          :value="value"
-          placeholder="请选择性别"
-          @click="showPicker = true"
-        />
-        <van-popup v-model="showPicker" round position="bottom">
-          <van-picker
-            show-toolbar
-            :columns="columns"
-            @cancel="showPicker = false"
-            @confirm="onConfirm"
-          />
-        </van-popup>
-        <div class="comrel_up">
-          <img src="../../assets/image/up_picker.png" alt="">
-        </div>
-      </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入职务"  v-model="userpost"  :readonly="flags">
-      </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入联系电话"  v-model="suerphone"  :readonly="flags">
-      </div>
+      <!-- <div class="comrel_middle1" @click="change">编辑</div> -->
     </div>
     <div class="comrel_con">
       <div class="comrel_con_inp">
@@ -51,9 +17,6 @@
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入统一社会信用代码"  v-model="code"  :readonly="flags">
       </div>
-       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入注册资金"  v-model="register"  :readonly="flags">
-       </div>
       <div class="comrel_con_inp1">
         <van-cell is-link @click="showPopup" v-model="showAddr">
         <span class="showAddr1" v-if="!addFlag">请选择公司地址</span>
@@ -83,14 +46,14 @@
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司网址"  v-model="website"  :readonly="flags">
       </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编"  v-model="Postcode"  :readonly="flags">
+       <div class="comrel_con_inp">
+        <input type="text" placeholder="请输入公司传真"  v-model="Fax"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-         <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入公司邮箱"  v-model="mailbox"  :readonly="flags">
-      </div>
         <input type="text" placeholder="请输入公司电话"  v-model="Telephone"  :readonly="flags">
+      </div>
+       <div class="comrel_con_inp">
+        <input type="text" placeholder="请输入公司邮箱"  v-model="mailbox"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司邮编"  v-model="Postcode"  :readonly="flags">
@@ -104,13 +67,13 @@
         <input type="text" placeholder="请选择公司性质"  v-model="nature"  :readonly="flags">
       </div>
       <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入成立日期"  v-model="establish"  :readonly="flags">
+        <input type="text" placeholder="请输入注册资金"  v-model="register"  :readonly="flags">
       </div>
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="people"
+          :value="value2"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -133,7 +96,7 @@
        <van-field
           readonly
           clickable
-          :value="Industryrb"
+          :value="value3"
           placeholder="请选择公司主营产品"
           @click="showPicker3 = true"
         />
@@ -185,7 +148,7 @@
 
 <script>
 import areaList from '../../assets/js/area.js'
-import {getObtainraccount,companyAdd,ObtainIndustry,uploadimgs} from "../../api/home"
+import {getObtainraccount,companyAdd,uploadimgs,ObtainIndustry } from "../../api/home"
 import { Form, Toast } from 'vant'
 export default {
   data() {
@@ -204,19 +167,18 @@ export default {
       areaList: areaList, //可选地址数据列表
       showAddr:'',
       addFlag:false,
-      resAddr: '', //传给后端的位置信息
-      lid:"",      
+      resAddr: '',       //传给后端的位置信息
       fileList: [
-        {url:""}
+        // {url:""}
       ],
       fileList2: [
-       {url:""}
+      //  {url:""}
       ],
       fileList3: [
-       {url:""}
+      //  {url:""}
       ],
       fileList4: [
-       {url:""}
+      //  {url:""}
       ],
       username:"",
       lxname:"",
@@ -235,16 +197,17 @@ export default {
       establish:"",
       Industryrb:"",
       people:"",
-      mailbox:"",
       imgurl:"",
       imgurl2:"",
       imgurl3:"",
       imgurl4:"",
+      flags:false,
+      province:"111",
+      city:"111",
+      mailbox:"",
       register:"",
-      flags:true,
-      province:"",
-      city:"",
-      area:"",
+      lid:"",
+      
       formData:{
         action:"Addcompany",
         Title:"",
@@ -269,49 +232,59 @@ export default {
         authorization:"",
         Patentcertificate:"",
         Postcode:"",
-        eid:''
+        eid:'',
+        allarea:['中国','111','11','111'],
       }
 
     }
   },
   mounted(){
-    this.getObtainraccount()
+    // this.getObtainraccount()
+    this.ObtainIndustry()
   },
   methods:{
-    xiugai(){
-      if(this.flags){
-        this.$router.push('/mine')
-      }else{
-       ObtainIndustry({}).then(res=>{
+    ObtainIndustry(){
+      ObtainIndustry({}).then(res=>{
         console.log(res)
         res.Data.forEach(element => {
            this.columns3.push(element.name)
-           if(this.Industryrb == element.name){
+           if(this.value3 == element.name){
              this.lid = element.lid
            }
         });
+        // this.columns3.push(res.Data.name)
         console.log(this.lid)
-        console.log(this.value3)
-      if(this.formData.license){
-        this.formData.license = this.formData.license
-      }else{
-        this.formData.license = this.fileList[0].url
-      }
-       if(this.formData.certificate){
-        this.formData.certificate = this.formData.certificate
-      }else{
-        this.formData.certificate = this.fileList2[0].url
-      }
-       if(this.formData.authorization){
-        this.formData.authorization = this.formData.authorization
-      }else{
-        this.formData.authorization = this.fileList3[0].url
-      }
-       if(this.formData.Patentcertificate){
-        this.formData.Patentcertificate = this.formData.Patentcertificate
-      }else{
-        this.formData.Patentcertificate = this.fileList4[0].url
-      }
+      })
+    },
+    xiugai(){
+      
+     ObtainIndustry({}).then(res=>{
+        console.log(res)
+        res.Data.forEach(element => {
+           this.columns3.push(element.name)
+           if(this.value3 == element.name){
+             this.lid = element.lid
+           }
+        });
+        // this.columns3.push(res.Data.name)
+     
+         console.log(this.lid)
+    //   if(!this.Title) {Toast({message: '请输入公司名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.code) {Toast({message: '请输入统一社会信用代码'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
+    //   if(!this.eTitle) {Toast({message: '请输入英文名称'})}
       this.formData.Title = this.Title
       this.formData.eTitle = this.eTitle
       this.formData.code = this.code
@@ -323,97 +296,39 @@ export default {
       this.formData.abbreviation = this.abbreviation
       this.formData.nature = this.nature
       this.formData.establish = this.establish
-      this.formData.people = this.people
+      this.formData.people = this.value2
     //   this.formData.license = "" 
     //   this.formData.certificate = ""
-      this.formData.Industryrb = this.lid ||this.Industryrb
+      this.formData.Industryrb = this.lid
     //   this.formData.authorization = ""
       this.formData.Postcode = this.Postcode
       this.formData.country  = "中国"
-      this.formData.province = this.province || "北京"
-      this.formData.city = this.city || "北京"
+      this.formData.province = this.province
+      this.formData.city = this.city
       this.formData.register = this.register
     //   this.formData.Patentcertificate = ""
-      this.formData.area = this.area || "北京"
-      this.formData.eid = sessionStorage.Uid
+      this.formData.area = "东城区"
+      this.formData.eid = this.$route.query.eid
       this.formData.Language = "10",
-      this.formData.allarea=""
+      this.formData.allarea="中国"
+     
       console.log(this.formData)
-      Editcompany(this.formData).then(res=>{
+      companyAdd(this.formData).then(res=>{
         console.log(res)
         if(res.Success){
-          Toast('修改成功')
-         this.$router.push('/mine')
+            Toast('注册成功')
+            this.$router.push('/login')
         }else{
-          Toast(res.Msg)
+            Toast(res.Msg)
 
-         }
-       })
-      })
-      }
-    },
-    //编辑信息
-    change(){
-      this.flags = false
-    },
-    getObtainraccount(){
-      ObtainIndustry({}).then(res=>{
-        console.log(res)
-        res.Data.forEach(element => {
-           this.columns3.push(element.name)
-          //  if(this.value3 == element.name){
-          //    this.lid = element.lid
-          //  }
-        });
-        // this.columns3.push(res.Data.name)
-        // console.log(this.lid)
-      })
-      let data = {
-        cid:JSON.parse(sessionStorage.cidInfo).cid
-      }
-      getObtainraccount(data).then(res=>{
-        console.log(res)
-        if(res.Success){
-          if(res.Data.sex=="2"){
-            this.value = "男"
-          }else{
-            this.value = "女"
-          }
-        this.username = res.Data.username
-        this.lxname = res.Data.name
-        this.userpost = res.Data.post
-        this.suerphone = res.Data.phone
-        this.Title = res.Data.Title
-        this.eTitle = res.Data.eTitle
-        this.code = res.Data.code
-        this.address = res.Data.address
-        this.website = res.Data.website
-        this.Fax = res.Data.Fax
-        this.Telephone = res.Data.Telephone
-        this.Postcode = res.Data.Postcode
-        this.abbreviation = res.Data.abbreviation
-        this.nature = res.Data.nature
-        this.establish = res.Data.establish
-        this.Industryrb = res.Data.Industryrb
-        this.register = res.Data.register
-        this.people = res.Data.people
-        this.mailbox = res.Data.mailbox
-        this.imgurl = res.Data.Patentcertificate.split("&&")[0]
-        this.imgurl2 = res.Data.authorization.split("&&")[0]
-        this.imgurl3 = res.Data.certificate.split("&&")[0]
-        this.imgurl4 = res.Data.license.split("&&")[0]
-        this.fileList[0].url = this.imgurl4
-        this.fileList2[0].url = this.imgurl3
-        this.fileList3[0].url = this.imgurl2
-        this.fileList4[0].url = this.imgurl
-        console.log(this.imgurl)
-        }else{
-          Toast(res.Msg)
         }
       })
+      })
+
     },
+    //编辑信息
     goReturn() {
-      this.$router.push('/mine')
+      this.$router.push('/exhibitors')
     },
     onConfirm(value,index) {
       this.value = value;
@@ -439,6 +354,7 @@ export default {
         //value=0改变省，1改变市，2改变区
         let val = picker.getValues()
         this.resAddr = val
+        console.log(val)
       },
       cancelChoose() {
         this.show = false
@@ -453,12 +369,14 @@ export default {
         }else{
           this.showAddr = this.resAddr[0].name + '-' + this.resAddr[1].name
         }
-         this.resAddr[0].name = this.province
-         this.resAddr[1].name = this.city
-         this.resAddr[2].name = this.area
         console.log(this.resAddr, '即将传给后端的省市区信息')
+        this.resAddr[0].name = this.province
+        this.resAddr[1].name = this.city
+        console.log(this.city)
+        // this.resAddr[2].name = this.province
+
       },
-       afterRead(file) {
+      afterRead(file) {
       // 此时可以自行将文件上传至服务器
         console.log(file)
          const fd = new FormData()

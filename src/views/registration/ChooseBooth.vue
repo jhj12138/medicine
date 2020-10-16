@@ -28,12 +28,17 @@
       <van-collapse v-model="activeNames" class="xzzw">
           <van-collapse-item :title="title" name="1">
             <div class="header_li">
-              <p v-for="(item,index) in list"  :key="index" @click="changetitle(index)" >{{item.Title}}</p>
+              <p v-for="(item,index) in list"  :key="index" @click="changetitle(item.price - item.Discount,index,item.ID)" >{{item.Title}}</p>
             </div>
           </van-collapse-item>
         </van-collapse>
         <div class="area">
            <input type="text" placeholder="请输入要求参展数与面积(3*3)" v-model="msum">
+        </div>
+        <div class="Upload">
+        <a class="link" href="https://www.zjylz.com/Upload/20200829.pdf" target="_blank" download>请下载2020年第33届春季医疗展会--展位申请表</a>
+        <van-uploader :after-read="afterRead"   v-model="fileList" :max-count="1"/>
+        <p>请上传申请表</p>
         </div>
         <div class="explain">
           <div class="explain1">说明:</div>
@@ -51,22 +56,37 @@
 <script>
 import { Toast } from 'vant';
 import {exhibitionBooth,exhibitionOrderAdd} from '../../api/user'
+import {uploadimgs} from '../../api/home'
 export default {
   data() {
     return {
       active: 1,
       list:[],
       activeNames: [],
+      fileList:[],
       title:"请选择展位",
       msum:"",
       explain1:'',
-      formdata:{}
+      formdata:{},
+      baseurl:"",
+      Orderamount:'',
+      epid:""
     };
   },
   mounted(){
     this.exhibitionBooth()
   },
   methods:{
+    afterRead(file){
+        console.log(file)
+         const fd = new FormData()
+            fd.append('File', file.file)
+            fd.append('FileType', 'image')
+            uploadimgs(fd).then(res => {
+                this.baseurl = 'https://www.zjylz.com/' + res.Data
+            })
+            console.log(this.baseurl)
+    },
     exhibitionBooth(){
       let data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
@@ -75,13 +95,16 @@ export default {
         action:"Booth"
       }
       exhibitionBooth(data).then(res=>{
+        console.log(res)
         this.list = res.Data
         this.explain1 = res.Data[0].Summary
       })
     },
-    changetitle(index){
+    changetitle(price,index,ID){
      this.title = this.list[index].Title 
      this.activeNames = []
+     this.Orderamount = price
+     this.epid = ID
     },
      goxzzw(){
       //  console.log(this.msum)
@@ -90,13 +113,27 @@ export default {
          Toast('请输入参展数与面积')
          return
          }
+         var GenerateOrder = 'GenerateOrder'
          this.formdata = JSON.parse(sessionStorage.formdata)
-         this.formdata.action = "GenerateOrder"
+         this.formdata.action = GenerateOrder
          this.formdata.bsid = sessionStorage.bsid
+         this.formdata.Upload = this.baseurl
+         this.formdata.epid = this.epid
+         this.formdata.Orderamount = this.Orderamount
          this.formdata.cid = JSON.parse(sessionStorage.cidInfo).cid
          console.log(this.formdata)
          exhibitionOrderAdd(this.formdata).then(res=>{
-           console.log(res)
+              // this.$router.push('/ChooseBoothpass')
+            console.log(res)
+           if(res.Success){
+              Toast(res.Msg)
+              sessionStorage.oid = res.Data
+              this.$router.push('/ChooseBoothpass')
+           }else{
+             if(res.Msg == "已报名"){
+               Toast(res.Msg)
+             }
+           }
          })
       //  this.$router.push('/ChooseBoothpass')
      },
@@ -229,6 +266,13 @@ line-height: px(36);
     }
     .xx1{
        left: 62.5%; 
+    }
+    .Upload{
+      margin-left:px(30) ;
+      p{
+        font-size:px(24) ;
+        color: #888888;
+      }
     }
 .header {
      //      width: 750px;

@@ -27,9 +27,17 @@
     </div>
     <div class="banimgage">
         <img src="../../assets/image/zhanhi3.png" alt="">
-        <div class="banimgage-text">
+        <div class="banimgage-text" v-if="checkStatus==='success'">
             <p>您提交的展商申请资料，已通过审核</p>
-            <a href="###" @click="uploadht">请下载展位申请表合同附件</a>
+            <p href="##" @click="download(url)">请下载展位申请表合同附件</p>
+        </div>
+        <div class="banimgage-text" v-if="checkStatus==='wait'">
+            <p>您已提交了展商申请资料，正在审核中</p>
+            <a href="###">申请期间，我们会电话联系您，请留意您的来电...</a>
+        </div>
+          <div class="banimgage-text" v-if="checkStatus==='failed'">
+            <p>您提交的展商申请资料，未通过审核</p>
+            <a href="###" @click="uploadht2">请重新填写</a>
         </div>
     </div>
     <div class="stand_bottoms">
@@ -40,20 +48,84 @@
 
 <script>
 import { Toast } from 'vant';
+import { exhibitionOrderObtain } from '../../api/user/index';
 export default {
   data() {
     return {
+      urlParams: 'https://www.zjylz.com',
       active: 1,
       list:[{
         name:111
       }],
+      checkStatus:'',
       activeNames: [],
+      downloadurl:""
     };
   },
+  mounted(){
+    this.exhibitionOrderObtain1()//获取订单信息
+  },
   methods:{
+    uploadht2(){
+      this.$router.path('/gsxx')
+    },
+    fileDownload(url){
+      const link = document.createElement('a') // 创建a标签
+      link.style.display = 'none' // 使其隐藏
+      link.href = url // 赋予文件下载地址
+      link.setAttribute('download', '') // 设置下载属性 以及文件名
+      document.body.appendChild(link) // a标签插至页面中
+      link.click() // 强制触发a标签事件
+    },
+    //下载
+    download(){
+       exhibitionOrderObtain({
+        oid: sessionStorage.oid
+      }).then(res => {
+        if (res.Success) {
+          var url = this.urlParams + res.Data.Upload.split('&&')[0]
+          console.log(url)
+          // this.downloadurl = url
+          this.fileDownload(url)
+        } else {
+          this.$message.error(res.Msg)
+        }
+      })
+    },
+    //获取订单信息
+    exhibitionOrderObtain1(){
+      var data = {
+        oid:sessionStorage.oid
+      }
+      exhibitionOrderObtain(data).then(res=>{
+        console.log(res)
+        if(res.Success){
+            var status = res.Data.spstate
+          if (status === 0) {
+            this.checkStatus = 'wait'
+          } else if (status === 1) {
+            this.checkStatus = 'success'
+          } else if (status === 2) {
+            this.checkStatus = 'failed'
+          }
+        }else{
+          Toast(res.Msg)
+        }
+        console.log(res)
+      })
+    },
      goxzzw(){
       //  this.$router.push('/gsxx')
+      if(this.checkStatus=="wait"){
+        Toast('等待审核')
+      }else if(this.checkStatus=='success'){
        this.$router.push('/ChooseBooth2')
+      }else{
+        Toast('未通过审核')
+
+      }
+
+      
      },
      uploadht(){
        Toast('请前往官网下载')

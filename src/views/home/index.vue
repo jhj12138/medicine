@@ -24,7 +24,7 @@
               <span>展品</span>
               <div class="home_textbox_img"><img src="../../assets/image/home_san.png" alt=""></div>
             </div>
-            <div class="home_textup" @click="goUps" v-if ="flagUp">展商</div>
+            <div class="home_textup" @click="goUps" v-if="flagUp">展商</div>
           </div>
           <div class="home_textbox_right">
             <div class="home_textbox_shou"><img src="../../assets/image/home_shou.png" alt=""></div>
@@ -170,7 +170,7 @@
             v-for="(item,index) in review_list" 
             :key = "index"
             @click="getReview(index,item.ID)">
-              <img :src="item.ImgUrl" alt="">
+              <img :src="item.MImgUrl" alt="">
               <div class="home_review_flag"
               :class="review_index == index?'home_review_flags':''">
                 <div class="home_review_time">
@@ -260,21 +260,22 @@ export default {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
         bsid:sessionStorage.bsid,
       }
+      //  this.$router.push('/gsxx')
       ObtainOid(data).then(res=>{
-        console.log(res)
         if(res.Success){
-           sessionStorage.oid = res.data
+           sessionStorage.oid = res.Data
            if(res.Msg=="已报名"){
               Toast("您已报名参展，请前往展商中心查看")
-              this.$router.push('mine')
-           }else if(res.Msg==null){
-              Toast("信息出错，请重新登录")
-           }else{
-            this.$router.push('/gsxx')
+              this.$router.push('/mine')
+           }else  {
+              this.$router.push('/gsxx')
            }
           
         }else{
-          Toast(res.Msg)
+          console.log(11111)
+          // Toast(res.Msg)
+              this.$router.push('/gsxx')
+
         }
       })
     },
@@ -289,11 +290,11 @@ export default {
     },
     //条状新闻详情
     gonewsxq(ID){
-      this.$router.push({ path: '/newsform', query: { Id: ID} })
+      this.$router.push({ path: '/newsform', query: { Id: ID , flagsnews:true} })
     },
     //跳转搜索页面
     goSearch(){
-      this.$router.push({ path: '/ExhSearch'})
+      this.$router.push({ path: '/Search',query:{flagss:true}})
     },
     getActive(index){
       this.text_index = index
@@ -417,10 +418,11 @@ export default {
     },
     homeHistory() {
       homeHistory().then((res) => {
+        console.log(res)
         if (res.Success){
           this.review_list = res.Data
           res.Data.forEach(ele=> {
-            ele.ImgUrl = 'https://www.zjylz.com'+ele.ImgUrl
+            ele.MImgUrl = 'https://www.zjylz.com'+ele.MImgUrl
           })
           console.log(res)
         } else {
@@ -508,7 +510,8 @@ export default {
               if(IdentityType){
                 this.ObtainOid()
               }else{
-                Toast("未登录")
+                Toast("登录之后才能报名")
+               this.$router.push('/login')
               }
           }
       // }else{

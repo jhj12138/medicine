@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     goReturn() {
-      this.$router.push('/exchange')
+      this.$router.push('/offlineActive')
     },
     goBao() {
       const data = {
@@ -85,11 +85,11 @@ export default {
           this.nowTime = new Date().getTime()
           console.log(this.nowTime)
           if(this.nowTime <  this.xtime){
-            this.getstate = this.getTime.nostate
+            this.getstate = "未开始"
           }else if(this.nowTime >=  this.xtime && this.nowTime <=  this.endTime){
-            this.getstate = this.getTime.state
+            this.getstate = "报名参加"
           }else if(this.nowTime >  this.endTime){
-           this.getstate = this.getTime.begin
+           this.getstate = "已结束"
           }
         } else {
           Toast(res.Msg)
@@ -195,8 +195,11 @@ export default {
     margin-top: px(40);
     img{
       width: 100%;
-      height: px(300);
+      height: 100%;
     }
+    // blockquote{
+    //   margin: 0;
+    // }
   }
 }
 </style>

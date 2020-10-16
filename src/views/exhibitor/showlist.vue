@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="evemage_cont">展会列表</div>
-      <div class="evemage_right" @click="Administrator">管理</div>
+      <div class="evemage_right" @click="Administrator"></div>
     </div>
     <div class="evedail_con">
       <ul>

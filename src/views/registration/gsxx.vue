@@ -59,9 +59,9 @@
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司网址"  v-model="formData.website">
       </div>
-      <div class="comrel_con_inp">
-        <input type="text" placeholder="请输入邮编"  v-model="formData.Postcode">
-      </div>
+      <!-- <div class="comrel_con_inp">
+        <input type="text" placeholder="请输入邮编"  v-model="formData.code">
+      </div> -->
       <div class="comrel_con_inp">
         <input type="text" placeholder="请输入公司电话"  v-model="formData.Telephone">
       </div>
@@ -83,7 +83,7 @@
        <van-field
           readonly
           clickable
-          :value="formData.people"
+          :value="value2"
           placeholder="请选择员工人数"
           @click="showPicker2 = true"
         />
@@ -99,14 +99,14 @@
           <img src="../../assets/image/up_picker.png" alt="">
         </div>
       </div>
-      <div class="comrel_con_inp">
+      <!-- <div class="comrel_con_inp">
         <input type="text" placeholder="请输入成立日期" v-model="formData.establish">
-      </div>
+      </div> -->
       <div class="comrel_con_inp1">
        <van-field
           readonly
           clickable
-          :value="formData.Industryrb"
+          :value="value3"
           placeholder="请选择公司主营产品"
           @click="showPicker3 = true"
         />
@@ -136,14 +136,14 @@
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传产品授权书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead3" v-model="fileList3" :max-count="1"/>
 
           </div>
         </div>
         <div class="comrel_updates">
-          <div class="comrel_update_top">请上传商标注册证</div>
+          <div class="comrel_update_top">请上传专利证书</div>
           <div class="comrel_update_main">
             <van-uploader :after-read="afterRead4" v-model="fileList4" :max-count="1"/>
           </div>
@@ -171,7 +171,7 @@ export default {
       columns2: ['10-20','20-50','50-200','200-500','大于500'],
       showPicker2: false,
       value3: '',
-      columns3: ['产品1','产品2'],
+      columns3: ['综合','内窥镜','手术室供应室消杀','放射','超声','检验'],
       showPicker3: false,
       show: false,  //是否显示弹出层
       detailAddress: '',  //绑定详细地址输入框
@@ -212,7 +212,10 @@ export default {
         Patentcertificate:"",
         authorization:"",
         certificate:"",
-        license:""
+        license:"",
+        country:"",
+        province:"",
+        city:"",
       },
      
     }
@@ -236,58 +239,72 @@ export default {
         sessionStorage.formdata = JSON.stringify(this.formData)
           this.$router.push("/ChooseBooth")
       },
-    getObtainraccount(){
-      let data = {
+    getObtainraccount(){  
+      if(JSON.parse(sessionStorage.cidInfo).cid){
+         let data = {
         cid:JSON.parse(sessionStorage.cidInfo).cid,
         Uid:sessionStorage.Uid
       }
     //   exhibitionObtainCid(data).then(res=>{
     //       console.log(res)
     //   })
+
       ObtainCid(data).then(res=>{
          sessionStorage.rb = res.Data.rb
         this.showAddr= res.Data.country +  res.Data.province + res.Data.city
+        console.log(this.showAddr)
       })
       getObtainraccount(data).then(res=>{
         console.log(res)
         if(res.Success){
-        this.formData.username = res.Data.username
-        this.formData.name = res.Data.name
-        this.formData.post = res.Data.post
-        this.formData.phone = res.Data.phone
-        this.formData.Title = res.Data.Title
-        this.formData.eTitle = res.Data.eTitle
-        this.formData.code = res.Data.code
-        this.formData.address = res.Data.address
-        this.formData.website = res.Data.website
-        this.formData.Fax = res.Data.Fax
-        this.formData.Telephone = res.Data.Telephone
-        this.formData.Postcode = res.Data.Postcode
-        this.formData.abbreviation = res.Data.abbreviation
-        this.formData.nature = res.Data.nature
-        this.formData.establish = res.Data.establish
-        this.formData.Industryrb = res.Data.Industryrb
-        this.formData.people = res.Data.people
-        this.formData.Patentcertificate = 'https://www.zjylz.com' + res.Data.Patentcertificate.split("&&")[0]
-        this.formData.authorization = 'https://www.zjylz.com' + res.Data.authorization.split("&&")[0]
-        this.formData.certificate = 'https://www.zjylz.com' + res.Data.certificate.split("&&")[0]
-        this.formData.license = 'https://www.zjylz.com' + res.Data.license.split("&&")[0]
+         this.formData.username = res.Data.username
+         this.formData.name = res.Data.name
+         this.formData.post = res.Data.post
+         this.formData.phone = res.Data.phone
+         this.formData.Title = res.Data.Title
+         this.formData.eTitle = res.Data.eTitle
+         this.formData.code = res.Data.code
+         this.formData.address = res.Data.address
+         this.formData.website = res.Data.website
+         this.formData.Fax = res.Data.Fax
+         this.formData.Telephone = res.Data.Telephone
+         this.formData.Postcode = res.Data.Postcode
+         this.formData.abbreviation = res.Data.abbreviation
+         this.formData.nature = res.Data.nature
+         this.formData.establish = res.Data.establish
+         this.formData.Industryrb = res.Data.Industryrb
+         this.formData.people = res.Data.people
+         this.formData.country = res.Data.country
+         this.formData.province = res.Data.province
+         this.formData.city = res.Data.city
+         this.formData.register = res.Data.register
+         this.formData.mailbox = res.Data.mailbox
+         this.value2 = res.Data.people
+         this.value3 = res.Data.Industryrb
+         this.formData.Patentcertificate = res.Data.Patentcertificate.split("&&")[0]
+         this.formData.authorization = res.Data.authorization.split("&&")[0]
+         this.formData.certificate =  res.Data.certificate.split("&&")[0]
+         this.formData.license = res.Data.license.split("&&")[0]
         this.fileList4[0].url = this.formData.license
         this.fileList3[0].url = this.formData.certificate
         this.fileList2[0].url = this.formData.authorization
         this.fileList[0].url =  this.formData.Patentcertificate
-        console.log(this.formData)
+        console.log(res)
         }else{
           Toast(res.Msg)
         }
       })
+      }else{
+        console.log(1111)
+      }
+     
     },
     goReturn() {
       this.$router.push('/home')
     },
     onConfirm(value,index) {
       this.value = value;
-      console.log(this.con[index])
+      // console.log(this.con[index])
       this.showPicker = false;
     },
     onConfirm2(value,index) {
@@ -323,7 +340,10 @@ export default {
         }else{
           this.showAddr = this.resAddr[0].name + '-' + this.resAddr[1].name
         }
-        console.log(this.resAddr, '即将传给后端的省市区信息')
+       this.formData.country =  this.showAddr[0].name
+       this.formData.province =  this.showAddr[1].name
+       this.formData.city =  this.showAddr[2].name
+        console.log(this.formData.country, '即将传给后端的省市区信息')
       },
       afterRead(file) {
       // 此时可以自行将文件上传至服务器

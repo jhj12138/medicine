@@ -5,19 +5,20 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="stand_middle">展位信息</div>
+      <div class="certif_right" @click="change">编辑</div>
     </div>
     <div class="stand_con">
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入公司简称" v-model="company">
+        <input type="text" placeholder="请输入公司简称" v-model="company" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系人" v-model="contacts">
+        <input type="text" placeholder="请输入联系人" v-model="contacts" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入联系电话" v-model="phones">
+        <input type="text" placeholder="请输入联系电话" v-model="phones" :readonly="flag">
       </div>
       <div class="stand_con_inp">
-        <input type="text" placeholder="请输入邮箱地址" v-model="email">
+        <input type="text" placeholder="请输入邮箱地址" v-model="email" :readonly="flag">
       </div>
     </div>
     <div class="stand_update">
@@ -25,6 +26,13 @@
         <div class="stand_update_top">请上传公司logo</div>
         <div class="stand_update_main">
           <van-uploader :after-read="afterRead" v-model="fileList" :max-count="1"/>
+          <!-- <img :src="imgurl" alt=""> -->
+        </div>
+      </div>
+      <div class="stand_updates">
+        <div class="stand_update_top">请上传公司二维码</div>
+        <div class="stand_update_main">
+          <van-uploader :after-read="afterRead3" v-model="fileList3" :max-count="1"/>
           <!-- <img :src="imgurl" alt=""> -->
         </div>
       </div>
@@ -42,7 +50,7 @@
         <img src="../../assets/image/stand_img.png" alt="">
       </div>
       <div class="stand_textarea_right">
-        <textarea placeholder="请填写公司的简介" v-model="textareas"></textarea>
+        <textarea placeholder="请填写公司的简介" v-model="textareas"  :readonly="flag"></textarea>
       </div>
     </div>
     <div class="stand_bottom" @click="submits">确定</div>
@@ -50,8 +58,9 @@
 </template>
 
 <script>
-import { Toast } from 'vant';
-import { ObtainContactUs} from '../../api/home';
+import { Form,Toast } from 'vant';
+import { ObtainContactUs,ADDContactUs,uploadimgs } from '../../api/home';
+import {EditContactUs} from '../../api/user';
 export default {
   data() {
     return{
@@ -62,34 +71,50 @@ export default {
         {url:""}
        
       ],
+       fileList3: [
+        {url:""}
+       
+      ],
       company:'',
       contacts:'',
       phones:'',
       email:'',
       textareas:'',
+      qrcode:"",
       imgurl:"",
       imgurl1:"",
+      flag:true,
+      img1:null,
+      img2:null,
+      ID:null,
     }
   },
   mounted(){
     this.ObtainContactUs()
   },
   methods:{
+    change(){
+        this.flag =false
+        console.log(111)
+    },
     ObtainContactUs(){
       var data = {
         cid: JSON.parse(sessionStorage.cidInfo).cid
       }
       ObtainContactUs(data).then(res=>{
+        console.log(res)
+        this.ID = res.Data.ID
         this.company = res.Data.abbreviation
         this.phones = res.Data.phone
         this.email = res.Data.mailbox
         this.contacts = res.Data.contacts
-        this.imgurl = "https://www.zjylz.com" + res.Data.LOGO.split('&&')[0]
-        this.imgurl1 = "https://www.zjylz.com" + res.Data.imgurl.split('&&')[0]
-        this.fileList[0].url = this.imgurl
-        this.fileList2[0].url = this.imgurl1
+        this.imgurl =  res.Data.LOGO.split('&&')[0]
+        this.imgurl1 =  res.Data.imgurl.split('&&')[0]
+        this.qrcode =  res.Data.QRcode.split('&&')[0]
+        this.fileList[0].url = "https://www.zjylz.com" + this.imgurl
+        this.fileList2[0].url =  "https://www.zjylz.com" + this.imgurl1
+        this.fileList3[0].url =  "https://www.zjylz.com" + this.qrcode
         this.textareas = res.Data.introduce
-        console.log( res.Data)
       })
     },
     goReturn() {
@@ -97,12 +122,35 @@ export default {
     },
     afterRead(file) {
       // 此时可以自行将文件上传至服务器
-      console.log(file)
+       console.log(file)
+         const fd = new FormData()
+            fd.append('File', file.file)
+            fd.append('FileType', 'image')
+            uploadimgs(fd).then(res => {
+              console.log(res)
+                this.imgurl = 'https://www.zjylz.com/' + res.Data
+            })
     },
     afterRead2(file) {
-      console.log(file)
+       console.log(file)
+         const fd = new FormData()
+            fd.append('File', file.file)
+            fd.append('FileType', 'image')
+            uploadimgs(fd).then(res => {
+                this.imgurl1 = 'https://www.zjylz.com/' + res.Data
+            })
+    },
+    afterRead3(file) {
+       console.log(file)
+         const fd = new FormData()
+            fd.append('File', file.file)
+            fd.append('FileType', 'image')
+            uploadimgs(fd).then(res => {
+                this.qrcode = 'https://www.zjylz.com/' + res.Data
+            })
     },
     submits() {
+      if(!this.flag){
       if(!this.company){Toast('请输入公司简称');return}
       if(!this.contacts){Toast('请输入联系人');return}
       if(!this.phones){Toast('请输入联系电话');return}
@@ -112,7 +160,88 @@ export default {
       if(!this.textareas){Toast('请输入邮箱地址');return}
       if (!(/^1[3456789]\d{9}$/.test(this.phones))){Toast('联系人电话有误');return} 
       if (!(/^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/.test(this.email))){Toast('邮箱有误');return}
-      this.$router.push('/mine')
+    //  var data={
+    //    cid:JSON.parse(sessionStorage.cidInfo).cid,
+    //    abbreviation:this.company,
+    //    contacts:this.contacts,
+    //    phone:this.phones,
+    //    mailbox:this.email,
+    //    LOGO:"https://www.zjylz.com",
+    //    imgurl:"https://www.zjylz.com",
+    //    introduce:this.textareas
+    //  }
+        // this.$router.push('/mine')
+
+    //  console.log(1111)
+     //修改
+     if(this.ID){
+     var nowTime = new Date().toLocaleDateString()
+     var data={
+       cid:JSON.parse(sessionStorage.cidInfo).cid,
+       ID:this.ID,
+       abbreviation:this.company,
+       contacts:this.contacts,
+       phone:this.phones,
+       mailbox:this.email,
+       LOGO: this.imgurl,
+       imgurl: this.imgurl1,
+       introduce:this.textareas,
+       VideoUrl:"",
+       number:"",
+       addtime:nowTime,
+       QRcode:this.qrcode
+     }
+     console.log(data)
+     EditContactUs(data).then(res=>{
+       if(res.Success){
+         Toast(res.Msg)
+        this.$router.push('/mine')
+       }else{
+         Toast(res.Msg)
+
+       }
+     })
+     }else{
+        var nowTime = new Date().toLocaleDateString()
+     var data={
+       cid:JSON.parse(sessionStorage.cidInfo).cid,
+       abbreviation:this.company,
+       contacts:this.contacts,
+       phone:this.phones,
+       mailbox:this.email,
+       LOGO: this.imgurl,
+       imgurl: this.imgurl1,
+       introduce:this.textareas,
+       VideoUrl:"",
+       number:"",
+       addtime:nowTime,
+       QRcode:this.qrcode
+     }
+     console.log(data)
+     EditContactUs(data).then(res=>{
+       if(res.Success){
+         Toast(res.Msg)
+        this.$router.push('/mine')
+       }else{
+         Toast(res.Msg)
+
+       }
+     })
+     }
+     
+      }else{
+        this.$router.push('/mine')
+
+      }
+     
+    //  ADDContactUs(data).then(res=>{
+    //     if(res.Success){
+    //       Toast('修改成功')
+    //     this.$router.push('/mine')
+    //     }else{
+    //       Toast(res.Msg)
+    //     }
+    //   })
     }
   }
 }
@@ -144,6 +273,13 @@ export default {
       img{
         width: 100%;
       }
+    }
+    .certif_right{
+      position: absolute;
+      top: 30%;
+      right: 10%;
+      font-size: px(28);
+      color: #2668C0;
     }
     .stand_middle{
       position: absolute;

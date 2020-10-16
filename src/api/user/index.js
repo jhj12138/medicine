@@ -14,10 +14,11 @@ export const OnlineCode = apiParams => { //
 export const ObtainOid = apiParams => { //
   return request({
     method: 'get',
-    url: urlParams + '/Exhibitorinfo/Obtainoid',
-    params: apiParams,
+    url: urlParams + 'Exhibitorinfo/Obtainoid',
+    params: apiParams
   })
 }
+//展商注册
 export const exRegister = apiParams => { //
   return request({
     method: 'POST',
@@ -30,6 +31,14 @@ export const edit = apiParams => { //
   return request({
     method: 'POST',
     url: urlParams + 'user/info/edit',
+    params: apiParams,
+  })
+}
+//删除参展人员
+export const delParticipants= apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'Exhibitorinfo/Participants/DEL',
     params: apiParams,
   })
 }
@@ -91,6 +100,14 @@ export const exhibitionObtainrbInvoice = apiParams => { //
     params: apiParams
   })
 }
+//修改联系我们
+export const EditContactUs = apiParams => { //
+  return request({
+    url: urlParams + 'Exhibitorinfo/EditContactUs',
+    method: 'post',
+    params: apiParams
+  })
+}
   // 展商报名第四步 上传付款凭证
 
 export const exhibitionVoucher = apiParams => { //
@@ -132,6 +149,22 @@ export const joinEditList = apiParams => { //
   return request({
     method: 'get',
     url: urlParams + 'user/purpose/get',
+    params: apiParams,
+  })
+}
+// 我感兴趣的
+export const intrestget = apiParams => { //
+  return request({
+    method: 'get',
+    url: urlParams + 'user/intrest/get',
+    params: apiParams,
+  })
+}
+// 我感兴趣的选择
+export const intrestedit = apiParams => { //
+  return request({
+    method: 'post',
+    url: urlParams + 'user/intrest/edit',
     params: apiParams,
   })
 }

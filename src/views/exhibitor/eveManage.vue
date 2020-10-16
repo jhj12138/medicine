@@ -17,7 +17,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="evemage_right">参展人员管理</div>
-      <div class="evemage_right">管理</div>
+      <div class="evemage_right"></div>
     </div>
     <div class="evemage_con">
       <ul>
@@ -42,7 +42,7 @@
           </div>
           <div class="evemage_li_bottom">
             <div class="evemage_li_span1">展位号：{{item.number}}</div>
-            <div class="evemage_li_span2">参展人数：0人</div>
+            <div class="evemage_li_span2">参展人数：{{sum}}人</div>
             <div class="evemage_li_span3">展会时间：{{item.starttime}}-{{item.starttime}}</div>
           </div>
         </li>
@@ -60,7 +60,8 @@ export default {
     return {
       list:[],
       v_flag:true,
-      params:{}
+      params:{},
+      sum:""
     }
   },
   mounted(){
@@ -72,7 +73,7 @@ export default {
       getParticipants(this.params).then(res=>{
         if(res.Success){
         // this.list = res.Data.Data
-
+          this.sum = res.Data.Data.length
         }else{
           Toast(res.Msg)
         }

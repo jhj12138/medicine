@@ -5,7 +5,7 @@
         <img src="../../assets/image/mine_return.png" alt="">
       </div>
       <div class="certif_middle">发票管理</div>
-      <div class="certif_right">管理</div>
+      <div class="certif_right"></div>
     </div>
     <div class="invdetail_con">
       <ul>
@@ -22,7 +22,8 @@
               </div>
             </div>
             <div class="invdetail_li_right">
-              <span @click="Download">下载发票</span>
+              <a :href="'https://www.zjylz.com' + item.voucher"  v-if="item.voucher">下载发票</a>
+              <span @click="Download" v-else>等待审核</span>
               <div class="invdetail_li_img">
                 <img src="../../assets/image/mine_go.png" alt="">
               </div>
@@ -43,7 +44,7 @@
 
 <script>
 import { Toast } from 'vant'
-import{getObtainInvoiceList} from "../../api/home"
+import{getObtainInvoiceList,getObtain} from "../../api/home"
 export default {
   data() {
     return{
@@ -56,7 +57,7 @@ export default {
   },
   methods:{
     Download(){
-      Toast("请前往官网下载")
+      Toast("审核中，请等待")
     },
     getObtainInvoiceList(){
       this.params.cid = JSON.parse(sessionStorage.cidInfo).cid

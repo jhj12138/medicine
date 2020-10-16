@@ -5,7 +5,7 @@
         <div class="surrTra_return" @click="goReturn">
           <img src="../../assets/image/mine_return.png" alt />
         </div>
-        <div class="surrTra_middle">展会报名</div>
+        <div class="surrTra_middle">上传凭证</div>
       </div>
         <div class="Articlesteps">
             <ul class="Articlestepssum">
@@ -27,11 +27,11 @@
     </div>
     <div class="updataimg">
         <img src="../../assets/image/sczf.png" alt="" @click="updatazf">
-        <img src="../../assets/image/sjxx.png" alt="" @click="kaipxx">
-        <img src="../../assets/image/kaip.png" alt="" @click="rest">
+        <!-- <img src="../../assets/image/sjxx.png" alt="" @click="kaipxx">
+        <img src="../../assets/image/kaip.png" alt="" @click="rest"> -->
     </div>
       <div class="stand_bottoms">
-             <div class="stand_bottom" @click="goxzzw">下一步</div>
+             <div class="stand_bottom" @click="goxzzw">确定</div>
         </div>
   </div>
 </template>
@@ -75,12 +75,16 @@ export default {
 
      },
      goxzzw(){
+       if(this.$route.query.id == "true"){
          Toast('报名成功')
-        this.$router.push('/mine')
+        this.$router.push('/home')
+       }else{
+         Toast('请完善信息')
+       }
        
      },
      goReturn(){
-         this.$router.push('/ChooseBooth1')
+         this.$router.push('/ChooseBoothpass')
      }
   }
 };
@@ -222,7 +226,7 @@ line-height: px(36);
         height: px(2);
         border: px(2) solid #FFFFFF;
         background: #ffffff;
-        opacity: 0.4;
+        // opacity: 0.4;
     }
     .xx1{
        left: 62.5%; 

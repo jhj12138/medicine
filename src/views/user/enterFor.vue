@@ -130,7 +130,7 @@ export default {
           console.log(res)
           if(res.Success){
             Toast({
-              message: '报名成功',
+              message: res.Msg,
             });
             // this.$router.push('/login')
             this.$router.push({ path: '/inraim', query: { Id: res.Data.Id } })
@@ -148,7 +148,7 @@ export default {
               message: '报名成功',
             });
             // this.$router.push('/inraim')
-            this.$router.push({ path: '/inraim', query: { Id: res.Data.Id } })
+            // this.$router.push({ path: '/inraim', query: { Id: res.Data.Id } })
           } else {
             Toast({
               message: '报名失败',
