@@ -79,6 +79,7 @@ export default {
     //   });
       }else{
         Toast('未登录')
+        this.$router.push('login')
       }
       
     },

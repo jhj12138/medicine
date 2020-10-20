@@ -56,7 +56,7 @@
        </div>
       <div class="comrel_con_inp1">
         <van-cell is-link @click="showPopup" v-model="showAddr">
-        <span class="showAddr1" v-if="!addFlag">请选择公司地址</span>
+        <span class="showAddr1" v-if="!addFlag">{{addressxx}}</span>
         <span class="showAddr2" v-if="addFlag">{{showAddr}}</span>
       </van-cell>
         <van-popup
@@ -245,6 +245,7 @@ export default {
       province:"",
       city:"",
       area:"",
+      addressxx:"",
       formData:{
         action:"Addcompany",
         Title:"",
@@ -398,15 +399,16 @@ export default {
         this.register = res.Data.register
         this.people = res.Data.people
         this.mailbox = res.Data.mailbox
+        this.addressxx = res.Data.country + "|" + res.Data.province +  "|" +res.Data.city +  "|" +res.Data.area
         this.imgurl = res.Data.Patentcertificate.split("&&")[0]
         this.imgurl2 = res.Data.authorization.split("&&")[0]
         this.imgurl3 = res.Data.certificate.split("&&")[0]
         this.imgurl4 = res.Data.license.split("&&")[0]
-        this.fileList[0].url = this.imgurl4
-        this.fileList2[0].url = this.imgurl3
-        this.fileList3[0].url = this.imgurl2
-        this.fileList4[0].url = this.imgurl
-        console.log(this.imgurl)
+        this.fileList[0].url = 'https://www.zjylz.com/' +  this.imgurl4
+        this.fileList2[0].url ='https://www.zjylz.com/' +  this.imgurl3
+        this.fileList3[0].url = 'https://www.zjylz.com/' + this.imgurl2
+        this.fileList4[0].url ='https://www.zjylz.com/' +  this.imgurl
+        console.log(res)
         }else{
           Toast(res.Msg)
         }

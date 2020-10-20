@@ -61,18 +61,26 @@
             <span> {{userName}}</span>
        </div>
        <div class="header_btn_cont" v-show="bisshow">
-         <div class="header_btn_cont1" @click="uesrcont">用户中心</div>
-         <div class="header_btn_cont2" @click="exitLongin">退出</div>
+         <!-- <div class="header_btn_cont1" @click="uesrcont">用户中心</div>
+         <div class="header_btn_cont2" @click="exitLongin">退出</div> -->
        </div>
         <div class="header_btn_right">
           <img src="../../assets/image/head_reight.png" alt="">
         </div>
       </div>
-      <div class="header_btn2" v-show="flag" @click="goRegist">
+    
+     
+      <div class="header_btn2" v-if="flag" @click="goRegist">
         <div class="header_btn_txt">个人注册</div>
       </div>
-      <div class="header_btn2" v-show="flag" @click="goRegist1">
+        <div class="header_btn2" v-else @click="uesrcont">
+        <div class="header_btn_txt" >用户中心</div>
+      </div>
+      <div class="header_btn2" v-if="flag" @click="goRegist1">
         <div class="header_btn_txt">展商注册</div>
+      </div>
+       <div class="header_btn2" v-else @click="exitLongin">
+        <div class="header_btn_txt" >退出</div>
       </div>
     </div>
     <!-- 三个按钮 -->
@@ -346,8 +354,8 @@ export default {
   .header_btn{
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 px(30);
+    justify-content: space-around;
+    padding: 0 px(10);
     margin-top: px(80);
     .header_btn1{
       display: flex;
@@ -362,11 +370,15 @@ export default {
       position: relative;
      
       .header_btn_txt{
+        text-align: center;
+        // width: px(320);
+        height: px(100);
+        line-height: px(100);
         font-size: px(32);
         color: #fff;
-        // overflow: hidden;    
-        // text-overflow:ellipsis;    
-        // white-space: nowrap;
+        overflow: hidden;    
+        text-overflow:ellipsis;    
+        white-space: nowrap;
         padding-left:px(10);
       }
       .header_btn_cont{

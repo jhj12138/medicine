@@ -27,6 +27,7 @@ export default {
       CurPage:0,
       PageSize:5,
       tabContents:[],
+      flags:true
     }
   },
   methods:{
@@ -34,8 +35,7 @@ export default {
       this.$router.push('/home')
     },
     gonewxq(id) {
-        this.$router.push({ path: '/newsform', query: { Id: id} })
-
+        this.$router.push({ path: '/newsform', query: { Id: id,flags:this.flags} })
     },
     loadMore() {
       // this.tabContents =[]

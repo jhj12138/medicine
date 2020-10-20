@@ -11,10 +11,12 @@
             <div class="new_a">{{this.Title}}</div>
             <div class="new_b">
               <div class="acd_left">
-                <div class="acd_left_time">活动时间：{{ActivityTime}}-{{ActivityTimeEnd}}</div>
+                <div class="acd_left_time">报名时间：{{ActivityTime}}-{{ActivityTimeEnd}}</div>
+                <div class="acd_left_time">活动时间：{{CreateTime}}-{{EndTimes}}</div>
                 <div class="acd_left_address">活动地点：{{Address}}</div>
               </div>
               <div class="acd_right" @click="goBao">{{getstate}}</div>
+              <!-- <div class="acd_right" @click="goBao">baom</div> -->
             </div>
             <div class="acdeTails" v-html="Content">
             </div>
@@ -38,6 +40,10 @@ export default {
       nowTime:null,
       endTime:null,
       xtime:null,
+      times:null, //转成‘/’
+      timEnd:null,//转成‘/’
+      CreateTime:null,
+      EndTimes:null,
       getTime:{
         state:"立即报名",
         begin:"已结束",
@@ -48,7 +54,11 @@ export default {
   },
   methods:{
     goReturn() {
-      this.$router.push('/offlineActive')
+      if(this.$route.query.flags){
+        this.$router.push('/useOffline')
+      }else{
+        this.$router.push('/offlineActive')
+      }
     },
     goBao() {
       const data = {
@@ -57,14 +67,20 @@ export default {
       activityJoin(data).then((res) => {
         if (res.Success){
            if(this.getstate == "立即报名"){
-            Toast(res.Msg)
+            Toast('报名成功')
+            console.log(res)
           }else if (this.getstate == "已结束"){
             Toast("活动已结束")
           }else if(this.getstate == "未开始"){
-            Toast("活动还未开会")
+            Toast("活动还未开始")
           }
         } else {
           Toast(res.Msg)
+          if(res.Msg == '未登录'){
+            this.$router.push('/login')
+          }else{
+            console.log(11)
+          }
         }
       })
     },
@@ -73,6 +89,7 @@ export default {
         Id :this.$route.query.Id,
       }
       offlineDetail(data).then((res) => {
+        console.log(res)
         if (res.Success){
           this.Title = res.Data.Title
           this.Address = res.Data.Address
@@ -80,8 +97,13 @@ export default {
           this.Ids = res.Data.Id
           this.ActivityTime = res.Data.ActivityTime.replace(/-/g,".")
           this.ActivityTimeEnd = res.Data.ActivityTimeEnd.replace(/-/g,".")
-          this.endTime = new Date(this.ActivityTimeEnd).getTime()
-          this.xtime = new Date( this.ActivityTime).getTime()
+          this.CreateTime = res.Data.ActivityTimeEnd.replace(/-/g,".")
+          this.EndTimes = res.Data.ActivityTimeEnd.replace(/-/g,".")
+          this.times =  res.Data.ActivityTime.replace(/-/g,"/")
+          this.timEnd = res.Data.ActivityTimeEnd.replace(/-/g,"/")
+          this.endTime = new Date(this.timEnd).getTime()
+          this.xtime = new Date( this.times).getTime()
+
           this.nowTime = new Date().getTime()
           console.log(this.nowTime)
           if(this.nowTime <  this.xtime){
