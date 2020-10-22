@@ -97,8 +97,8 @@ export default {
           this.Ids = res.Data.Id
           this.ActivityTime = res.Data.ActivityTime.replace(/-/g,".")
           this.ActivityTimeEnd = res.Data.ActivityTimeEnd.replace(/-/g,".")
-          this.CreateTime = res.Data.ActivityTimeEnd.replace(/-/g,".")
-          this.EndTimes = res.Data.ActivityTimeEnd.replace(/-/g,".")
+          this.CreateTime = res.Data.StartTime.replace(/-/g,".")
+          this.EndTimes = res.Data.EndTime.replace(/-/g,".")
           this.times =  res.Data.ActivityTime.replace(/-/g,"/")
           this.timEnd = res.Data.ActivityTimeEnd.replace(/-/g,"/")
           this.endTime = new Date(this.timEnd).getTime()

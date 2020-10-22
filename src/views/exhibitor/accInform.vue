@@ -400,14 +400,14 @@ export default {
         this.people = res.Data.people
         this.mailbox = res.Data.mailbox
         this.addressxx = res.Data.country + "|" + res.Data.province +  "|" +res.Data.city +  "|" +res.Data.area
-        this.imgurl = res.Data.Patentcertificate.split("&&")[0]
-        this.imgurl2 = res.Data.authorization.split("&&")[0]
-        this.imgurl3 = res.Data.certificate.split("&&")[0]
         this.imgurl4 = res.Data.license.split("&&")[0]
         this.fileList[0].url = 'https://www.zjylz.com/' +  this.imgurl4
-        this.fileList2[0].url ='https://www.zjylz.com/' +  this.imgurl3
-        this.fileList3[0].url = 'https://www.zjylz.com/' + this.imgurl2
+        this.imgurl = res.Data.Patentcertificate.split("&&")[0]
         this.fileList4[0].url ='https://www.zjylz.com/' +  this.imgurl
+        this.imgurl2 = res.Data.authorization.split("&&")[0]
+        this.fileList3[0].url = 'https://www.zjylz.com/' + this.imgurl2
+        this.imgurl3 = res.Data.certificate.split("&&")[0]
+        this.fileList2[0].url ='https://www.zjylz.com/' +  this.imgurl3
         console.log(res)
         }else{
           Toast(res.Msg)

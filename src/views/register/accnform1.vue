@@ -383,7 +383,7 @@ export default {
             fd.append('File', file.file)
             fd.append('FileType', 'image')
             uploadimgs(fd).then(res => {
-                this.formData.license = 'https://www.zjylz.com/' + res.Data
+                this.formData.license = res.Data
             })
       },
       afterRead2(file) {
@@ -393,7 +393,7 @@ export default {
             fd.append('File', file.file)
             fd.append('FileType', 'image')
             uploadimgs(fd).then(res => {
-                this.formData.certificate = 'https://www.zjylz.com/' + res.Data
+                this.formData.certificate =  res.Data
             })
       },
       afterRead3(file) {
@@ -403,7 +403,7 @@ export default {
             fd.append('File', file.file)
             fd.append('FileType', 'image')
             uploadimgs(fd).then(res => {
-                this.formData.authorization = 'https://www.zjylz.com/' + res.Data
+                this.formData.authorization = res.Data
             })
       },
       afterRead4(file) {
@@ -413,7 +413,7 @@ export default {
             fd.append('File', file.file)
             fd.append('FileType', 'image')
             uploadimgs(fd).then(res => {
-                this.formData.Patentcertificate = 'https://www.zjylz.com/' + res.Data
+                this.formData.Patentcertificate =  res.Data
             })
       },
     
